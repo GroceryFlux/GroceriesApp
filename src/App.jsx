@@ -6,8 +6,6 @@ function App() {
   const [items, setItems] = useState(['']);
   const [shoppingList, saveList] = useState([]);
 
-  console.log('asba')
-
   return (
     <>
       {isModalVisible ? (
