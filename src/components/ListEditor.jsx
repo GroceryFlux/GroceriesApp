@@ -20,8 +20,6 @@ function ListEditor({ setOverview, listOverview, setIsModalVisible, selectedList
     sortBy: '',*/
   }
 
-  console.log(selectedList)
-
   const [list, setList] = useState(defaultState);
   
   return (

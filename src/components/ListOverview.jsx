@@ -20,7 +20,6 @@ function ListOverview({ setIsModalVisible, listOverview, setSelectedIndex }) {
         <ul>
           {listOverview.lists.map((list, index) => (
             <li key={`key${index}`}>
-              {console.log('index', index)}
               <button onClick={() => {setIsModalVisible(true); setSelectedIndex(index)}}>{list.title}</button>
             </li>
           ))}
