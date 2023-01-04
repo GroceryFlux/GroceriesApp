@@ -12,8 +12,6 @@ function App() {
     lists: [],
   });
 
-  console.log('selectedIndex', selectedIndex)
-
   return (
     <>
       {isModalVisible ? (
