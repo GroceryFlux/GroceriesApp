@@ -1,23 +1,26 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
+function getNewItem() {
+  return (
+    {
+      productName: '',
+      quantity: {
+        amout: 0,
+        unit: '',
+      },
+      category: [],
+      index: 0,
+    }
+  )
+}
+
 
 function ListEditor({ setOverview, listOverview, setIsModalVisible, selectedList }) {
   
   const defaultState = selectedList ? selectedList : {
     title: '',
-    items: [
-      {
-        productName: '',
-        quantity: {
-          amout: 0,
-          unit: '',
-        },
-        category: [],
-      },
-    ],
-    /*index: 0,
-    sortBy: '',*/
+    items: [getNewItem()]
   }
 
   const [list, setList] = useState(defaultState);
@@ -71,15 +74,7 @@ function ListEditor({ setOverview, listOverview, setIsModalVisible, selectedList
                       setList({
                         items: [
                           ...list.items,
-                          {
-                            productName: '',
-                            quantity: {
-                              amout: 0,
-                              unit: '',
-                            },
-                            category: [],
-                            index: 0,
-                          },
+                          getNewItem(),
                         ],
                       })
                     }
@@ -103,6 +98,32 @@ function ListEditor({ setOverview, listOverview, setIsModalVisible, selectedList
           </div>
         </div>
       </form>
+
+      {/*<form>
+        <div className="flex justify-center mt-5">
+          <input
+            placeholder="Title"
+            defaultValue={list.title}
+            className="border text-center"
+          >
+          </input>
+        </div>       
+        <div className="flex flex-col justify-center border text-center">
+          <h1>LIST</h1>
+          <div className="flex justify-center space-x-3">
+            <input
+              placeholder="Banana"
+              className="border text-center"
+            >    
+            </input>
+            <button
+              className="ml-5"
+            >
+              +
+            </button>
+          </div>
+        </div>
+      </form>*/}
     </>
   );
 }
