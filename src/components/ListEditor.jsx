@@ -15,7 +15,6 @@ function getNewItem() {
   )
 }
 
-
 function ListEditor({ setOverview, listOverview, setIsModalVisible, selectedList }) {
   
   const defaultState = selectedList ? selectedList : {
@@ -24,6 +23,30 @@ function ListEditor({ setOverview, listOverview, setIsModalVisible, selectedList
   }
 
   const [list, setList] = useState(defaultState);
+
+  function indexFinderTitle(value, arr){
+    const isValueEqual = (element) => value === element.title
+    return arr.findIndex(isValueEqual)
+  }
+
+  function saveList(lists, target) {
+    const newList = {
+      title: target[2].value,
+      items: [],
+    }
+    for(let i = 3; i < target.length; i++){
+      newList.items.push({ productName: target[i].value })
+    }
+    const newArray = listOverview.lists
+    if(indexFinderTitle(target[2].value, lists) === -1){
+      newArray.push(newList);
+    }
+    else if(indexFinderTitle(target[2].value, lists) > -1){
+      newArray.splice(indexFinderTitle(target[2].value, lists), 1, newList)
+    }
+    setOverview({ lists: newArray })
+  }
+
   
   return (
     <>
@@ -31,18 +54,7 @@ function ListEditor({ setOverview, listOverview, setIsModalVisible, selectedList
         onSubmit={(event) => {
           event.preventDefault();
 
-          const newList = {
-            title: event.target[2].value,
-            items: [],
-          };
-
-          for (let i = 3; i < event.target.length; i++) {
-            newList.items.push({ productName: event.target[i].value });
-          }
-
-          const newArray = listOverview.lists;
-          newArray.push(newList);
-          setOverview({ lists: newArray });
+          saveList(listOverview.lists, event.target)
         }}
       >
         <div className="flex justify-between pt-5 pl-5 pr-5">
