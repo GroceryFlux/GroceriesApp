@@ -15,7 +15,7 @@ function getNewItem() {
   )
 }
 
-function ListEditor({ setOverview, listOverview, setIsModalVisible, selectedList }) {
+function ListEditor({ setExistingLists, existingLists, setIsModalVisible, selectedList }) {
   
   const defaultState = selectedList ? selectedList : {
     title: '',
@@ -29,7 +29,7 @@ function ListEditor({ setOverview, listOverview, setIsModalVisible, selectedList
     return arr.findIndex(isValueEqual)
   }
 
-  function saveList(lists, target) {
+  function saveList(savedLists, target) {
     const newList = {
       title: target[2].value,
       items: [],
@@ -37,14 +37,14 @@ function ListEditor({ setOverview, listOverview, setIsModalVisible, selectedList
     for(let i = 3; i < target.length; i++){
       newList.items.push({ productName: target[i].value })
     }
-    const newArray = listOverview.lists
-    if(indexFinderTitle(target[2].value, lists) === -1){
+    const newArray = existingLists.lists
+    if(indexFinderTitle(target[2].value, savedLists) === -1){
       newArray.push(newList);
     }
-    else if(indexFinderTitle(target[2].value, lists) > -1){
-      newArray.splice(indexFinderTitle(target[2].value, lists), 1, newList)
+    else if(indexFinderTitle(target[2].value, savedLists) > -1){
+      newArray.splice(indexFinderTitle(target[2].value, savedLists), 1, newList)
     }
-    setOverview({ lists: newArray })
+    setExistingLists({ lists: newArray })
   }
 
   
@@ -54,7 +54,7 @@ function ListEditor({ setOverview, listOverview, setIsModalVisible, selectedList
         onSubmit={(event) => {
           event.preventDefault();
 
-          saveList(listOverview.lists, event.target)
+          saveList(existingLists.lists, event.target)
         }}
       >
         <div className="flex justify-between pt-5 pl-5 pr-5">
@@ -141,9 +141,9 @@ function ListEditor({ setOverview, listOverview, setIsModalVisible, selectedList
 }
 
 ListEditor.propTypes = {
-  setOverview: PropTypes.func,
+  setExistingLists: PropTypes.func,
   setIsModalVisible: PropTypes.func,
-  listOverview: PropTypes.object,
+  existingLists: PropTypes.object,
   selectedList: PropTypes.object
 };
 

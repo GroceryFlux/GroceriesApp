@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import ListEditor from './components/ListEditor';
-import ListOverview from './components/ListOverview';
+import ExistingLists from './components/ExistingLists';
 import './input.css';
 
 function App() {
   const [isModalVisible, setIsModalVisible] = useState(true);
   const [selectedIndex, setSelectedIndex] = useState()
 
-  const [listOverview, setOverview] = useState({
+  const [existingLists, setExistingLists] = useState({
     /*sortBy: '',*/
     lists: [],
   });
@@ -16,15 +16,15 @@ function App() {
     <>
       {isModalVisible ? (
         <ListEditor
-          setOverview={setOverview}
+          setExistingLists={setExistingLists}
           setIsModalVisible={setIsModalVisible}
-          listOverview={listOverview}
-          selectedList={selectedIndex !== undefined ? listOverview.lists[selectedIndex] : undefined}
+          existingLists={existingLists}
+          selectedList={selectedIndex !== undefined ? existingLists.lists[selectedIndex] : undefined}
         />
       ) : (
-        <ListOverview
+        <ExistingLists
           setIsModalVisible={setIsModalVisible}
-          listOverview={listOverview}
+          existingLists={existingLists}
           setSelectedIndex={setSelectedIndex}
 
         />

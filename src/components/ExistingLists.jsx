@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function ListOverview({ setIsModalVisible, listOverview, setSelectedIndex }) {
+function ExistingLists({ setIsModalVisible, existingLists, setSelectedIndex }) {
   return (
     <>
       <div className="flex w-full justify-end pt-5 pr-5">
@@ -16,9 +16,9 @@ function ListOverview({ setIsModalVisible, listOverview, setSelectedIndex }) {
         </button>
       </div>
       <div className="flex flex-col pl-5">
-        <h1>Existing lists</h1>
+        <h1>Saved lists</h1>
         <ul>
-          {listOverview.lists.map((list, index) => (
+          {existingLists.lists.map((list, index) => (
             <li key={`key${index}`}>
               <button onClick={() => {setIsModalVisible(true); setSelectedIndex(index)}}>{list.title}</button>
             </li>
@@ -29,10 +29,10 @@ function ListOverview({ setIsModalVisible, listOverview, setSelectedIndex }) {
   );
 }
 
-ListOverview.propTypes = {
+ExistingLists.propTypes = {
   setIsModalVisible: PropTypes.func,
-  listOverview: PropTypes.object,
+  existingLists: PropTypes.object,
   setSelectedIndex: PropTypes.func
 };
 
-export default ListOverview;
+export default ExistingLists;
