@@ -15,34 +15,45 @@ function getNewItem() {
   )
 }
 
-function ListEditor({ setExistingLists, existingLists, setIsModalVisible, selectedList }) {
+function ListEditor({ setExistingLists, existingLists, setIsModalVisible, selectedList, selectedIndex, setSelectedIndex }) {
   
   const defaultState = selectedList ? selectedList : {
     title: '',
-    items: [getNewItem()]
+    items: [getNewItem()],
+    index: 0,
   }
 
   const [list, setList] = useState(defaultState);
 
-  function indexFinderTitle(value, arr){
-    const isValueEqual = (element) => value === element.title
+  function indexFinder(value, arr){
+    const isValueEqual = (element) => value === element.index
     return arr.findIndex(isValueEqual)
   }
 
   function saveList(savedLists, target) {
-    const newList = {
-      title: target[2].value,
-      items: [],
+    const newArray = savedLists
+    if(indexFinder(selectedIndex, savedLists) > -1){
+      let updatedList = {
+        title: target[2].value,
+        index: savedLists[selectedIndex].index,
+        items: []
+      }
+      for(let i = 3; i < target.length ; i++){
+        updatedList.items.push({ productName: target[i].value })
+      }
+      newArray.splice(selectedIndex, 1, updatedList)
     }
-    for(let i = 3; i < target.length; i++){
-      newList.items.push({ productName: target[i].value })
-    }
-    const newArray = existingLists.lists
-    if(indexFinderTitle(target[2].value, savedLists) === -1){
+    else if(indexFinder(selectedIndex, savedLists) === -1){
+      let newList = {
+        title: target[2].value,
+        index: selectedIndex === undefined ? savedLists.length : selectedIndex,
+        items: [],
+      }
+      for(let i = 3; i < target.length ; i++){
+        newList.items.push({ productName: target[i].value })
+      }
+      setSelectedIndex(selectedIndex === undefined ? savedLists.length : selectedIndex)
       newArray.push(newList);
-    }
-    else if(indexFinderTitle(target[2].value, savedLists) > -1){
-      newArray.splice(indexFinderTitle(target[2].value, savedLists), 1, newList)
     }
     setExistingLists({ lists: newArray })
   }
@@ -53,7 +64,6 @@ function ListEditor({ setExistingLists, existingLists, setIsModalVisible, select
       <form
         onSubmit={(event) => {
           event.preventDefault();
-
           saveList(existingLists.lists, event.target)
         }}
       >
@@ -98,12 +108,15 @@ function ListEditor({ setExistingLists, existingLists, setIsModalVisible, select
               }
 
               return (
-                <div key={index}>
+                <div key={index} 
+                  className="flex justify-center"
+                >
                   o &nbsp;
                   <input
                     placeholder="Bananas"
                     defaultValue={item.productName}
                   ></input>
+                  <div>&nbsp;--</div>
                 </div>
               );
             })}
@@ -144,7 +157,9 @@ ListEditor.propTypes = {
   setExistingLists: PropTypes.func,
   setIsModalVisible: PropTypes.func,
   existingLists: PropTypes.object,
-  selectedList: PropTypes.object
+  selectedList: PropTypes.object,
+  selectedIndex: PropTypes.number,
+  setSelectedIndex: PropTypes.func,
 };
 
 export default ListEditor;

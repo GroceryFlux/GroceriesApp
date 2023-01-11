@@ -20,6 +20,8 @@ function App() {
           setIsModalVisible={setIsModalVisible}
           existingLists={existingLists}
           selectedList={selectedIndex !== undefined ? existingLists.lists[selectedIndex] : undefined}
+          selectedIndex={selectedIndex}
+          setSelectedIndex={setSelectedIndex}
         />
       ) : (
         <ExistingLists
