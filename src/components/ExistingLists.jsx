@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function ExistingLists({ setIsModalVisible, existingLists, setSelectedIndex }) {
+function ExistingLists({ setIsModalVisible, existingLists, setSelectedID }) {
   return (
     <>
       <div className="flex w-full justify-end pt-5 pr-5">
@@ -9,7 +9,7 @@ function ExistingLists({ setIsModalVisible, existingLists, setSelectedIndex }) {
           className="text-5xl"
           onClick={() => {
             setIsModalVisible(true)
-            setSelectedIndex(undefined)
+            setSelectedID(undefined)
           }}
         >
           +
@@ -20,7 +20,7 @@ function ExistingLists({ setIsModalVisible, existingLists, setSelectedIndex }) {
         <ul>
           {existingLists.lists.map((list, index) => (
             <li key={`key${index}`}>
-              <button onClick={() => {setIsModalVisible(true); setSelectedIndex(index)}}>{list.title}</button>
+              <button onClick={() => {setIsModalVisible(true); setSelectedID(list.id)}}>{list.title}</button>
             </li>
           ))}
         </ul>
@@ -32,7 +32,8 @@ function ExistingLists({ setIsModalVisible, existingLists, setSelectedIndex }) {
 ExistingLists.propTypes = {
   setIsModalVisible: PropTypes.func,
   existingLists: PropTypes.object,
-  setSelectedIndex: PropTypes.func
+  setSelectedIndex: PropTypes.func,
+  setSelectedID: PropTypes.func,
 };
 
 export default ExistingLists;

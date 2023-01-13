@@ -5,7 +5,7 @@ import './input.css';
 
 function App() {
   const [isModalVisible, setIsModalVisible] = useState(true);
-  const [selectedIndex, setSelectedIndex] = useState()
+  const [selectedID, setSelectedID] = useState(undefined);
 
   const [existingLists, setExistingLists] = useState({
     /*sortBy: '',*/
@@ -19,16 +19,14 @@ function App() {
           setExistingLists={setExistingLists}
           setIsModalVisible={setIsModalVisible}
           existingLists={existingLists}
-          selectedList={selectedIndex !== undefined ? existingLists.lists[selectedIndex] : undefined}
-          selectedIndex={selectedIndex}
-          setSelectedIndex={setSelectedIndex}
+          selectedID={selectedID}
+          setSelectedID={setSelectedID}
         />
       ) : (
         <ExistingLists
           setIsModalVisible={setIsModalVisible}
           existingLists={existingLists}
-          setSelectedIndex={setSelectedIndex}
-
+          setSelectedID={setSelectedID}
         />
       )}
     </>

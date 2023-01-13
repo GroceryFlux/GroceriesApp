@@ -1,70 +1,74 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-function getNewItem() {
+function addNewItem(productName, index) {
   return (
     {
-      productName: '',
+      productName: productName,
       quantity: {
         amout: 0,
         unit: '',
       },
       category: [],
-      index: 0,
+      index: index,
+      id: crypto.randomUUID()
     }
   )
 }
 
-function ListEditor({ setExistingLists, existingLists, setIsModalVisible, selectedList, selectedIndex, setSelectedIndex }) {
-  
-  const defaultState = selectedList ? selectedList : {
-    title: '',
-    items: [getNewItem()],
+function createNewList(existingLists, target) {
+  const newItemArray = {
+    title: target[2].value,
     index: 0,
+    items: [],
+    id: crypto.randomUUID()
+  };
+  for(let i = 3; i < target.length ; i++){
+    newItemArray.items.push(addNewItem(target[i].value, i - 3))
+  }
+  const newListArray = existingLists
+  newListArray.push(newItemArray)
+  return newListArray
+}
+
+function updateList(existingLists, selectedIndex, target) {
+  let updatedItemList = {
+    title: target[2].value,
+    index: existingLists[selectedIndex].index,
+    items: [],
+    id: existingLists[selectedIndex].id,
+  }
+  for(let i = 3; i < target.length ; i++){
+    updatedItemList.items.push(addNewItem(target[i].value, i - 3))
+  }
+  let updatedListArray = existingLists
+  updatedListArray.splice(selectedIndex, 1, updatedItemList)
+  return updatedListArray
+}
+
+function ListEditor({ setExistingLists, existingLists, setIsModalVisible, selectedID }) {
+
+  const defaultState = selectedID ? existingLists.lists[existingLists.lists.findIndex(x => x.id === selectedID)] : {
+    title: '',
+    items: [addNewItem('')],
+    index: 0,
+    id: undefined
   }
 
   const [list, setList] = useState(defaultState);
 
-  function indexFinder(value, arr){
-    const isValueEqual = (element) => value === element.index
-    return arr.findIndex(isValueEqual)
+  function saveList(existingLists, selectedID, target) {
+    selectedID === undefined ? 
+      setExistingLists({ lists: createNewList(existingLists, target) }) : existingLists.findIndex(x => x.id === selectedID) > -1 ? 
+        setExistingLists({ lists: updateList(existingLists, existingLists.findIndex(x => x.id === selectedID), target) }) : setExistingLists({ lists: createNewList(existingLists, target) })
   }
-
-  function saveList(savedLists, target) {
-    const newArray = savedLists
-    if(indexFinder(selectedIndex, savedLists) > -1){
-      let updatedList = {
-        title: target[2].value,
-        index: savedLists[selectedIndex].index,
-        items: []
-      }
-      for(let i = 3; i < target.length ; i++){
-        updatedList.items.push({ productName: target[i].value })
-      }
-      newArray.splice(selectedIndex, 1, updatedList)
-    }
-    else if(indexFinder(selectedIndex, savedLists) === -1){
-      let newList = {
-        title: target[2].value,
-        index: selectedIndex === undefined ? savedLists.length : selectedIndex,
-        items: [],
-      }
-      for(let i = 3; i < target.length ; i++){
-        newList.items.push({ productName: target[i].value })
-      }
-      setSelectedIndex(selectedIndex === undefined ? savedLists.length : selectedIndex)
-      newArray.push(newList);
-    }
-    setExistingLists({ lists: newArray })
-  }
-
   
   return (
     <>
       <form
         onSubmit={(event) => {
           event.preventDefault();
-          saveList(existingLists.lists, event.target)
+          saveList(existingLists.lists, selectedID, event.target)
         }}
       >
         <div className="flex justify-between pt-5 pl-5 pr-5">
@@ -96,7 +100,7 @@ function ListEditor({ setExistingLists, existingLists, setIsModalVisible, select
                       setList({
                         items: [
                           ...list.items,
-                          getNewItem(),
+                          addNewItem(),
                         ],
                       })
                     }
@@ -158,8 +162,7 @@ ListEditor.propTypes = {
   setIsModalVisible: PropTypes.func,
   existingLists: PropTypes.object,
   selectedList: PropTypes.object,
-  selectedIndex: PropTypes.number,
-  setSelectedIndex: PropTypes.func,
+  selectedID: PropTypes.string,
 };
 
 export default ListEditor;
