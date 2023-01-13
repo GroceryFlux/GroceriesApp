@@ -62,6 +62,14 @@ function ListEditor({ setExistingLists, existingLists, setIsModalVisible, select
       setExistingLists({ lists: createNewList(existingLists, target) }) : existingLists.findIndex(x => x.id === selectedID) > -1 ? 
         setExistingLists({ lists: updateList(existingLists, existingLists.findIndex(x => x.id === selectedID), target) }) : setExistingLists({ lists: createNewList(existingLists, target) })
   }
+
+  function deleteItem(selectedID, productID, existingLists) {
+    const updatedListArray = existingLists
+    const listIndex = existingLists.findIndex(x => x.id === selectedID)
+    const itemIndex = existingLists[listIndex].items.findIndex(y => y.id === productID)
+    updatedListArray[listIndex].items.splice(itemIndex, 1)
+    setList({ items: updatedListArray[listIndex].items }) 
+  }
   
   return (
     <>
@@ -120,7 +128,7 @@ function ListEditor({ setExistingLists, existingLists, setIsModalVisible, select
                     placeholder="Bananas"
                     defaultValue={item.productName}
                   ></input>
-                  <div>&nbsp;--</div>
+                  <div onClick={() => deleteItem(selectedID, item.id, existingLists.lists)}>&nbsp;--</div>
                 </div>
               );
             })}
