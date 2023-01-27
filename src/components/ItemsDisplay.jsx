@@ -15,6 +15,14 @@ function ItemsDisplay({ setExistingLists, existingLists, setIsModalVisible, sele
     setListDetails(new Map(newList));
   }
 
+  const localStoring = () => {
+    const array = [...existingLists.entries()]
+    const newArray = []
+    for(let i = 0; i < array.length; i++) {
+      newArray.push([array[i][0], { title: array[i][1].title, itemsList: [...array[i][1].itemsList] }])
+    }
+    localStorage.setItem('existingLists', JSON.stringify(newArray))
+  }
 
   return (
 
@@ -30,7 +38,7 @@ function ItemsDisplay({ setExistingLists, existingLists, setIsModalVisible, sele
           }
             
           setExistingLists(existingLists.set(selectedID, updatedList))
-
+          localStoring()
 
         }}
       >
