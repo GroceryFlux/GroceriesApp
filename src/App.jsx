@@ -1,21 +1,18 @@
 import React, { useState } from 'react';
-import ListEditor from './components/ListEditor';
-import ExistingLists from './components/ExistingLists';
 import './input.css';
+import ListsDisplay from './components/ListsDisplay';
+import ItemsDisplay from './components/ItemsDisplay';
 
 function App() {
-  const [isModalVisible, setIsModalVisible] = useState(true);
+  
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedID, setSelectedID] = useState(undefined);
-
-  const [existingLists, setExistingLists] = useState({
-    /*sortBy: '',*/
-    lists: [],
-  });
+  const [existingLists, setExistingLists] = useState(new Map());
 
   return (
     <>
       {isModalVisible ? (
-        <ListEditor
+        <ItemsDisplay
           setExistingLists={setExistingLists}
           setIsModalVisible={setIsModalVisible}
           existingLists={existingLists}
@@ -23,8 +20,9 @@ function App() {
           setSelectedID={setSelectedID}
         />
       ) : (
-        <ExistingLists
+        <ListsDisplay
           setIsModalVisible={setIsModalVisible}
+          setExistingLists={setExistingLists}
           existingLists={existingLists}
           setSelectedID={setSelectedID}
         />
