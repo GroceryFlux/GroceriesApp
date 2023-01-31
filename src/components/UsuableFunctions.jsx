@@ -36,7 +36,10 @@ export const deleteItem = (listID, itemID, setState, state) => {
 }
 
 export const deleteList = (listID, setState, state) => {
-  setState(new Map(state.delete(listID)))
+  const newList = state
+  newList.delete(listID)
+  setState(new Map(newList))
+  setLocalStorage(state)
 }
 
 export const saveListTitle = (listID, title, setState, state) => {

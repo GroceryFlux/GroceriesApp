@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { deleteList } from './UsuableFunctions';
 
 function ListsDisplay({ setIsModalVisible, setSelectedID, existingLists, setExistingLists }) {
 
@@ -24,6 +25,7 @@ function ListsDisplay({ setIsModalVisible, setSelectedID, existingLists, setExis
           {[...existingLists.entries()].map(([id, list]) => (
             <li key={`key${id}`}>
               <button onClick={() => {setIsModalVisible(true); setSelectedID(id)}}>{list.title}</button>
+              <button onClick={() => deleteList(id, setExistingLists, existingLists)}>&nbsp;-</button>
             </li>
           ))}
         </ul>
