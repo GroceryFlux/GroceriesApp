@@ -1,3 +1,4 @@
+
 const setLocalStorage = (state) => {
   const array = [...state.entries()]
   const newArray = []
@@ -47,3 +48,26 @@ export const saveListTitle = (listID, title, setState, state) => {
   setState(new Map(newList))
   setLocalStorage(state)
 }
+
+export const filterItem = (value, listID, state) => {
+  const actualState = new Map()
+  const newArray = [...state.get(listID).itemsList.entries()]
+  value === '' ? newArray.forEach(e => actualState.set(e[0], { itemName: e[1].itemName })) : null
+  const filteredArray = actualState
+  newArray.forEach(e => { if(e[1].itemName.includes(value) && value!=''){
+    filteredArray.set(e[0], { itemName: e[1].itemName })
+  }})
+  return filteredArray
+}
+
+export const filterList = (value, state) => {
+  const actualState = new Map()
+  const newArray = [...state.entries()]
+  value === '' ? newArray.forEach(e => actualState.set(e[0], { title: e[1].title, itemsList: e[1].itemsList })) : null
+  const filteredArray = actualState
+  newArray.forEach(e => {if(e[1].title.includes(value) && value!='') {
+    filteredArray.set(e[0], { title: e[1].title, itemsList: e[1].itemsList })
+  }})
+  return filteredArray
+}
+

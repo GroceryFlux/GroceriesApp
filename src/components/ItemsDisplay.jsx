@@ -1,11 +1,17 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { saveListTitle, updateList, deleteItem } from './UsuableFunctions';
+import { saveListTitle, updateList, deleteItem, filterItem } from './UsuableFunctions';
 
 function ItemsDisplay({ setExistingLists, existingLists, setIsModalVisible, selectedID }) {
 
   const inputValue = useRef(null)
 
+  const [filteredItem, setFilteredItem] = useState('')
+
+  const handleChange = (e) => {
+    setFilteredItem(e)
+  }
+ 
   return (
 
     <>
@@ -32,6 +38,13 @@ function ItemsDisplay({ setExistingLists, existingLists, setIsModalVisible, sele
           ></input>
         </div>          
       </form>
+      <div className="flex justify-center">
+        <input
+          placeholder="Filter"
+          className="border text-center"
+          onChange={(event) => handleChange(event.target.value)}
+        ></input>
+      </div>
       <form 
         onSubmit={(event) => {
           event.preventDefault();
@@ -53,7 +66,7 @@ function ItemsDisplay({ setExistingLists, existingLists, setIsModalVisible, sele
         </div>
         <div>
           <ul>
-            {[...existingLists.get(selectedID).itemsList.entries()].map(([id, value]) => (
+            {[...filterItem(filteredItem, selectedID, existingLists).entries()].map(([id, value]) => (
               <li key={id}>
                 <div className="flex">
                   <div>O&nbsp;</div>

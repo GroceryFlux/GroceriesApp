@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { deleteList } from './UsuableFunctions';
+import { deleteList, filterList } from './UsuableFunctions';
 
 function ListsDisplay({ setIsModalVisible, setSelectedID, existingLists, setExistingLists }) {
+
+  const [filteredList, setFilteredList] = useState('')
+
+  const handleChange = (e) => {
+    setFilteredList(e)
+  }
 
   return (
     <>
@@ -21,8 +27,15 @@ function ListsDisplay({ setIsModalVisible, setSelectedID, existingLists, setExis
       </div>
       <div className="flex flex-col pl-5">
         <h1>Saved lists</h1>
+        <div>
+          <input
+            placeholder="Filter"
+            className="border text-center"
+            onChange={(event) => handleChange(event.target.value)}
+          ></input>
+        </div>
         <ul>
-          {[...existingLists.entries()].map(([id, list]) => (
+          {[...filterList(filteredList, existingLists).entries()].map(([id, list]) => (
             <li key={`key${id}`}>
               <button onClick={() => {setIsModalVisible(true); setSelectedID(id)}}>{list.title}</button>
               <button onClick={() => deleteList(id, setExistingLists, existingLists)}>&nbsp;-</button>
