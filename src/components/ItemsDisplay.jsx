@@ -1,45 +1,17 @@
-import React, { useState } from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
+import { saveListTitle, updateList, deleteItem } from './UsuableFunctions';
 
 function ItemsDisplay({ setExistingLists, existingLists, setIsModalVisible, selectedID }) {
-  
-  const [listDetails, setListDetails] = useState(existingLists.get(selectedID).itemsList);
 
-  const updateMap = (key, value) => {
-    setListDetails(new Map(listDetails.set(key, value)));
-  };
-
-  const deleteItem = (key) => {
-    const newList = listDetails
-    newList.delete(key)
-    setListDetails(new Map(newList));
-  }
-
-  const localStoring = () => {
-    const array = [...existingLists.entries()]
-    const newArray = []
-    for(let i = 0; i < array.length; i++) {
-      newArray.push([array[i][0], { title: array[i][1].title, itemsList: [...array[i][1].itemsList] }])
-    }
-    localStorage.setItem('existingLists', JSON.stringify(newArray))
-  }
+  const inputValue = useRef(null)
 
   return (
 
     <>
       <form
-        id='1'
         onSubmit={(event) => {
           event.preventDefault();
-
-          const updatedList = {
-            title: event.target[2].value, 
-            itemsList: listDetails
-          }
-            
-          setExistingLists(existingLists.set(selectedID, updatedList))
-          localStoring()
-
         }}
       >
         <div className="flex justify-between pt-5 pl-5 pr-5">
@@ -50,20 +22,19 @@ function ItemsDisplay({ setExistingLists, existingLists, setIsModalVisible, sele
           >
             &lt;-
           </button>
-          <button type="submit">Save</button>
         </div>
         <div className="flex justify-center">
           <input
             placeholder="Title"
             defaultValue={existingLists.get(selectedID).title}
             className="border text-center"
+            onBlur={(event) => saveListTitle(selectedID, event.target.value, setExistingLists, existingLists)}
           ></input>
         </div>          
       </form>
       <form 
         onSubmit={(event) => {
           event.preventDefault();
-          updateMap(crypto.randomUUID(), { itemName: event.target[0].value });
           event.target[0].value = '';
         }}>
         <div className="flex flex-col justify-center border text-center">
@@ -74,21 +45,22 @@ function ItemsDisplay({ setExistingLists, existingLists, setIsModalVisible, sele
             className="border text-center"
             placeholder='Bananas'
             defaultValue=''
+            ref={inputValue}
           />
-          <button type="submit">&nbsp;add</button>
+          <button 
+            onClick={() => updateList(selectedID, crypto.randomUUID(), { itemName: inputValue.current.value }, setExistingLists, existingLists)}
+          >&nbsp;add</button>
         </div>
         <div>
           <ul>
-            {[...listDetails.entries()].map(([key, value]) => (
-              <li key={key}>
+            {[...existingLists.get(selectedID).itemsList.entries()].map(([id, value]) => (
+              <li key={id}>
                 <div className="flex">
                   <div>O&nbsp;</div>
                   <input 
-                    
-                    onBlur={(event) => updateMap(key, { itemName: event.target.value })} 
-                    form='1' 
+                    onBlur={(event) => updateList(selectedID, id, { itemName: event.target.value }, setExistingLists, existingLists)} 
                     defaultValue={value.itemName} />
-                  <div onClick={() => deleteItem(key)}>&nbsp;-</div>
+                  <div onClick={() => deleteItem(selectedID, id, setExistingLists, existingLists)}>&nbsp;-</div>
                 </div>
               </li>
             ))}

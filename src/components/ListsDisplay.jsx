@@ -21,9 +21,9 @@ function ListsDisplay({ setIsModalVisible, setSelectedID, existingLists, setExis
       <div className="flex flex-col pl-5">
         <h1>Saved lists</h1>
         <ul>
-          {[...existingLists.entries()].map((list, index) => (
-            <li key={`key${index}`}>
-              <button onClick={() => {setIsModalVisible(true); setSelectedID(list[0])}}>{list[1].title}</button>
+          {[...existingLists.entries()].map(([id, list]) => (
+            <li key={`key${id}`}>
+              <button onClick={() => {setIsModalVisible(true); setSelectedID(id)}}>{list.title}</button>
             </li>
           ))}
         </ul>
