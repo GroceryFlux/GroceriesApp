@@ -1,32 +1,41 @@
 import React, { useState } from 'react';
-import './input.css';
+import './index.css';
 import ListsDisplay from './components/ListsDisplay';
 import ItemsDisplay from './components/ItemsDisplay';
-import { getLocalState } from './components/UsuableFunctions';
+import { setLocalStorage, getLocalState } from './utils/localStorage.utils';
 
 function App() {
-
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [selectedID, setSelectedID] = useState(undefined);
+  const [selectedList, setSelectedList] = useState(null);
   const [existingLists, setExistingLists] = useState(getLocalState);
 
+  const saveList = (listID, list) => {
+    const newList = new Map(existingLists.set(listID, list));
+    setExistingLists(newList);
+    setLocalStorage(newList);
+  };
+
+  const deleteList = (listID) => {
+    existingLists.delete(listID);
+    setExistingLists(existingLists);
+    setLocalStorage(existingLists);
+  };
 
   return (
     <>
       {isModalVisible ? (
         <ItemsDisplay
-          setExistingLists={setExistingLists}
           setIsModalVisible={setIsModalVisible}
-          existingLists={existingLists}
-          selectedID={selectedID}
-          setSelectedID={setSelectedID}
+          saveList={saveList}
+          selectedList={selectedList}
         />
       ) : (
         <ListsDisplay
           setIsModalVisible={setIsModalVisible}
-          setExistingLists={setExistingLists}
           existingLists={existingLists}
-          setSelectedID={setSelectedID}
+          setSelectedList={setSelectedList}
+          saveList={saveList}
+          deleteList={deleteList}
         />
       )}
     </>

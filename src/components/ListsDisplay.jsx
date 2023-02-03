@@ -1,14 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { deleteList, filterList } from './UsuableFunctions';
+import { filterLists } from '../utils/filterValue.utils';
 
-function ListsDisplay({ setIsModalVisible, setSelectedID, existingLists, setExistingLists }) {
-
-  const [filteredList, setFilteredList] = useState('')
-
-  const handleChange = (e) => {
-    setFilteredList(e)
-  }
+function ListsDisplay({ setIsModalVisible, setSelectedList, existingLists, saveList, deleteList }) {
+  const [filterValue, setFilterValue] = useState('');
 
   return (
     <>
@@ -16,10 +11,11 @@ function ListsDisplay({ setIsModalVisible, setSelectedID, existingLists, setExis
         <button
           className="text-5xl"
           onClick={() => {
-            setIsModalVisible(true)
-            const listID = crypto.randomUUID()
-            setExistingLists(existingLists.set(listID, { title: '', index: null, itemsList: new Map() }));
-            setSelectedID(listID);
+            setIsModalVisible(true);
+            const listID = crypto.randomUUID();
+            const list = { title: '', itemsList: new Map() };
+            saveList(listID, list);
+            setSelectedList([listID, list]);
           }}
         >
           +
@@ -31,28 +27,35 @@ function ListsDisplay({ setIsModalVisible, setSelectedID, existingLists, setExis
           <input
             placeholder="Filter"
             className="border text-center"
-            onChange={(event) => handleChange(event.target.value)}
+            onChange={(event) => setFilterValue(event.target.value)}
           ></input>
         </div>
         <ul>
-          {[...filterList(filteredList, existingLists).entries()].map(([id, list]) => (
-            <li key={`key${id}`}>
-              <button onClick={() => {setIsModalVisible(true); setSelectedID(id)}}>{list.title}</button>
-              <button onClick={() => deleteList(id, setExistingLists, existingLists)}>&nbsp;-</button>
+          {filterLists(filterValue, existingLists).map(([listID, list]) => (
+            <li key={listID}>
+              <button
+                onClick={() => {
+                  setIsModalVisible(true);
+                  setSelectedList([listID, list]);
+                }}
+              >
+                {list.title}
+              </button>
+              <button onClick={() => deleteList(listID)}>&nbsp;-</button>
             </li>
           ))}
         </ul>
       </div>
     </>
-  )
+  );
 }
 
 ListsDisplay.propTypes = {
   setIsModalVisible: PropTypes.func,
   existingLists: PropTypes.object,
-  setSelectedID: PropTypes.func,
-  selectedID: PropTypes.string,
-  setExistingLists: PropTypes.func,
+  setSelectedList: PropTypes.func,
+  saveList: PropTypes.func,
+  deleteList: PropTypes.func,
 };
 
-export default ListsDisplay
+export default ListsDisplay;
