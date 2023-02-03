@@ -1,34 +1,41 @@
 import React, { useState } from 'react';
-import ListEditor from './components/ListEditor';
-import ListOverview from './components/ListOverview';
-import './input.css';
+import './index.css';
+import ListsDisplay from './components/ListsDisplay';
+import ItemsDisplay from './components/ItemsDisplay';
+import { setLocalStorage, getLocalState } from './utils/localStorage.utils';
 
 function App() {
-  const [isModalVisible, setIsModalVisible] = useState(true);
-  const [selectedIndex, setSelectedIndex] = useState()
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedList, setSelectedList] = useState(null);
+  const [existingLists, setExistingLists] = useState(getLocalState);
 
-  const [listOverview, setOverview] = useState({
-    /*sortBy: '',*/
-    lists: [],
-  });
+  const saveList = (listID, list) => {
+    const newList = new Map(existingLists.set(listID, list));
+    setExistingLists(newList);
+    setLocalStorage(newList);
+  };
 
-  console.log('selectedIndex', selectedIndex)
+  const deleteList = (listID) => {
+    existingLists.delete(listID);
+    setExistingLists(existingLists);
+    setLocalStorage(existingLists);
+  };
 
   return (
     <>
       {isModalVisible ? (
-        <ListEditor
-          setOverview={setOverview}
+        <ItemsDisplay
           setIsModalVisible={setIsModalVisible}
-          listOverview={listOverview}
-          selectedList={selectedIndex !== undefined ? listOverview.lists[selectedIndex] : undefined}
+          saveList={saveList}
+          selectedList={selectedList}
         />
       ) : (
-        <ListOverview
+        <ListsDisplay
           setIsModalVisible={setIsModalVisible}
-          listOverview={listOverview}
-          setSelectedIndex={setSelectedIndex}
-
+          existingLists={existingLists}
+          setSelectedList={setSelectedList}
+          saveList={saveList}
+          deleteList={deleteList}
         />
       )}
     </>
