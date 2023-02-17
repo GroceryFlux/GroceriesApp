@@ -1,9 +1,8 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { filterItems } from '../utils/filterValue.utils';
 
 function ItemsDisplay({ setIsModalVisible, selectedList, saveList }) {
-  const itemName = useRef(null);
   const [listID, list] = selectedList;
   const [filterValue, setFilterValue] = useState('');
 
@@ -39,9 +38,9 @@ function ItemsDisplay({ setIsModalVisible, selectedList, saveList }) {
       <form
         onSubmit={(event) => {
           event.preventDefault();
-          event.target[0].value = '';
-          list.itemsList.set(crypto.randomUUID(), { itemName: itemName.current.value });
+          list.itemsList.set(crypto.randomUUID(), { itemName: event.target[0].value });
           saveList(listID, list);
+          event.target[0].value = '';
         }}
       >
         <div className="flex flex-col justify-center border text-center">
@@ -53,7 +52,6 @@ function ItemsDisplay({ setIsModalVisible, selectedList, saveList }) {
               className="border text-center"
               placeholder="Bananas"
               defaultValue=""
-              ref={itemName}
             />
           </div>
           <div>
@@ -95,7 +93,7 @@ ItemsDisplay.propTypes = {
   setExistingLists: PropTypes.func,
   setIsModalVisible: PropTypes.func,
   existingLists: PropTypes.object,
-  selectedList: PropTypes.object,
+  selectedList: PropTypes.array,
   selectedID: PropTypes.string,
   saveList: PropTypes.func,
 };
