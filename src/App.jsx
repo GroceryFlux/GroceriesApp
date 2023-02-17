@@ -17,7 +17,7 @@ function App() {
 
   const deleteList = (listID) => {
     existingLists.delete(listID);
-    setExistingLists(existingLists);
+    setExistingLists(new Map(existingLists));
     setLocalStorage(existingLists);
   };
 
