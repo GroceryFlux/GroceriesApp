@@ -8,6 +8,7 @@ function App() {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedList, setSelectedList] = useState(null);
   const [existingLists, setExistingLists] = useState(getLocalState);
+  const [theme, setTheme] = useState('Light')
 
   const saveList = (listID, list) => {
     const newList = new Map(existingLists.set(listID, list));
@@ -23,21 +24,26 @@ function App() {
 
   return (
     <>
-      {isModalVisible ? (
-        <ItemsDisplay
-          setIsModalVisible={setIsModalVisible}
-          saveList={saveList}
-          selectedList={selectedList}
-        />
-      ) : (
-        <ListsDisplay
-          setIsModalVisible={setIsModalVisible}
-          existingLists={existingLists}
-          setSelectedList={setSelectedList}
-          saveList={saveList}
-          deleteList={deleteList}
-        />
-      )}
+      <div className={`min-h-screen ${theme === 'Light' ? 'bg-slate-700 text-slate-200' : ''}`}>
+        {isModalVisible ? (
+          <ItemsDisplay
+            setIsModalVisible={setIsModalVisible}
+            saveList={saveList}
+            selectedList={selectedList}
+            theme={theme}
+          />
+        ) : (
+          <ListsDisplay
+            setIsModalVisible={setIsModalVisible}
+            existingLists={existingLists}
+            setSelectedList={setSelectedList}
+            saveList={saveList}
+            deleteList={deleteList}
+            theme={theme}
+            setTheme={setTheme}
+          />
+        )}
+      </div>
     </>
   );
 }
