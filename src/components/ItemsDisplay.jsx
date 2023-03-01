@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { filterItems } from '../utils/filterValue.utils';
+import { timeToHuman } from '../utils/timeStampAndSortBy';
 
 function ItemsDisplay({ setIsModalVisible, selectedList, saveList, theme }) {
   const [listID, list] = selectedList;
   const [filterValue, setFilterValue] = useState('');
 
-  let lastModified = new Date(list.timeStamp)
 
   return (
     <>
@@ -33,7 +33,7 @@ function ItemsDisplay({ setIsModalVisible, selectedList, saveList, theme }) {
       <div className="flex justify-center mb-2">
         {list.timeStamp === undefined ? 
           <h3 className="text-center italic text-xs">Start adding items to your list</h3> 
-          : <h3 className="text-center italic text-xs">Last modified on {lastModified.toLocaleDateString("default")} at {lastModified.toLocaleTimeString("default")}</h3>
+          : <h3 className="text-center italic text-xs">Last modified on {timeToHuman(list.timeStamp).date} at {timeToHuman(list.timeStamp).time}</h3>
         }
       </div>
       <form

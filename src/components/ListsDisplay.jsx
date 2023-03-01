@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { filterLists } from '../utils/filterValue.utils';
-import { sortBy } from '../utils/sortBy';
+import { sortBy } from '../utils/timeStampAndSortBy';
 
 function ListsDisplay({ setIsModalVisible, setSelectedList, existingLists, saveList, deleteList, theme, setTheme }) {
   const [filterValue, setFilterValue] = useState('');
