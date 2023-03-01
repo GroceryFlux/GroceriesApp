@@ -6,6 +6,8 @@ function ItemsDisplay({ setIsModalVisible, selectedList, saveList, theme }) {
   const [listID, list] = selectedList;
   const [filterValue, setFilterValue] = useState('');
 
+  let lastModified = new Date(list.timeStamp)
+
   return (
     <>
       <div className="flex justify-between px-3 pt-5 mb-5">
@@ -22,17 +24,23 @@ function ItemsDisplay({ setIsModalVisible, selectedList, saveList, theme }) {
           className={`border-solid border-2 border-blue-400 text-center text-2xl rounded-lg ${theme === 'Light' ? 'bg-slate-700 text-slate-200' : ''}`}
           onBlur={(event) => {
             list.title = event.target.value;
+            list.timeStamp = Date.now();
             saveList(listID, list);
           }}
         ></input>
-        <div className="min-w-[5rem]"></div>
+        <div className="min-w-[5rem]"/>
       </div>
-      <div className="flex justify-center">
+      <div className="flex justify-center mb-2">
+        {list.timeStamp === undefined ? 
+          <h3 className="text-center italic text-xs">Start adding items to your list</h3> 
+          : <h3 className="text-center italic text-xs">Last modified on {lastModified.toLocaleDateString("default")} at {lastModified.toLocaleTimeString("default")}</h3>
+        }
       </div>
       <form
         onSubmit={(event) => {
           event.preventDefault();
           list.itemsList.set(crypto.randomUUID(), { itemName: event.target[0].value });
+          list.timeStamp = Date.now();
           saveList(listID, list);
           event.target[0].value = '';
         }}
@@ -76,6 +84,7 @@ function ItemsDisplay({ setIsModalVisible, selectedList, saveList, theme }) {
                     className={`${theme === 'Light' ? 'bg-slate-700 text-slate-200' : ''}`}
                     onBlur={(event) => {
                       item.itemName = event.target.value;
+                      list.timeStamp = Date.now();
                       saveList(listID, list);
                     }}
                     defaultValue={item.itemName}
@@ -85,6 +94,7 @@ function ItemsDisplay({ setIsModalVisible, selectedList, saveList, theme }) {
                   className="text-red-400 min-w-[5rem] text-center"
                   onClick={() => {
                     list.itemsList.delete(itemID);
+                    list.timeStamp = Date.now()
                     saveList(listID, list);
                   }}
                 >

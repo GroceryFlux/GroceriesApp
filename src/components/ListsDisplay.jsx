@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { filterLists } from '../utils/filterValue.utils';
+import { sortBy } from '../utils/sortBy';
 
 function ListsDisplay({ setIsModalVisible, setSelectedList, existingLists, saveList, deleteList, theme, setTheme }) {
   const [filterValue, setFilterValue] = useState('');
   const [display, setDisplay] = useState('saved');
+  const [sortType, setSortType] = useState('')
 
   return (
     <>
@@ -15,7 +17,7 @@ function ListsDisplay({ setIsModalVisible, setSelectedList, existingLists, saveL
           onClick={() => {
             setIsModalVisible(true);
             const listID = crypto.randomUUID();
-            const list = { title: '', itemsList: new Map() };
+            const list = { title: '', timeStamp: undefined, itemsList: new Map() };
             saveList(listID, list);
             setSelectedList([listID, list]);
           }}
@@ -60,9 +62,23 @@ function ListsDisplay({ setIsModalVisible, setSelectedList, existingLists, saveL
               onChange={(event) => setFilterValue(event.target.value)}
             ></input>
           </div>
+          <div className={`mx-5 mt-3 pl-3 rounded-lg ${theme === 'Light' ? 'bg-slate-700 text-slate-200' : ''}`}>
+            <select 
+              id="selectSortBy" 
+              name="selectSortBy" 
+              defaultValue="sort" 
+              onChange={(event) => setSortType(event.target.value)}
+              className={`${theme === 'Light' ? 'bg-slate-700 text-slate-200' : ''}`}
+            >
+              <option value="sort" disabled hidden>Sort your lists</option>
+              <option value="last_modified">Last modified</option>
+              <option value="alphabetical">Alphabetical</option>
+              <option value="date_of_creation">Date of creation</option>
+            </select>
+          </div>
           <div className="mx-5 mt-3">
             <ul>
-              {filterLists(filterValue, existingLists).map(([listID, list]) => (
+              {filterLists(filterValue, sortBy(sortType, existingLists)).map(([listID, list]) => (
                 <li key={listID}>
                   <div className="flex flex-row justify-between px-4 py-1">
                     <button
