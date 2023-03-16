@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { filterItems } from '../utils/filterValue.utils';
-import { timeToHuman } from '../utils/timeStampAndSortBy';
+import { toDate, toTime } from '../utils/timeStampAndSortBy';
 
 function ItemsDisplay({ setIsModalVisible, selectedList, saveList, theme }) {
   const [listID, list] = selectedList;
@@ -12,7 +12,9 @@ function ItemsDisplay({ setIsModalVisible, selectedList, saveList, theme }) {
     <>
       <div className="flex justify-between px-3 pt-5 mb-5">
         <button
-          onClick={() => setIsModalVisible(false)}
+          onClick={() => 
+            setIsModalVisible(false)
+          }
           className="text-1xl font-bold min-w-[5rem]"
           type="button"
         >
@@ -33,7 +35,7 @@ function ItemsDisplay({ setIsModalVisible, selectedList, saveList, theme }) {
       <div className="flex justify-center mb-2">
         {list.timeStamp === undefined ? 
           <h3 className="text-center italic text-xs">Start adding items to your list</h3> 
-          : <h3 className="text-center italic text-xs">Last modified on {timeToHuman(list.timeStamp).date} at {timeToHuman(list.timeStamp).time}</h3>
+          : <h3 className="text-center italic text-xs">Last modified on {toDate(list.timeStamp)} at {toTime(list.timeStamp)}</h3>
         }
       </div>
       <form
@@ -45,9 +47,6 @@ function ItemsDisplay({ setIsModalVisible, selectedList, saveList, theme }) {
           event.target[0].value = '';
         }}
       >
-        <div className="flex flex-col justify-center text-center">
-          <h1>Items</h1>
-        </div>
         <div className="flex flex-row justify-center text-center my-4">
           <div>
             <input
@@ -61,14 +60,14 @@ function ItemsDisplay({ setIsModalVisible, selectedList, saveList, theme }) {
               type="submit"
               className="border-solid border-y-2 border-r-2 rounded-r-lg border-blue-400 text-blue-400 p-1"
             >
-              &nbsp;add
+              &nbsp;<i className="fa-solid fa-circle-plus"></i>
             </button>
           </div>
         </div>
         <div className="flex justify-center">
           <input
-            placeholder="Filter"
-            className={`border text-center rounded-lg ${theme === 'Light' ? 'bg-slate-700 text-slate-200' : ''}`}
+            placeholder="Search"
+            className={`border border-blue-400 text-center rounded-lg ${theme === 'Light' ? 'bg-slate-700 text-slate-200' : ''}`}
             onChange={(event) => setFilterValue(event.target.value)}
           ></input>
         </div>
@@ -79,7 +78,10 @@ function ItemsDisplay({ setIsModalVisible, selectedList, saveList, theme }) {
             <li key={itemID}>
               <div className="flex flex-row justify-between px-4 py-1">
                 <div>
-                  O&nbsp;
+                  <input 
+                    type="checkbox"
+                    onClick={(event) => console.log(event.target.checked)}
+                  ></input>&nbsp;
                   <input
                     className={`${theme === 'Light' ? 'bg-slate-700 text-slate-200' : ''}`}
                     onBlur={(event) => {

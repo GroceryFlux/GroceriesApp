@@ -5,16 +5,39 @@ import { sortBy } from '../utils/timeStampAndSortBy';
 
 function ListsDisplay({ setIsModalVisible, setSelectedList, existingLists, saveList, deleteList, theme, setTheme }) {
   const [filterValue, setFilterValue] = useState('');
-  const [display, setDisplay] = useState('saved');
   const [sortType, setSortType] = useState('')
 
   return (
-    <>
-      <div className="flex flex-col items-center min-w-240">
-        <h1 className="font-medium text-4xl text-center mt-6 mb-3">Groceries</h1>
-        <button
-          className="text-5xl w-20 mt-3 mb-6"
-          onClick={() => {
+    <div className="w-3/4">
+      <div className="flex items-center justify-around mt-4 mb-8">
+        <div className="mt-0.5">
+          <button 
+            onClick={() => theme === 'Dark' ? setTheme('Light') : setTheme('Dark')}
+            className=""
+          >
+            {theme === 'Light' ? <i className="fa-regular fa-moon"></i> : <i className="fa-regular fa-sun"></i>}
+          </button>
+        </div>
+        <div className="">
+          <h1 className="font-medium text-2xl text-center">Groceries</h1>
+        </div>
+        <div className="self-end">
+          <button
+            className="text-xl"
+            onClick={() => console.log('shopping list')}
+          >
+            <i className="fa-solid fa-cart-shopping"></i>
+          </button>
+        </div>
+      </div>
+      <div className="flex gap-4 my-4">
+        <div className="text-lg">
+          Recurrent lists
+        </div>
+        <button 
+          className="text-xl"
+          onClick={() => 
+          {
             setIsModalVisible(true);
             const listID = crypto.randomUUID();
             const list = { title: '', timeStamp: undefined, itemsList: new Map() };
@@ -22,65 +45,37 @@ function ListsDisplay({ setIsModalVisible, setSelectedList, existingLists, saveL
             setSelectedList([listID, list]);
           }}
         >
-          < div className="flex items-center justify-center pb-2">
-            <i className="fa-solid fa-cart-plus"></i>
-          </div>
-        </button>
-        <button 
-          onClick={() => theme === 'Dark' ? setTheme('Light') : setTheme('Dark')}
-        >
-          {theme}
+          <i className="fa-solid fa-circle-plus"></i>
         </button>
       </div>
-      <div className="flex flex-row justify-around my-3">
-        <button 
-          className="min-w-[5.5rem]"
-          onClick={() => setDisplay('favorites')}
-        >
-          Favorites
-        </button>
-        <button 
-          className="min-w-[5.5rem]" 
-          onClick={() => setDisplay('saved')}
-        >
-          Saved
-        </button>
-        <button 
-          className="min-w-[5.5rem]"
-          onClick={() => setDisplay('grocery-list')}
-        >
-          Grocery list
-        </button>
-      </div>
-      {display === 'saved' ? 
-        <div className="flex flex-col">
-          <h1 className="my-2 text-center">My lists</h1>
-          <div className="text-center min-w-8">
-            <input
-              placeholder="Filter"
-              className={`border text-center rounded-lg ${theme === 'Light' ? 'bg-slate-700 text-slate-200' : ''}`}
-              onChange={(event) => setFilterValue(event.target.value)}
-            ></input>
-          </div>
-          <div className={`mx-5 mt-3 pl-3 rounded-lg ${theme === 'Light' ? 'bg-slate-700 text-slate-200' : ''}`}>
+      <div className="flex flex-col">
+        <div className="flex flex-row gap-3 mb-4">
+          <input
+            placeholder="Search"
+            className={`border text-center rounded-lg ${theme === 'Light' ? 'bg-slate-700 text-slate-200' : ''}`}
+            onChange={(event) => setFilterValue(event.target.value)}
+          ></input>
+          <div className={`${theme === 'Light' ? 'bg-slate-700 text-slate-200' : ''}`}>
             <select 
               id="selectSortBy" 
               name="selectSortBy" 
               defaultValue="sort" 
               onChange={(event) => setSortType(event.target.value)}
-              className={`${theme === 'Light' ? 'bg-slate-700 text-slate-200' : ''}`}
+              className={`w-14 ${theme === 'Light' ? 'bg-slate-700 text-slate-200' : ''}`}
             >
-              <option value="sort" disabled hidden>Sort your lists</option>
-              <option value="last_modified">Last modified</option>
-              <option value="alphabetical">Alphabetical</option>
-              <option value="date_of_creation">Date of creation</option>
+              <option value="sort" disabled>Sort</option>
+              <option value="last_modified">Date</option>
+              <option value="alphabetical">A-Z</option>
             </select>
           </div>
-          <div className="mx-5 mt-3">
-            <ul>
-              {filterLists(filterValue, sortBy(sortType, existingLists)).map(([listID, list]) => (
-                <li key={listID}>
-                  <div className="flex flex-row justify-between px-4 py-1">
+        </div>
+
+        <div className="">
+          <ul>
+            {filterLists(filterValue, sortBy(sortType, existingLists)).map(([listID, list]) => (
+              list.title === '' ? deleteList(listID) :
+                <li key={listID} className="mb-1">
+                  <div className="flex flex-row justify-between">
                     <button
                       onClick={() => {
                         setIsModalVisible(true);
@@ -97,16 +92,11 @@ function ListsDisplay({ setIsModalVisible, setSelectedList, existingLists, saveL
                     </button>
                   </div>
                 </li>
-              ))}
-            </ul>
-          </div>
+            ))}
+          </ul>
         </div>
-        : 
-        <div className="text-center my-10">
-          Welcome to groceries, add or browse your grocery lists
-        </div>
-      }
-    </>
+      </div>
+    </div>
   );
 }
 
