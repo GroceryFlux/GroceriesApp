@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { filterLists } from '../utils/filterValue.utils';
 import { sortBy } from '../utils/timeStampAndSortBy';
 
-function ListsDisplay({ setIsModalVisible, setSelectedList, existingLists, saveList, deleteList, theme, setTheme }) {
+function ListsDisplay({ setIsItemsDisplayVisible, setIsShoppingListVisible, setSelectedList, existingLists, saveList, deleteList, theme, setTheme }) {
   const [filterValue, setFilterValue] = useState('');
   const [sortType, setSortType] = useState('')
 
@@ -24,7 +24,7 @@ function ListsDisplay({ setIsModalVisible, setSelectedList, existingLists, saveL
         <div className="self-end">
           <button
             className="text-xl"
-            onClick={() => console.log('shopping list')}
+            onClick={() => setIsShoppingListVisible(true)}
           >
             <i className="fa-solid fa-cart-shopping"></i>
           </button>
@@ -38,7 +38,7 @@ function ListsDisplay({ setIsModalVisible, setSelectedList, existingLists, saveL
           className="text-xl"
           onClick={() => 
           {
-            setIsModalVisible(true);
+            setIsItemsDisplayVisible(true);
             const listID = crypto.randomUUID();
             const list = { title: '', timeStamp: undefined, itemsList: new Map() };
             saveList(listID, list);
@@ -78,7 +78,7 @@ function ListsDisplay({ setIsModalVisible, setSelectedList, existingLists, saveL
                   <div className="flex flex-row justify-between">
                     <button
                       onClick={() => {
-                        setIsModalVisible(true);
+                        setIsItemsDisplayVisible(true);
                         setSelectedList([listID, list]);
                       }}
                     >
@@ -101,7 +101,8 @@ function ListsDisplay({ setIsModalVisible, setSelectedList, existingLists, saveL
 }
 
 ListsDisplay.propTypes = {
-  setIsModalVisible: PropTypes.func,
+  setIsItemsDisplayVisible: PropTypes.func,
+  setIsShoppingListVisible: PropTypes.func,
   existingLists: PropTypes.object,
   setSelectedList: PropTypes.func,
   saveList: PropTypes.func,

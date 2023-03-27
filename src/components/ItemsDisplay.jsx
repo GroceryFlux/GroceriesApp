@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { filterItems } from '../utils/filterValue.utils';
 import { toDate, toTime } from '../utils/timeStampAndSortBy';
+import { setLocalShoppingList } from '../utils/localStorage.utils';
 
-function ItemsDisplay({ setIsModalVisible, selectedList, saveList, theme }) {
+function ItemsDisplay({ setIsItemsDisplayVisible, selectedList, saveList, theme, shoppingList }) {
   const [listID, list] = selectedList;
   const [filterValue, setFilterValue] = useState('');
 
@@ -13,7 +14,7 @@ function ItemsDisplay({ setIsModalVisible, selectedList, saveList, theme }) {
       <div className="flex justify-between px-3 pt-5 mb-5">
         <button
           onClick={() => 
-            setIsModalVisible(false)
+            setIsItemsDisplayVisible(false)
           }
           className="text-1xl font-bold min-w-[5rem]"
           type="button"
@@ -41,7 +42,7 @@ function ItemsDisplay({ setIsModalVisible, selectedList, saveList, theme }) {
       <form
         onSubmit={(event) => {
           event.preventDefault();
-          list.itemsList.set(crypto.randomUUID(), { itemName: event.target[0].value });
+          list.itemsList.set(crypto.randomUUID(), { itemName: event.target[0].value, addToShoppingList: false });
           list.timeStamp = Date.now();
           saveList(listID, list);
           event.target[0].value = '';
@@ -76,12 +77,24 @@ function ItemsDisplay({ setIsModalVisible, selectedList, saveList, theme }) {
         <ul>
           {filterItems(filterValue, list.itemsList).map(([itemID, item]) => (
             <li key={itemID}>
-              <div className="flex flex-row justify-between px-4 py-1">
-                <div>
-                  <input 
-                    type="checkbox"
-                    onClick={(event) => console.log(event.target.checked)}
-                  ></input>&nbsp;
+              <div className="flex flex-row justify-between py-1">
+                <div className="flex flex-row"> 
+                  <div
+                    onClick={() => {
+                      list.itemsList.set(itemID, { ...item, addToShoppingList: !item.addToShoppingList })
+                      saveList(listID, list)
+                      item.addToShoppingList === false ? 
+                        shoppingList.set(itemID, { ... item, listTitle: list.title, addToShoppingList: true }) 
+                        : shoppingList.delete(itemID)
+                      setLocalShoppingList(shoppingList)
+                    }}
+                  >
+                    {item.addToShoppingList === false ?
+                      <i className="fa-regular fa-square-plus text-green-500"></i>
+                      : <i className="fa-regular fa-square-minus text-red-500"></i>
+                    }
+                  </div>
+                  &nbsp;&nbsp;&nbsp;
                   <input
                     className={`${theme === 'Light' ? 'bg-slate-700 text-slate-200' : ''}`}
                     onBlur={(event) => {
@@ -93,7 +106,7 @@ function ItemsDisplay({ setIsModalVisible, selectedList, saveList, theme }) {
                   />
                 </div>
                 <div
-                  className="text-red-400 min-w-[5rem] text-center"
+                  className="text-red-400 text-center"
                   onClick={() => {
                     list.itemsList.delete(itemID);
                     list.timeStamp = Date.now()
@@ -113,12 +126,12 @@ function ItemsDisplay({ setIsModalVisible, selectedList, saveList, theme }) {
 
 ItemsDisplay.propTypes = {
   setExistingLists: PropTypes.func,
-  setIsModalVisible: PropTypes.func,
-  existingLists: PropTypes.object,
+  setIsItemsDisplayVisible: PropTypes.func,
   selectedList: PropTypes.array,
   selectedID: PropTypes.string,
   saveList: PropTypes.func,
   theme: PropTypes.string,
+  shoppingList: PropTypes.object,
 };
 
 export default ItemsDisplay;
