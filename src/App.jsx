@@ -48,6 +48,7 @@ function App() {
             <ShoppingListDisplay
               setIsShoppingListVisible={setIsShoppingListVisible}
               existingLists={existingLists}
+              saveList={saveList}
               theme={theme}
               shoppingList={shoppingList}
               setShoppingList={setShoppingList}

@@ -42,7 +42,7 @@ function ItemsDisplay({ setIsItemsDisplayVisible, selectedList, saveList, theme,
       <form
         onSubmit={(event) => {
           event.preventDefault();
-          list.itemsList.set(crypto.randomUUID(), { itemName: event.target[0].value, addToShoppingList: false });
+          list.itemsList.set(crypto.randomUUID(), { itemName: event.target[0].value, addToShoppingList: false, isBought: false });
           list.timeStamp = Date.now();
           saveList(listID, list);
           event.target[0].value = '';
@@ -79,22 +79,6 @@ function ItemsDisplay({ setIsItemsDisplayVisible, selectedList, saveList, theme,
             <li key={itemID}>
               <div className="flex flex-row justify-between py-1">
                 <div className="flex flex-row"> 
-                  <div
-                    onClick={() => {
-                      list.itemsList.set(itemID, { ...item, addToShoppingList: !item.addToShoppingList })
-                      saveList(listID, list)
-                      item.addToShoppingList === false ? 
-                        shoppingList.set(itemID, { ... item, listTitle: list.title, addToShoppingList: true }) 
-                        : shoppingList.delete(itemID)
-                      setLocalShoppingList(shoppingList)
-                    }}
-                  >
-                    {item.addToShoppingList === false ?
-                      <i className="fa-regular fa-square-plus text-green-500"></i>
-                      : <i className="fa-regular fa-square-minus text-red-500"></i>
-                    }
-                  </div>
-                  &nbsp;&nbsp;&nbsp;
                   <input
                     className={`${theme === 'Light' ? 'bg-slate-700 text-slate-200' : ''}`}
                     onBlur={(event) => {
@@ -104,6 +88,27 @@ function ItemsDisplay({ setIsItemsDisplayVisible, selectedList, saveList, theme,
                     }}
                     defaultValue={item.itemName}
                   />
+                </div>
+                <div 
+                  className="mr-3"
+                  onClick={() => {
+                    item.addToShoppingList === false ? (
+                      shoppingList.set(itemID, { ... item, listID: listID, addToShoppingList: true, isBought: false }),
+                      list.itemsList.set(itemID, { ...item, addToShoppingList: true })
+                    ) 
+                      : (
+                        list.itemsList.set(itemID, { ...item, isBought: false, addToShoppingList: false }), 
+                        shoppingList.delete(itemID)
+                      )
+                    saveList(listID, list)
+                    setLocalShoppingList(shoppingList)
+                  }}
+                >
+                  {item.isBought === true ?
+                    <i className="fa-solid fa-check-double"></i>
+                    : item.addToShoppingList === true ? <i className="fa-solid fa-check"></i>
+                      : <i className="fa-solid fa-plus"></i>
+                  }
                 </div>
                 <div
                   className="text-red-400 text-center"

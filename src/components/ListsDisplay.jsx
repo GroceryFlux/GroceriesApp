@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 import { filterLists } from '../utils/filterValue.utils';
 import { sortBy } from '../utils/timeStampAndSortBy';
 
+
 function ListsDisplay({ setIsItemsDisplayVisible, setIsShoppingListVisible, setSelectedList, existingLists, saveList, deleteList, theme, setTheme }) {
   const [filterValue, setFilterValue] = useState('');
   const [sortType, setSortType] = useState('')
+  const [listToDelete, setListToDelete] = useState(null)
 
   return (
     <div className="w-3/4">
@@ -84,12 +86,26 @@ function ListsDisplay({ setIsItemsDisplayVisible, setIsShoppingListVisible, setS
                     >
                       {list.title}
                     </button>
-                    <button 
-                      className="text-red-400 min-w-[3rem]"
-                      onClick={() => deleteList(listID)}
-                    >
-                      <i className="fa-solid fa-trash"></i>
-                    </button>
+                    <div>
+                      { listToDelete === listID ?
+                        <div className="flex gap-4">
+                          <button onClick={() => deleteList(listID)}>
+                            <i className="fa-regular fa-square-check text-red-400"></i>
+                          </button>
+                          <button onClick={() => setListToDelete(null)}>
+                            <i className="fa-regular fa-rectangle-xmark text-green-400"></i> 
+                          </button>
+                        </div>
+                        :
+                        <button 
+                          className="text-red-400 min-w-[3rem]"
+                          // onClick={() => deleteList(listID)}
+                          onClick={() => setListToDelete(listID)}
+                        >
+                          <i className="fa-solid fa-trash"></i>
+                        </button>
+                      }
+                    </div>
                   </div>
                 </li>
             ))}
