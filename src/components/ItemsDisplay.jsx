@@ -115,6 +115,7 @@ function ItemsDisplay({ setIsItemsDisplayVisible, selectedList, saveList, theme,
                   onClick={() => {
                     list.itemsList.delete(itemID);
                     list.timeStamp = Date.now()
+                    shoppingList.delete(itemID)
                     saveList(listID, list);
                   }}
                 >
