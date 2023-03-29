@@ -84,6 +84,7 @@ function ItemsDisplay({ setIsItemsDisplayVisible, selectedList, saveList, theme,
                     onBlur={(event) => {
                       item.itemName = event.target.value;
                       list.timeStamp = Date.now();
+                      shoppingList.set(itemID, item)
                       saveList(listID, list);
                     }}
                     defaultValue={item.itemName}
