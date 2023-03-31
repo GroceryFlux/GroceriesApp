@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://groceryflux.github.io/GroceriesApp",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -12,7 +13,9 @@
     "prettier": "prettier \".*rc.json\" \"{**/*,*}.{css,jsx,js,md,json}*\" --config .prettierrc.json --ignore-path .lintignore",
     "prettier:fix": "npm run prettier -- --write",
     "eslint": "eslint --report-unused-disable-directives --ext \".js,.jsx\" --ignore-path .lintignore .",
-    "eslint:fix": "npm run eslint -- --fix"
+    "eslint:fix": "npm run eslint -- --fix",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -25,6 +28,7 @@
     "autoprefixer": "^10.4.13",
     "eslint": "^8.30.0",
     "eslint-plugin-react": "^7.31.11",
+    "gh-pages": "^5.0.0",
     "npm-run-all": "^4.1.5",
     "postcss": "^8.4.21",
     "prettier": "^2.8.1",
