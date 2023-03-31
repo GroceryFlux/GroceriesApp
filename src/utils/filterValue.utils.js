@@ -3,10 +3,12 @@ export const filterLists = (value, lists) => {
     return [...lists];
   }
 
+  const valueLowerCase = value.toLowerCase()
+
   const filteredLists = [...lists].filter(
     (entry) =>
-      entry[1].title.includes(value) ||
-      [...entry[1].itemsList.entries()].some((item) => item[1].itemName.includes(value)),
+      entry[1].title.toLowerCase().includes(valueLowerCase) ||
+      [...entry[1].itemsList.entries()].some((item) => item[1].itemName.toLowerCase().includes(valueLowerCase)),
   );
 
   return filteredLists;

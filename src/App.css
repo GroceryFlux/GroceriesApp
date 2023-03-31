@@ -1,4 +1,3 @@
-.new-list-button {
-  display: flex;
-  justify-content: flex-end;
+html {
+  max-width: 100vw;
 }
