@@ -13,9 +13,7 @@
     "prettier": "prettier \".*rc.json\" \"{**/*,*}.{css,jsx,js,md,json}*\" --config .prettierrc.json --ignore-path .lintignore",
     "prettier:fix": "npm run prettier -- --write",
     "eslint": "eslint --report-unused-disable-directives --ext \".js,.jsx\" --ignore-path .lintignore .",
-    "eslint:fix": "npm run eslint -- --fix",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "eslint:fix": "npm run eslint -- --fix"
   },
   "dependencies": {
     "react": "^18.2.0",
