@@ -22,7 +22,7 @@ export const sortBy = (sortType, lists) => {
 
 
     if(sortType === 'alphabetical') {
-      return compare(listB.title, listA.title)
+      return compare(listB.title.toLowerCase(), listA.title.toLowerCase())
     }
 
     return 0

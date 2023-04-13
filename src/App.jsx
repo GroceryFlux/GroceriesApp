@@ -42,6 +42,7 @@ function App() {
             theme={theme}
             shoppingList={shoppingList}
             existingLists={existingLists}
+            deleteList={deleteList}
           />
         ) : (
           isShoppingListVisible ? (

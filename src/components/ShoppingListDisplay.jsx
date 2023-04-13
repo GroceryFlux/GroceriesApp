@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { setLocalExistingLists, setLocalShoppingList } from '../utils/localStorage.utils';
 
-function ShoppingListDisplay({ setIsShoppingListVisible, theme, shoppingList, setShoppingList, saveShoppingList, existingLists }) {
+function ShoppingListDisplay({ setIsShoppingListVisible, theme, shoppingList, setShoppingList, saveShoppingList, existingLists, saveList }) {
 
   const [displayCompleted, setDisplayCompleted] = useState(true)
   
@@ -41,7 +41,6 @@ function ShoppingListDisplay({ setIsShoppingListVisible, theme, shoppingList, se
         <p className="w-3/4">Your shopping list is empty, please start adding items in your reccurent lists</p>
         :
         <>
-          <h2>Basket</h2>
           <ul className="mb-3 mt-3">
             {[...shoppingList.entries()].map(([itemID, item]) => (
               !existingLists.has(item.listID) ? shoppingList.delete(itemID) 
@@ -51,7 +50,7 @@ function ShoppingListDisplay({ setIsShoppingListVisible, theme, shoppingList, se
                     <div className="flex flex-row gap-2">
                       <div onClick={() => {
                         saveShoppingList(itemID, { ...item, isBought: true })
-                        existingLists.set(item.listID, { ...existingLists.get(item.listID), itemsList: existingLists.get(item.listID).itemsList.set(itemID, { ...item, isBought: true }) })
+                        saveList(item.listID, { ...existingLists.get(item.listID), itemsList: existingLists.get(item.listID).itemsList.set(itemID, { ...item, isBought: true }) })
                       }}>
                         <i className="fa-regular fa-circle"></i>
                       </div>
@@ -67,7 +66,7 @@ function ShoppingListDisplay({ setIsShoppingListVisible, theme, shoppingList, se
             ))}
           </ul>
           <div className="flex flex-row gap-3">
-            <h2>Completed</h2>
+            <h2>Purchased</h2>
             <div onClick={() => setDisplayCompleted(!displayCompleted)}>
               {displayCompleted === false ? 
                 <i className="fa-solid fa-chevron-up"></i> 
@@ -87,11 +86,11 @@ function ShoppingListDisplay({ setIsShoppingListVisible, theme, shoppingList, se
                             saveShoppingList(itemID, { ...item, isBought: false })
                             existingLists.set(shoppingList.get(itemID).listID, { ...existingLists.get(shoppingList.get(itemID).listID), itemsList: existingLists.get(shoppingList.get(itemID).listID).itemsList.set(itemID, { ...item, isBought: false }) })
                           }}>
-                          <i className="fa-solid fa-circle-check"></i>
+                          <i className="fa-solid fa-circle-check text-slate-400"></i>
                         </div>
                         <div className="">
                           <input
-                            className={`${theme === 'Light' ? 'bg-slate-700 text-slate-200' : 'bg-white'}`}
+                            className={`${theme === 'Light' ? 'bg-slate-700 text-slate-400' : 'bg-white text-slate-400'}`}
                             defaultValue={item.itemName}
                             disabled
                           />
@@ -114,6 +113,7 @@ ShoppingListDisplay.propTypes = {
   saveShoppingList: PropTypes.func,
   setShoppingList: PropTypes.func,
   existingLists: PropTypes.object,
+  saveList: PropTypes.func
 }
 
 export default ShoppingListDisplay

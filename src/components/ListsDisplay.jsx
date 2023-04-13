@@ -54,7 +54,7 @@ function ListsDisplay({ setIsItemsDisplayVisible, setIsShoppingListVisible, setS
         <div className="flex flex-row gap-3 mb-4">
           <input
             placeholder="Search"
-            className={`border text-center rounded-lg ${theme === 'Light' ? 'bg-slate-700 text-slate-200' : ''}`}
+            className={`focus:outline-none border text-center rounded-lg ${theme === 'Light' ? 'bg-slate-700 text-slate-200' : ''}`}
             onChange={(event) => setFilterValue(event.target.value)}
           ></input>
           <div className={`${theme === 'Light' ? 'bg-slate-700 text-slate-200' : ''}`}>
@@ -63,7 +63,7 @@ function ListsDisplay({ setIsItemsDisplayVisible, setIsShoppingListVisible, setS
               name="selectSortBy" 
               defaultValue="sort" 
               onChange={(event) => setSortType(event.target.value)}
-              className={`w-14 ${theme === 'Light' ? 'bg-slate-700 text-slate-200' : ''}`}
+              className={`focus:outline-none w-14 ${theme === 'Light' ? 'bg-slate-700 text-slate-200' : ''}`}
             >
               <option value="sort" disabled>Sort</option>
               <option value="last_modified">Date</option>
@@ -75,39 +75,38 @@ function ListsDisplay({ setIsItemsDisplayVisible, setIsShoppingListVisible, setS
         <div className="">
           <ul>
             {filterLists(filterValue, sortBy(sortType, existingLists)).map(([listID, list]) => (
-              list.title === '' ? deleteList(listID) :
-                <li key={listID} className="mb-1">
-                  <div className="flex flex-row justify-between">
-                    <button
-                      onClick={() => {
-                        setIsItemsDisplayVisible(true);
-                        setSelectedList([listID, list]);
-                      }}
-                    >
-                      {list.title}
-                    </button>
-                    <div>
-                      { listToDelete === listID ?
-                        <div className="flex gap-4">
-                          <button onClick={() => deleteList(listID)}>
-                            <i className="fa-regular fa-square-check text-red-400"></i>
-                          </button>
-                          <button onClick={() => setListToDelete(null)}>
-                            <i className="fa-regular fa-rectangle-xmark text-green-400"></i> 
-                          </button>
-                        </div>
-                        :
-                        <button 
-                          className="text-red-400 min-w-[3rem]"
-                          // onClick={() => deleteList(listID)}
-                          onClick={() => setListToDelete(listID)}
-                        >
-                          <i className="fa-solid fa-trash"></i>
+              <li key={listID} className="mb-1">
+                <div className="flex flex-row justify-between">
+                  <button
+                    onClick={() => {
+                      setIsItemsDisplayVisible(true);
+                      setSelectedList([listID, list]);
+                    }}
+                  >
+                    {list.title}
+                  </button>
+                  <div>
+                    { listToDelete === listID ?
+                      <div className="flex gap-4">
+                        <button onClick={() => deleteList(listID)}>
+                          <i className="fa-regular fa-square-check text-green-400"></i>
                         </button>
-                      }
-                    </div>
+                        <button onClick={() => setListToDelete(null)}>
+                          <i className="fa-regular fa-rectangle-xmark text-red-400"></i> 
+                        </button>
+                      </div>
+                      :
+                      <button 
+                        className="text-red-400 min-w-[3rem]"
+                        // onClick={() => deleteList(listID)}
+                        onClick={() => setListToDelete(listID)}
+                      >
+                        <i className="fa-solid fa-trash"></i>
+                      </button>
+                    }
                   </div>
-                </li>
+                </div>
+              </li>
             ))}
           </ul>
         </div>
