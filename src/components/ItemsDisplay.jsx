@@ -71,19 +71,21 @@ function ItemsDisplay({ setIsItemsDisplayVisible, selectedList, saveList, theme,
         onSubmit={(event) => {
           event.preventDefault();
           event.target[0].value != '' ? (
-            list.itemsList.set(crypto.randomUUID(), { itemName: event.target[0].value, addToShoppingList: false, isBought: false }),
+            list.itemsList.set(crypto.randomUUID(), { itemName: event.target[0].value, quantity: event.target[1].value, unit: event.target[2].value, addToShoppingList: false, isBought: false }),
             list.timeStamp = Date.now(),
             saveList(listID, list),
-            event.target[0].value = ''
+            event.target[0].value = '',
+            event.target[1].value = '',
+            event.target[2].value = ''
           ) : null
         }}
       >
-        <div className="flex flex-row justify-center text-center my-4">
+        <div className={`flex justify-center my-4`}>
           <div               
-            className={`text-center border-solid border-2 rounded-lg ${isItemEmpty === true ? 'border-red-400' : null}`}
+            className={`gap-1 max-w-[85%] border-solid border-2 rounded-lg ${isItemEmpty === true ? 'border-red-400' : null}`}
           >
             <input
-              className={`focus:outline-none text-center ${theme === 'Light' ? 'bg-slate-700 text-slate-200' : ''}`}
+              className={`focus:outline-none w-[55%] text-center ${theme === 'Light' ? 'bg-slate-700 text-slate-200' : ''}`}
               placeholder="Add item"
               defaultValue=""
               onSelect={(event) => event.target.value != '' ? 
@@ -93,15 +95,20 @@ function ItemsDisplay({ setIsItemsDisplayVisible, selectedList, saveList, theme,
                 : setIsItemEmpty(true)}
               onBlur={() => setIsItemEmpty(false)}
             />
+            <input 
+              className={`focus:outline-none w-[15%] text-center ${theme === 'Light' ? 'bg-slate-700 text-slate-200' : ''}`}
+              placeholder="Qty."  
+            ></input>
+            <input
+              className={`focus:outline-none w-[15%] text-center ${theme === 'Light' ? 'bg-slate-700 text-slate-200' : ''}`}
+              placeholder="Unit"
+            ></input>
             <button 
               type="submit"
-              className= "p-1"
+              className= "p-1 w-[15%]"
             >
               <i className="fa-solid fa-circle-plus"></i>
             </button>
-          </div>
-          <div>
-
           </div>
         </div>
         <div className="flex justify-center">
@@ -117,7 +124,19 @@ function ItemsDisplay({ setIsItemsDisplayVisible, selectedList, saveList, theme,
           {filterItems(filterValue, list.itemsList).map(([itemID, item]) => (
             <li key={itemID}>
               <div className="flex flex-row justify-between py-1">
-                <div className="flex flex-row"> 
+                <div className="flex flex-row">
+                  {item.quantity === '' ? null : 
+                    <input
+                      className={`${`w-[${item.quantity.length}ch]`} focus:outline-none ${theme === 'Light' ? 'bg-slate-700 text-slate-200' : ''}`}
+                      defaultValue={item.quantity}
+                    ></input>
+                  } 
+                  {item.unit === '' ? null : 
+                    <input
+                      className={`${`w-[${item.unit.length}ch]`} focus:outline-none ${theme === 'Light' ? 'bg-slate-700 text-slate-200' : ''}`}
+                      defaultValue={item.unit}
+                    ></input>
+                  }
                   <input
                     className={`focus:outline-none ${theme === 'Light' ? 'bg-slate-700 text-slate-200' : ''}`}
                     onBlur={(event) => {
@@ -131,37 +150,39 @@ function ItemsDisplay({ setIsItemsDisplayVisible, selectedList, saveList, theme,
                     defaultValue={item.itemName}
                   />
                 </div>
-                <div 
-                  className="mr-3"
-                  onClick={() => {
-                    item.addToShoppingList === false ? (
-                      shoppingList.set(itemID, { ... item, listID: listID, addToShoppingList: true, isBought: false }),
-                      list.itemsList.set(itemID, { ...item, addToShoppingList: true })
-                    ) 
-                      : (
-                        list.itemsList.set(itemID, { ...item, isBought: false, addToShoppingList: false }), 
-                        shoppingList.delete(itemID)
-                      )
-                    saveList(listID, list)
-                    setLocalShoppingList(shoppingList)
-                  }}
-                >
-                  {item.isBought === true ?
-                    <i className="fa-solid fa-check-double"></i>
-                    : item.addToShoppingList === true ? <i className="fa-solid fa-check"></i>
-                      : <i className="fa-solid fa-plus"></i>
-                  }
-                </div>
-                <div
-                  className="text-red-400 text-center"
-                  onClick={() => {
-                    list.itemsList.delete(itemID);
-                    list.timeStamp = Date.now()
-                    shoppingList.delete(itemID)
-                    saveList(listID, list);
-                  }}
-                >
-                  <i className="fa-solid fa-trash"></i>
+                <div className="flex flew-row">
+                  <div 
+                    className="mr-3"
+                    onClick={() => {
+                      item.addToShoppingList === false ? (
+                        shoppingList.set(itemID, { ... item, listID: listID, addToShoppingList: true, isBought: false }),
+                        list.itemsList.set(itemID, { ...item, addToShoppingList: true })
+                      ) 
+                        : (
+                          list.itemsList.set(itemID, { ...item, isBought: false, addToShoppingList: false }), 
+                          shoppingList.delete(itemID)
+                        )
+                      saveList(listID, list)
+                      setLocalShoppingList(shoppingList)
+                    }}
+                  >
+                    {item.isBought === true ?
+                      <i className="fa-solid fa-check-double"></i>
+                      : item.addToShoppingList === true ? <i className="fa-solid fa-check"></i>
+                        : <i className="fa-solid fa-plus"></i>
+                    }
+                  </div>
+                  <div
+                    className="text-red-400 text-center"
+                    onClick={() => {
+                      list.itemsList.delete(itemID);
+                      list.timeStamp = Date.now()
+                      shoppingList.delete(itemID)
+                      saveList(listID, list);
+                    }}
+                  >
+                    <i className="fa-solid fa-trash"></i>
+                  </div>
                 </div>
               </div>
             </li>
