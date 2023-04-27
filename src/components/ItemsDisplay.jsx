@@ -1,12 +1,22 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { filterItems } from '../utils/filterValue.utils';
 import { toDate, toTime } from '../utils/timeStampAndSortBy';
-import { setLocalShoppingList } from '../utils/localStorage.utils';
+import { useThemeStore } from '../store/theme/theme';
+import { useSelectedListStore } from '../store/selectedList/selectedList';
+import { useListsStore } from '../store/lists/lists';
+import { useDisplayedMenuStore } from '../store/displayedMenu/displayedMenu';
 
-function ItemsDisplay({ setIsItemsDisplayVisible, selectedList, saveList, theme, shoppingList }) {
-  const [listID, list] = selectedList;
+function ItemsDisplay() {
   const [filterValue, setFilterValue] = useState('');
+
+  const theme = useThemeStore((state) => state.theme)
+  const listID = useSelectedListStore((state) => state.selectedList)
+  const list = useListsStore((state) => state.existingLists).get(listID)
+  const shoppingList = useListsStore((state) => state.shoppingList)
+  const saveExistingLists = useListsStore((state) => state.saveExistingLists)
+  const saveShoppingList = useListsStore((state) => state.saveShoppingList)
+  const deleteItemShoppingList = useListsStore((state) => state.deleteItemShoppingList)
+  const setDisplayedMenu = useDisplayedMenuStore((state) => state.setDisplayedMenu)
 
 
   return (
@@ -14,7 +24,7 @@ function ItemsDisplay({ setIsItemsDisplayVisible, selectedList, saveList, theme,
       <div className="flex justify-between px-3 pt-5 mb-5">
         <button
           onClick={() => 
-            setIsItemsDisplayVisible(false)
+            setDisplayedMenu('listsDisplay')
           }
           className="text-1xl font-bold min-w-[5rem]"
           type="button"
@@ -24,11 +34,11 @@ function ItemsDisplay({ setIsItemsDisplayVisible, selectedList, saveList, theme,
         <input
           placeholder="Title"
           defaultValue={list.title}
-          className={`border-solid border-2 border-blue-400 text-center text-2xl rounded-lg ${theme === 'Light' ? 'bg-slate-700 text-slate-200' : ''}`}
+          className={`border-solid border-2 border-blue-400 text-center text-2xl rounded-lg ${theme === 'dark' ? 'bg-slate-700 text-slate-200' : ''}`}
           onBlur={(event) => {
             list.title = event.target.value;
             list.timeStamp = Date.now();
-            saveList(listID, list);
+            saveExistingLists(listID, list);
           }}
         ></input>
         <div className="min-w-[5rem]"/>
@@ -44,14 +54,14 @@ function ItemsDisplay({ setIsItemsDisplayVisible, selectedList, saveList, theme,
           event.preventDefault();
           list.itemsList.set(crypto.randomUUID(), { itemName: event.target[0].value, addToShoppingList: false, isBought: false });
           list.timeStamp = Date.now();
-          saveList(listID, list);
+          saveExistingLists(listID, list);
           event.target[0].value = '';
         }}
       >
         <div className="flex flex-row justify-center text-center my-4">
           <div>
             <input
-              className={`text-center border-solid border-y-2 rounded-l-lg border-l-2 border-blue-400 p-1 ${theme === 'Light' ? 'bg-slate-700 text-slate-200' : ''}`}
+              className={`text-center border-solid border-y-2 rounded-l-lg border-l-2 border-blue-400 p-1 ${theme === 'dark' ? 'bg-slate-700 text-slate-200' : ''}`}
               placeholder="Bananas"
               defaultValue=""
             />
@@ -68,7 +78,7 @@ function ItemsDisplay({ setIsItemsDisplayVisible, selectedList, saveList, theme,
         <div className="flex justify-center">
           <input
             placeholder="Search"
-            className={`border border-blue-400 text-center rounded-lg ${theme === 'Light' ? 'bg-slate-700 text-slate-200' : ''}`}
+            className={`border border-blue-400 text-center rounded-lg ${theme === 'dark' ? 'bg-slate-700 text-slate-200' : ''}`}
             onChange={(event) => setFilterValue(event.target.value)}
           ></input>
         </div>
@@ -80,12 +90,12 @@ function ItemsDisplay({ setIsItemsDisplayVisible, selectedList, saveList, theme,
               <div className="flex flex-row justify-between py-1">
                 <div className="flex flex-row"> 
                   <input
-                    className={`${theme === 'Light' ? 'bg-slate-700 text-slate-200' : ''}`}
+                    className={`${theme === 'dark' ? 'bg-slate-700 text-slate-200' : ''}`}
                     onBlur={(event) => {
                       item.itemName = event.target.value;
                       list.timeStamp = Date.now();
                       shoppingList.set(itemID, item)
-                      saveList(listID, list);
+                      saveExistingLists(listID, list);
                     }}
                     defaultValue={item.itemName}
                   />
@@ -94,15 +104,11 @@ function ItemsDisplay({ setIsItemsDisplayVisible, selectedList, saveList, theme,
                   className="mr-3"
                   onClick={() => {
                     item.addToShoppingList === false ? (
-                      shoppingList.set(itemID, { ... item, listID: listID, addToShoppingList: true, isBought: false }),
-                      list.itemsList.set(itemID, { ...item, addToShoppingList: true })
+                      saveShoppingList(itemID, { ... item, listID: listID, addToShoppingList: true, isBought: false })
                     ) 
                       : (
-                        list.itemsList.set(itemID, { ...item, isBought: false, addToShoppingList: false }), 
-                        shoppingList.delete(itemID)
+                        deleteItemShoppingList(itemID, item)
                       )
-                    saveList(listID, list)
-                    setLocalShoppingList(shoppingList)
                   }}
                 >
                   {item.isBought === true ?
@@ -117,7 +123,7 @@ function ItemsDisplay({ setIsItemsDisplayVisible, selectedList, saveList, theme,
                     list.itemsList.delete(itemID);
                     list.timeStamp = Date.now()
                     shoppingList.delete(itemID)
-                    saveList(listID, list);
+                    saveExistingLists(listID, list);
                   }}
                 >
                   <i className="fa-solid fa-trash"></i>
@@ -130,15 +136,5 @@ function ItemsDisplay({ setIsItemsDisplayVisible, selectedList, saveList, theme,
     </>
   );
 }
-
-ItemsDisplay.propTypes = {
-  setExistingLists: PropTypes.func,
-  setIsItemsDisplayVisible: PropTypes.func,
-  selectedList: PropTypes.array,
-  selectedID: PropTypes.string,
-  saveList: PropTypes.func,
-  theme: PropTypes.string,
-  shoppingList: PropTypes.object,
-};
 
 export default ItemsDisplay;
