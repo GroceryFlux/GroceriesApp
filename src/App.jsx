@@ -1,6 +1,6 @@
 import React from 'react';
 import './index.css';
-import ListsDisplay from './components/ListsDisplay';
+import ListsDisplay from './components/ListsDisplay/ListsDisplay';
 import ItemsDisplay from './components/ItemsDisplay';
 import ShoppingListDisplay from './components/ShoppingListDisplay';
 import { useThemeStore } from './store/theme/theme';

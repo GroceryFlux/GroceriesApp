@@ -12,13 +12,6 @@ export const useListsStore = create((set) => ({
     return { existingLists: tempoExistingLists }
   }),
 
-  deleteList: (listID) => set((state) => {
-    const tempoExistingLists = new Map(state.existingLists)
-    tempoExistingLists.delete(listID)
-    setLocalExistingLists(tempoExistingLists)
-    return { existingLists: tempoExistingLists }
-  }),
-
   saveShoppingList: (itemID, item) => set((state) => {
     if(item.addToShoppingList) {
       const tempoShoppingList = new Map(state.shoppingList)
@@ -29,6 +22,21 @@ export const useListsStore = create((set) => ({
       return { shoppingList: tempoShoppingList }
     }
     return state
+  }),
+
+  deleteList: (listID) => set((state) => {
+    const tempoExistingLists = new Map(state.existingLists)
+    const tempoShoppingList = new Map()
+    const actualShoppingList = [...state.shoppingList]
+    actualShoppingList.forEach(([itemID, item]) => {
+      if(item.listID !== listID){
+        tempoShoppingList.set(itemID, item)
+      }
+    })
+    tempoExistingLists.delete(listID)
+    setLocalExistingLists(tempoExistingLists)
+    setLocalShoppingList(tempoShoppingList)
+    return { existingLists: tempoExistingLists, shoppingList: tempoShoppingList }
   }),
 
   deleteCompleteShoppingList: () => set((state) => {

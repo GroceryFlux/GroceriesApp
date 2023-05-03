@@ -43,14 +43,11 @@ function ShoppingListDisplay() {
           <h2>Basket</h2>
           <ul className="mb-3 mt-3">
             {[...shoppingList.entries()].map(([itemID, item]) => (
-              //!existingLists.has(item.listID) ? shoppingList.delete(itemID) 
-              //:
               item.isBought === false ?
                 <li key={itemID}>
                   <div className="flex flex-row gap-2">
                     <div onClick={() => {
                       saveShoppingList(itemID, { ...item, isBought: true })
-                      //existingLists.set(item.listID, { ...existingLists.get(item.listID), itemsList: existingLists.get(item.listID).itemsList.set(itemID, { ...item, isBought: true }) })
                     }}>
                       <i className="fa-regular fa-circle"></i>
                     </div>
@@ -76,15 +73,12 @@ function ShoppingListDisplay() {
           {displayCompleted === true ? 
             <ul className="mb-3 mt-3">
               {[...shoppingList.entries()].map(([itemID, item]) => (
-                //!existingLists.has(item.listID) ? shoppingList.delete(itemID) 
-                //  :
                 item.isBought === true ?
                   <li key={itemID}>
                     <div className="flex flex-row gap-2">
                       <div 
                         onClick={() => {
                           saveShoppingList(itemID, { ...item, isBought: false })
-                          //existingLists.set(shoppingList.get(itemID).listID, { ...existingLists.get(shoppingList.get(itemID).listID), itemsList: existingLists.get(shoppingList.get(itemID).listID).itemsList.set(itemID, { ...item, isBought: false }) })
                         }}>
                         <i className="fa-solid fa-circle-check"></i>
                       </div>
