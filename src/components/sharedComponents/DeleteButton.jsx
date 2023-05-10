@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 
 function DeleteButton({ deleteFunction, deleteID }) {
 
+
   return(
     <button 
       className="text-red-400 min-w-[3rem]"

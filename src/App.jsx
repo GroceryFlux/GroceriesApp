@@ -1,6 +1,6 @@
 import React from 'react';
 import './index.css';
-import ListsDisplay from './components/ListsDisplay/ListsDisplay';
+import ListsPage from './pages/ListsPage';
 import ItemsDisplay from './components/ItemsDisplay';
 import ShoppingListDisplay from './components/ShoppingListDisplay';
 import { useThemeStore } from './store/theme/theme';
@@ -20,7 +20,7 @@ function App() {
           displayedMenu === 'shoppingListDisplay' ? (
             <ShoppingListDisplay />
           ) : (
-            <ListsDisplay />
+            <ListsPage />
           ))}
       </div>
     </>

@@ -1,12 +1,13 @@
 import React from "react"
 import { useThemeStore } from "../../store/theme/theme"
-import { PropTypes } from "prop-types"
+import { useDisplayedMenuStore } from "../../store/displayedMenu/displayedMenu"
 
 
-function ListsDisplayHeader({ setDisplayedMenu }) {
+function ListsPageHeader() {
 
   const toggleTheme = useThemeStore((state) => state.toggleTheme)
   const theme = useThemeStore((state) => state.theme)
+  const setDisplayedMenu = useDisplayedMenuStore((state) => state.setDisplayedMenu)
 
   return(
     <div className="flex items-center justify-around mt-4 mb-8">
@@ -33,8 +34,5 @@ function ListsDisplayHeader({ setDisplayedMenu }) {
   )
 }
 
-ListsDisplayHeader.propTypes = {
-  setDisplayedMenu: PropTypes.func
-}
 
-export default ListsDisplayHeader
+export default ListsPageHeader

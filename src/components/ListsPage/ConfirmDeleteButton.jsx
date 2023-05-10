@@ -1,7 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types"
+import { useListsStore } from "../../store/lists/lists";
+import { useListToDeleteStore } from "../../store/selectedList/selectedList";
 
-function ConfirmDeleteButton({ setListToDelete, deleteList, listID }){
+function ConfirmDeleteButton({ listID }){
+
+  const deleteList = useListsStore((state) => state.deleteList)
+  const setListToDelete = useListToDeleteStore((state) => state.setListToDelete)
 
   return(
     <div className="flex gap-4">
@@ -16,8 +21,6 @@ function ConfirmDeleteButton({ setListToDelete, deleteList, listID }){
 }
 
 ConfirmDeleteButton.propTypes = {
-  setListToDelete: PropTypes.func,
-  deleteList: PropTypes.func,
   listID: PropTypes.string
 }
 

@@ -1,16 +1,19 @@
 import React from "react";
-import PropTypes from "prop-types"
 import { useThemeStore } from "../../store/theme/theme";
+import { useSortByStore } from "../../store/filtersAndSortBy/sortBy";
 
-function SelectSortBy({ setSortType }) {
+function SelectSortBy() {
 
   const theme = useThemeStore((state) => state.theme)
+  const setSortType = useSortByStore ((state) => state.setSortType)
+  const sortType = useSortByStore((state) => state.sortType)
+
 
   return(
     <select 
       id="selectSortBy" 
       name="selectSortBy" 
-      defaultValue="sort" 
+      defaultValue={sortType} 
       onChange={(event) => setSortType(event.target.value)}
       className={`w-14 ${theme === 'dark' ? 'bg-slate-700 text-slate-200' : ''}`}
     >
@@ -19,10 +22,6 @@ function SelectSortBy({ setSortType }) {
       <option value="alphabetical">A-Z</option>
     </select>
   )
-}
-
-SelectSortBy.propTypes = {
-  setSortType: PropTypes.func
 }
 
 export default SelectSortBy
