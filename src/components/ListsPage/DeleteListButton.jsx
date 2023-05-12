@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types"
 
-function DeleteButton({ deleteFunction, deleteID }) {
+function DeleteListButton({ deleteFunction, deleteID }) {
 
 
   return(
@@ -14,9 +14,9 @@ function DeleteButton({ deleteFunction, deleteID }) {
   )
 }
 
-DeleteButton.propTypes = {
+DeleteListButton.propTypes = {
   deleteFunction: PropTypes.func,
   deleteID: PropTypes.string
 }
 
-export default DeleteButton
+export default DeleteListButton

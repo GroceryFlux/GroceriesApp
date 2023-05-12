@@ -2,9 +2,10 @@ import { create } from "zustand";
 
 
 export const useFilterStore = create((set) => ({
-  filter: '',
   listFilter: '',
   itemFilter:'', 
-  setFilter: (value) => set(() => ({ filter: value })),
-  resetFilters: () => set(() => ({ filter: '', listFilter: '', itemFilter: '' }))
+  setItemFilter: (value) => set(() => ({ itemFilter: value })),
+  setListFilter: (value) => set(() => ({ listFilter: value })),
+  resetItemFilter: () => set(() => ({ itemFilter: '' })),
+  resetListFilter: () => set(() => ({ listFilter: '' }))
 }))

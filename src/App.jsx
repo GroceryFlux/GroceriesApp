@@ -1,10 +1,11 @@
 import React from 'react';
 import './index.css';
 import ListsPage from './pages/ListsPage';
-import ItemsDisplay from './components/ItemsDisplay';
+import ItemsPage from './pages/ItemsPage';
 import ShoppingListDisplay from './components/ShoppingListDisplay';
 import { useThemeStore } from './store/theme/theme';
 import { useDisplayedMenuStore } from './store/displayedMenu/displayedMenu';
+
 
 function App() {
 
@@ -15,7 +16,7 @@ function App() {
     <>
       <div className={`flex flex-col min-w-[280px] items-center w-screen h-screen ${theme === 'dark' ? 'bg-slate-700 text-slate-200' : ''}`}>
         {displayedMenu === 'itemsDisplay' ? (
-          <ItemsDisplay />
+          <ItemsPage />
         ) : (
           displayedMenu === 'shoppingListDisplay' ? (
             <ShoppingListDisplay />

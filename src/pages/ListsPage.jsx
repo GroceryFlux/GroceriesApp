@@ -3,18 +3,18 @@ import { filterLists }from '../utils/filterValue.utils';
 import { sortBy } from '../utils/timeStampAndSortBy';
 import { useListsStore } from '../store/lists/lists';
 import NewListButton from '../components/ListsPage/NewListButton';
-import SearchBar from '../components/sharedComponents/SearchBar';
 import SelectSortBy from '../components/ListsPage/SelectSortBy';
 import ListsPageHeader from '../components/ListsPage/ListsDisplayHeader';
 import { useFilterStore } from '../store/filtersAndSortBy/filters';
 import { useSortByStore } from '../store/filtersAndSortBy/sortBy';
 import ListLine from '../components/ListsPage/ListLine';
+import SearchListInput from '../components/ListsPage/SearchListInput';
 
 
 function ListsPage() {
 
   const existingLists = useListsStore((state) => state.existingLists)
-  const filter = useFilterStore((state) => state.filter)
+  const listFilter = useFilterStore((state) => state.listFilter)
   const sortType = useSortByStore((state) => state.sortType)
 
   return (
@@ -28,12 +28,12 @@ function ListsPage() {
       </div>
       <div className="flex flex-col">
         <div className="flex flex-row gap-3 mb-4">
-          <SearchBar />
+          <SearchListInput />
           <SelectSortBy />
         </div>
         <div className="">
           <ul>
-            {filterLists(filter, sortBy(sortType, existingLists)).map(([listID, list]) => (
+            {filterLists(listFilter, sortBy(sortType, existingLists)).map(([listID, list]) => (
               <ListLine
                 key={listID}
                 listID={listID}

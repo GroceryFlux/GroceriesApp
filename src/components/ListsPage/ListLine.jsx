@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 import { useListToDeleteStore } from "../../store/selectedList/selectedList"
 import EnterListButton from "./EnterListButton"
 import ConfirmDeleteButton from "./ConfirmDeleteButton"
-import DeleteButton from "../sharedComponents/deleteButton"
+import DeleteListButton from "./DeleteListButton"
 
 
 function ListLine({ listID, list }) {
@@ -24,7 +24,7 @@ function ListLine({ listID, list }) {
               listID={listID}
             />
             :
-            <DeleteButton 
+            <DeleteListButton
               deleteFunction={setListToDelete}
               deleteID={listID}
             />
