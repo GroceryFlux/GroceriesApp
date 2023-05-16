@@ -1,11 +1,9 @@
-import React from "react"
-import ThemeToggleButton from "./ThemeToggleButton"
-import DisplayShoppingListButton from "./DisplayShoppingListButton"
-
+import React from 'react';
+import ThemeToggleButton from './ThemeToggleButton';
+import DisplayShoppingListButton from './DisplayShoppingListButton';
 
 function ListsPageHeader() {
-
-  return(
+  return (
     <div className="flex items-center justify-around mt-4 mb-8">
       <ThemeToggleButton />
       <div className="">
@@ -13,8 +11,7 @@ function ListsPageHeader() {
       </div>
       <DisplayShoppingListButton />
     </div>
-  )
+  );
 }
 
-
-export default ListsPageHeader
+export default ListsPageHeader;

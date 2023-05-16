@@ -1,5 +1,5 @@
 import React from 'react';
-import { filterLists }from '../utils/filterValue.utils';
+import { filterLists } from '../utils/filterValue.utils';
 import { sortBy } from '../utils/timeStampAndSortBy';
 import { useListsStore } from '../store/lists/lists';
 import NewListButton from '../components/ListsPage/NewListButton';
@@ -10,20 +10,16 @@ import { useSortByStore } from '../store/filtersAndSortBy/sortBy';
 import ListLine from '../components/ListsPage/ListLine';
 import SearchListInput from '../components/ListsPage/SearchListInput';
 
-
 function ListsPage() {
-
-  const existingLists = useListsStore((state) => state.existingLists)
-  const listFilter = useFilterStore((state) => state.listFilter)
-  const sortType = useSortByStore((state) => state.sortType)
+  const existingLists = useListsStore((state) => state.existingLists);
+  const listFilter = useFilterStore((state) => state.listFilter);
+  const sortType = useSortByStore((state) => state.sortType);
 
   return (
     <div className="w-3/4">
       <ListsPageHeader />
       <div className="flex gap-4 my-4">
-        <div className="text-lg">
-          Recurrent lists
-        </div>
+        <div className="text-lg">Recurrent lists</div>
         <NewListButton />
       </div>
       <div className="flex flex-col">

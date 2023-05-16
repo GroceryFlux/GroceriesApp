@@ -1,29 +1,25 @@
-import React from "react"
-import PropTypes from "prop-types"
-import ItemInput from "./ItemInput"
-import IsBoughtToggleButton from "./IsBoughtToggleButton"
-
+import React from 'react';
+import PropTypes from 'prop-types';
+import ItemInput from './ItemInput';
+import IsBoughtToggleButton from './IsBoughtToggleButton';
 
 function ItemLine({ itemID, item }) {
-
-  return(
+  return (
     <li key={itemID}>
       <div className="flex flex-row gap-2">
-        <IsBoughtToggleButton 
+        <IsBoughtToggleButton
           itemID={itemID}
           item={item}
         />
-        <ItemInput
-          item={item}
-        />
+        <ItemInput item={item} />
       </div>
     </li>
-  )
+  );
 }
 
 ItemLine.propTypes = {
   itemID: PropTypes.string,
-  item: PropTypes.object
-}
+  item: PropTypes.object,
+};
 
-export default ItemLine
+export default ItemLine;

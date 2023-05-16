@@ -1,13 +1,11 @@
-import React from "react"
-import PropTypes from "prop-types"
-import { useThemeStore } from "../../store/theme/theme"
-
+import React from 'react';
+import PropTypes from 'prop-types';
+import { useThemeStore } from '../../store/theme/theme';
 
 function ItemInput({ item }) {
+  const theme = useThemeStore((state) => state.theme);
 
-  const theme = useThemeStore((state) => state.theme)
-
-  return(
+  return (
     <div>
       <input
         className={`${theme === 'dark' ? 'bg-slate-700 text-slate-200' : 'bg-white'}`}
@@ -15,11 +13,11 @@ function ItemInput({ item }) {
         disabled
       />
     </div>
-  )
+  );
 }
 
 ItemInput.propTypes = {
-  item: PropTypes.object
-}
+  item: PropTypes.object,
+};
 
-export default ItemInput
+export default ItemInput;

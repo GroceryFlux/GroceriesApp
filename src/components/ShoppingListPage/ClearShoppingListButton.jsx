@@ -1,20 +1,16 @@
-import React from "react"
-import { useListsStore } from "../../store/lists/lists"
-
+import React from 'react';
+import { useListsStore } from '../../store/lists/lists';
 
 function ClearShoppingListButton() {
+  const deleteCompleteShoppingList = useListsStore((state) => state.deleteCompleteShoppingList);
 
-  const deleteCompleteShoppingList = useListsStore((state) => state.deleteCompleteShoppingList)
-
-  return(
+  return (
     <div>
-      <button 
-        onClick={() => deleteCompleteShoppingList()}
-      >
+      <button onClick={() => deleteCompleteShoppingList()}>
         <i className="fa-regular fa-circle-xmark text-xl"></i>
       </button>
     </div>
-  )
+  );
 }
 
-export default ClearShoppingListButton
+export default ClearShoppingListButton;

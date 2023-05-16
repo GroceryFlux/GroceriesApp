@@ -1,13 +1,11 @@
-import React from "react"
-import PropTypes from "prop-types"
-import ModifyItemInput from "./ModifyItemInput"
-import ShoppingListInterractionButton from "./ShoppingListInterractionButton"
-import DeleteItemButton from "./DeleteItemButton"
-
+import React from 'react';
+import PropTypes from 'prop-types';
+import ModifyItemInput from './ModifyItemInput';
+import ShoppingListInterractionButton from './ShoppingListInterractionButton';
+import DeleteItemButton from './DeleteItemButton';
 
 function ItemLine({ itemID, item }) {
-
-  return(
+  return (
     <li key={itemID}>
       <div className="flex flex-row justify-between py-1">
         <ModifyItemInput
@@ -18,17 +16,15 @@ function ItemLine({ itemID, item }) {
           itemID={itemID}
           item={item}
         />
-        <DeleteItemButton 
-          itemID={itemID}
-        />
+        <DeleteItemButton itemID={itemID} />
       </div>
     </li>
-  )
+  );
 }
 
 ItemLine.propTypes = {
   itemID: PropTypes.string,
-  item: PropTypes.object
-}
+  item: PropTypes.object,
+};
 
-export default ItemLine
+export default ItemLine;

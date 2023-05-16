@@ -1,21 +1,23 @@
-import React from "react"
-import ItemTitleInput from "./ItemTitleInput";
-import { useSelectedListStore } from "../../store/selectedList/selectedList";
-import { useListsStore } from "../../store/lists/lists";
-import AddItemButton from "./AddItemButton";
+import React from 'react';
+import ItemTitleInput from './ItemTitleInput';
+import { useSelectedListStore } from '../../store/selectedList/selectedList';
+import { useListsStore } from '../../store/lists/lists';
+import AddItemButton from './AddItemButton';
 
+function NewItemForm() {
+  const listID = useSelectedListStore((state) => state.selectedList);
+  const list = useListsStore((state) => state.existingLists).get(listID);
+  const saveExistingLists = useListsStore((state) => state.saveExistingLists);
 
-function NewItemForm(){
-
-  const listID = useSelectedListStore((state) => state.selectedList)
-  const list = useListsStore((state) => state.existingLists).get(listID)
-  const saveExistingLists = useListsStore((state) => state.saveExistingLists)
-
-  return(
+  return (
     <form
       onSubmit={(event) => {
         event.preventDefault();
-        list.itemsList.set(crypto.randomUUID(), { itemName: event.target[0].value, addToShoppingList: false, isBought: false });
+        list.itemsList.set(crypto.randomUUID(), {
+          itemName: event.target[0].value,
+          addToShoppingList: false,
+          isBought: false,
+        });
         list.timeStamp = Date.now();
         saveExistingLists(listID, list);
         event.target[0].value = '';
@@ -30,7 +32,7 @@ function NewItemForm(){
         </div>
       </div>
     </form>
-  )
+  );
 }
 
-export default NewItemForm
+export default NewItemForm;

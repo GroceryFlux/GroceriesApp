@@ -11,18 +11,16 @@ import SearchItemInput from '../components/ItemsPage/SearchItemInput';
 import ReturnToListsFromItemButton from '../components/ItemsPage/ReturnToListsFromItemsButton';
 
 function ItemsPage() {
-
-  const listID = useSelectedListStore((state) => state.selectedList)
-  const list = useListsStore((state) => state.existingLists).get(listID)
-  const itemFilter = useFilterStore((state) => state.itemFilter)
-
+  const listID = useSelectedListStore((state) => state.selectedList);
+  const list = useListsStore((state) => state.existingLists).get(listID);
+  const itemFilter = useFilterStore((state) => state.itemFilter);
 
   return (
     <>
       <div className="flex justify-between px-3 pt-5 mb-5">
         <ReturnToListsFromItemButton />
         <ListTitleInput />
-        <div className="min-w-[5rem]"/>
+        <div className="min-w-[5rem]" />
       </div>
       <LastModifiedText />
       <NewItemForm />
@@ -32,7 +30,7 @@ function ItemsPage() {
       <div className="mx-5 py-3">
         <ul>
           {filterItems(itemFilter, list.itemsList).map(([itemID, item]) => (
-            <ItemLine 
+            <ItemLine
               key={itemID}
               itemID={itemID}
               item={item}

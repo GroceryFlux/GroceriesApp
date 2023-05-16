@@ -1,12 +1,10 @@
-import React from "react"
-import { useDisplayedMenuStore } from "../../store/displayedMenu/displayedMenu"
-
+import React from 'react';
+import { useDisplayedMenuStore } from '../../store/displayedMenu/displayedMenu';
 
 function DisplayShoppingListButton() {
+  const setDisplayedMenu = useDisplayedMenuStore((state) => state.setDisplayedMenu);
 
-  const setDisplayedMenu = useDisplayedMenuStore((state) => state.setDisplayedMenu)
-
-  return(
+  return (
     <div className="self-end">
       <button
         className="text-xl"
@@ -15,7 +13,7 @@ function DisplayShoppingListButton() {
         <i className="fa-solid fa-cart-shopping"></i>
       </button>
     </div>
-  )
+  );
 }
 
-export default DisplayShoppingListButton
+export default DisplayShoppingListButton;
