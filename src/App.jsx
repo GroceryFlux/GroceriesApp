@@ -2,9 +2,9 @@ import React from 'react';
 import './index.css';
 import ListsPage from './pages/ListsPage';
 import ItemsPage from './pages/ItemsPage';
-import ShoppingListDisplay from './components/ShoppingListDisplay';
 import { useThemeStore } from './store/theme/theme';
 import { useDisplayedMenuStore } from './store/displayedMenu/displayedMenu';
+import ShoppingListPage from './pages/ShoppingListPage';
 
 
 function App() {
@@ -19,7 +19,7 @@ function App() {
           <ItemsPage />
         ) : (
           displayedMenu === 'shoppingListDisplay' ? (
-            <ShoppingListDisplay />
+            <ShoppingListPage />
           ) : (
             <ListsPage />
           ))}

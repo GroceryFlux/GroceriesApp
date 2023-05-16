@@ -2,7 +2,7 @@ import React from "react"
 import { useDisplayedMenuStore } from "../../store/displayedMenu/displayedMenu"
 
 
-function ReturnButton() {
+function ReturnToListsFromShoppingButton() {
 
   const setDisplayedMenu = useDisplayedMenuStore((state) => state.setDisplayedMenu)
 
@@ -11,7 +11,7 @@ function ReturnButton() {
       onClick={() => 
         setDisplayedMenu('listsDisplay')
       }
-      className="text-1xl font-bold min-w-[5rem]"
+      className="text-1xl font-bold"
       type="button"
     >
       <i className="fa-solid fa-chevron-left"></i>
@@ -19,4 +19,4 @@ function ReturnButton() {
   )
 }
 
-export default ReturnButton
+export default ReturnToListsFromShoppingButton
