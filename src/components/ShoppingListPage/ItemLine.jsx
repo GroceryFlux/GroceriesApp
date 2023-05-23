@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ItemInput from './ItemInput';
-import IsBoughtToggleButton from './IsBoughtToggleButton';
+import ToggleIsItemBoughtButton from './ToggleIsItemBoughtButton';
 
 function ItemLine({ itemID, item }) {
   return (
     <li key={itemID}>
       <div className="flex flex-row gap-2">
-        <IsBoughtToggleButton
+        <ToggleIsItemBoughtButton
           itemID={itemID}
           item={item}
         />

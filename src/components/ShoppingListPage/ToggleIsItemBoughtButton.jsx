@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { useListsStore } from '../../store/lists/lists';
 
-function IsBoughtToggleButton({ itemID, item }) {
+function ToggleIsItemBoughtButton({ itemID, item }) {
   const saveShoppingList = useListsStore((state) => state.saveShoppingList);
 
   return (
@@ -22,9 +22,9 @@ function IsBoughtToggleButton({ itemID, item }) {
   );
 }
 
-IsBoughtToggleButton.propTypes = {
+ToggleIsItemBoughtButton.propTypes = {
   itemID: PropTypes.string,
   item: PropTypes.object,
 };
 
-export default IsBoughtToggleButton;
+export default ToggleIsItemBoughtButton;
