@@ -1,13 +1,14 @@
 import React from 'react';
-import { useDisplayBoughtItemsStore } from '../../store/displayedMenu/displayedMenu';
+import { useBoughtItemsStore } from '../../store/displayedMenu/displayedMenu';
 
 function DisplayBoughtItemsButton() {
-  const displayBoughtItems = useDisplayBoughtItemsStore((state) => state.displayBoughtItems);
-  const toggleDisplayBoughtItems = useDisplayBoughtItemsStore((state) => state.toggleDisplayBoughtItems);
+  const showBoughtItems = useBoughtItemsStore((state) => state.showBoughtItems);
+  const toggleBoughtItemsVisibility = useBoughtItemsStore((state) => state.toggleBoughtItemsVisibility);
+  
 
   return (
-    <div onClick={() => toggleDisplayBoughtItems()}>
-      {displayBoughtItems === false ? (
+    <div onClick={() => toggleBoughtItemsVisibility()}>
+      {showBoughtItems === false ? (
         <i className="fa-solid fa-chevron-up"></i>
       ) : (
         <i className="fa-solid fa-chevron-down"></i>

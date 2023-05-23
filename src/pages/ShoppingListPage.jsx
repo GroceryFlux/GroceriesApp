@@ -2,12 +2,12 @@ import React from 'react';
 import { useListsStore } from '../store/lists/lists';
 import ShoppingListHeader from '../components/ShoppingListPage/ShoppingListPageHeader';
 import ItemLine from '../components/ShoppingListPage/ItemLine';
-import DisplayBoughtItemsButton from '../components/ShoppingListPage/DisplayBoughtItemsButton';
-import { useDisplayBoughtItemsStore } from '../store/displayedMenu/displayedMenu';
+import { useBoughtItemsStore } from '../store/displayedMenu/displayedMenu';
+import DisplayBoughtItemsButton from '../components/ShoppingListPage/displayBoughtItemsButton';
 
 function ShoppingListPage() {
   const shoppingList = useListsStore((state) => state.shoppingList);
-  const displayBoughtItems = useDisplayBoughtItemsStore((state) => state.displayBoughtItems);
+  const showBoughtItems = useBoughtItemsStore((state) => state.showBoughtItems);
 
   return (
     <>
@@ -32,7 +32,7 @@ function ShoppingListPage() {
             <h2>Completed</h2>
             <DisplayBoughtItemsButton />
           </div>
-          {displayBoughtItems === true ? (
+          {showBoughtItems === true ? (
             <ul className="mb-3 mt-3">
               {[...shoppingList.entries()].map(([itemID, item]) =>
                 item.isBought === true ? (
