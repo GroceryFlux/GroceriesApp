@@ -1,6 +1,6 @@
 import React from 'react';
 import { filterItems } from '../utils/filterValue.utils';
-import { useSelectedListStore } from '../store/selectedList/selectedList';
+import { useSelectedListIDStore } from '../store/selectedList/selectedList';
 import { useListsStore } from '../store/lists/lists';
 import ListTitleInput from '../components/ItemsPage/ListTitleInput';
 import LastModifiedText from '../components/ItemsPage/LastModifiedText';
@@ -11,7 +11,7 @@ import SearchItemInput from '../components/ItemsPage/SearchItemInput';
 import ReturnToListsFromItemButton from '../components/ItemsPage/ReturnToListsFromItemsButton';
 
 function ItemsPage() {
-  const listID = useSelectedListStore((state) => state.selectedList);
+  const listID = useSelectedListIDStore((state) => state.selectedListID);
   const list = useListsStore((state) => state.existingLists).get(listID);
   const itemFilter = useFilterStore((state) => state.itemFilter);
 

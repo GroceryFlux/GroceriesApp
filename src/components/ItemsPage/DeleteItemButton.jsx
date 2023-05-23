@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useSelectedListStore } from '../../store/selectedList/selectedList';
+import { useSelectedListIDStore } from '../../store/selectedList/selectedList';
 import { useListsStore } from '../../store/lists/lists';
 
 function DeleteItemButton({ itemID }) {
-  const listID = useSelectedListStore((state) => state.selectedList);
+  const listID = useSelectedListIDStore((state) => state.selectedListID);
   const list = useListsStore((state) => state.existingLists).get(listID);
   const shoppingList = useListsStore((state) => state.shoppingList);
   const saveExistingLists = useListsStore((state) => state.saveExistingLists);

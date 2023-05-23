@@ -1,11 +1,11 @@
 import React from 'react';
 import { useListsStore } from '../../store/lists/lists';
-import { useSelectedListStore } from '../../store/selectedList/selectedList';
+import { useSelectedListIDStore } from '../../store/selectedList/selectedList';
 import { useDisplayedMenuStore } from '../../store/displayedMenu/displayedMenu';
 
 function NewListButton() {
   const saveExistingLists = useListsStore((state) => state.saveExistingLists);
-  const setSelectedList = useSelectedListStore((state) => state.setSelectedList);
+  const setSelectedListID = useSelectedListIDStore((state) => state.setSelectedListID);
   const setDisplayedMenu = useDisplayedMenuStore((state) => state.setDisplayedMenu);
 
   return (
@@ -15,7 +15,7 @@ function NewListButton() {
         const listID = crypto.randomUUID();
         const list = { title: '', timeStamp: undefined, itemsList: new Map() };
         saveExistingLists(listID, list);
-        setSelectedList(listID);
+        setSelectedListID(listID);
         setDisplayedMenu('itemsDisplay');
       }}
     >

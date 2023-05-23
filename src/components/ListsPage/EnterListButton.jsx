@@ -1,17 +1,17 @@
 import { React } from 'react';
 import { useDisplayedMenuStore } from '../../store/displayedMenu/displayedMenu';
-import { useSelectedListStore } from '../../store/selectedList/selectedList';
+import { useSelectedListIDStore } from '../../store/selectedList/selectedList';
 import PropTypes from 'prop-types';
 
 function EnterListButton({ listID, title }) {
   const setDisplayedMenu = useDisplayedMenuStore((state) => state.setDisplayedMenu);
-  const setSelectedList = useSelectedListStore((state) => state.setSelectedList);
+  const setSelectedListID = useSelectedListIDStore((state) => state.setSelectedListID);
 
   return (
     <button
       onClick={() => {
         setDisplayedMenu('itemsDisplay');
-        setSelectedList(listID);
+        setSelectedListID(listID);
       }}
     >
       {title}

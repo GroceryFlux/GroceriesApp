@@ -1,11 +1,11 @@
 import React from 'react';
 import ItemTitleInput from './ItemTitleInput';
-import { useSelectedListStore } from '../../store/selectedList/selectedList';
+import { useSelectedListIDStore } from '../../store/selectedList/selectedList';
 import { useListsStore } from '../../store/lists/lists';
 import AddItemButton from './AddItemButton';
 
 function NewItemForm() {
-  const listID = useSelectedListStore((state) => state.selectedList);
+  const listID = useSelectedListIDStore((state) => state.selectedListID);
   const list = useListsStore((state) => state.existingLists).get(listID);
   const saveExistingLists = useListsStore((state) => state.saveExistingLists);
 

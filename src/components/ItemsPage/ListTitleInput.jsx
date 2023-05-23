@@ -1,11 +1,11 @@
 import React from 'react';
-import { useSelectedListStore } from '../../store/selectedList/selectedList';
+import { useSelectedListIDStore } from '../../store/selectedList/selectedList';
 import { useListsStore } from '../../store/lists/lists';
 import { useThemeStore } from '../../store/theme/theme';
 
 function ListTitleInput() {
   const theme = useThemeStore((state) => state.theme);
-  const listID = useSelectedListStore((state) => state.selectedList);
+  const listID = useSelectedListIDStore((state) => state.selectedListID);
   const list = useListsStore((state) => state.existingLists).get(listID);
   const saveExistingLists = useListsStore((state) => state.saveExistingLists);
 

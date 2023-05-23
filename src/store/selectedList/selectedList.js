@@ -1,8 +1,8 @@
 import { create } from 'zustand';
 
-export const useSelectedListStore = create((set) => ({
-  selectedList: '',
-  setSelectedList: (list) => set(() => ({ selectedList: list })),
+export const useSelectedListIDStore = create((set) => ({
+  selectedListID: '',
+  setSelectedListID: (ID) => set(() => ({ selectedListID: ID })),
 }));
 
 export const useListToDeleteStore = create((set) => ({
