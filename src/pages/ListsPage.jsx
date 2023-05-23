@@ -5,14 +5,14 @@ import { useListsStore } from '../store/lists/lists';
 import NewListButton from '../components/ListsPage/NewListButton';
 import SelectSortBy from '../components/ListsPage/SelectSortBy';
 import ListsPageHeader from '../components/ListsPage/ListsDisplayHeader';
-import { useFilterStore } from '../store/filtersAndSortBy/filters';
+import { useListFilterStore } from '../store/filtersAndSortBy/listFilter';
 import { useSortByStore } from '../store/filtersAndSortBy/sortBy';
 import ListLine from '../components/ListsPage/ListLine';
 import SearchListInput from '../components/ListsPage/SearchListInput';
 
 function ListsPage() {
   const existingLists = useListsStore((state) => state.existingLists);
-  const listFilter = useFilterStore((state) => state.listFilter);
+  const listFilter = useListFilterStore((state) => state.listFilter);
   const sortType = useSortByStore((state) => state.sortType);
 
   return (

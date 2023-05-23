@@ -5,15 +5,15 @@ import { useListsStore } from '../store/lists/lists';
 import ListTitleInput from '../components/ItemsPage/ListTitleInput';
 import LastModifiedText from '../components/ItemsPage/LastModifiedText';
 import NewItemForm from '../components/ItemsPage/NewItemForm';
-import { useFilterStore } from '../store/filtersAndSortBy/filters';
 import ItemLine from '../components/ItemsPage/ItemLine';
 import SearchItemInput from '../components/ItemsPage/SearchItemInput';
 import ReturnToListsFromItemButton from '../components/ItemsPage/ReturnToListsFromItemsButton';
+import { useItemFilterStore } from '../store/filtersAndSortBy/itemFilter';
 
 function ItemsPage() {
   const listID = useSelectedListIDStore((state) => state.selectedListID);
   const list = useListsStore((state) => state.existingLists).get(listID);
-  const itemFilter = useFilterStore((state) => state.itemFilter);
+  const itemFilter = useItemFilterStore((state) => state.itemFilter);
 
   return (
     <>

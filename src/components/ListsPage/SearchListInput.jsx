@@ -1,12 +1,12 @@
 import React from 'react';
 import { useThemeStore } from '../../store/theme/theme';
-import { useFilterStore } from '../../store/filtersAndSortBy/filters';
+import { useListFilterStore } from '../../store/filtersAndSortBy/listFilter';
 
 function SearchListInput() {
   const theme = useThemeStore((state) => state.theme);
-  const setListFilter = useFilterStore((state) => state.setListFilter);
-  const listFilter = useFilterStore((state) => state.listFilter);
-  const resetListFilter = useFilterStore((state) => state.resetListFilter);
+  const setListFilter = useListFilterStore((state) => state.setListFilter);
+  const listFilter = useListFilterStore((state) => state.listFilter);
+  const resetListFilter = useListFilterStore((state) => state.resetListFilter);
 
   return (
     <div className={`border rounded-lg ${theme === 'dark' ? 'bg-slate-700 text-slate-200' : ''}`}>
