@@ -1,12 +1,12 @@
 import React from 'react';
-import { useDisplayedMenuStore } from '../../store/displayedMenu/displayedMenu';
+import { usePageStore } from '../../store/displayedMenu/displayedMenu';
 
 function ReturnToListsFromShoppingButton() {
-  const setDisplayedMenu = useDisplayedMenuStore((state) => state.setDisplayedMenu);
+  const setDisplayedPage = usePageStore((state) => state.setDisplayedPage);
 
   return (
     <button
-      onClick={() => setDisplayedMenu('listsDisplay')}
+      onClick={() => setDisplayedPage('listsDisplay')}
       className="text-1xl font-bold"
       type="button"
     >

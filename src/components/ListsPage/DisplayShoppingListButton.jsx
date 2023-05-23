@@ -1,14 +1,14 @@
 import React from 'react';
-import { useDisplayedMenuStore } from '../../store/displayedMenu/displayedMenu';
+import { usePageStore } from '../../store/displayedMenu/displayedMenu';
 
 function DisplayShoppingListButton() {
-  const setDisplayedMenu = useDisplayedMenuStore((state) => state.setDisplayedMenu);
+  const setDisplayedPage = usePageStore((state) => state.setDisplayedPage);
 
   return (
     <div className="self-end">
       <button
         className="text-xl"
-        onClick={() => setDisplayedMenu('shoppingListDisplay')}
+        onClick={() => setDisplayedPage('shoppingListDisplay')}
       >
         <i className="fa-solid fa-cart-shopping"></i>
       </button>

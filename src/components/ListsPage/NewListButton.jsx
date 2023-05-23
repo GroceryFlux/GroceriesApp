@@ -1,12 +1,12 @@
 import React from 'react';
 import { useListsStore } from '../../store/lists/lists';
 import { useSelectedListIDStore } from '../../store/selectedList/selectedList';
-import { useDisplayedMenuStore } from '../../store/displayedMenu/displayedMenu';
+import { usePageStore } from '../../store/displayedMenu/displayedMenu';
 
 function NewListButton() {
   const saveExistingLists = useListsStore((state) => state.saveExistingLists);
   const setSelectedListID = useSelectedListIDStore((state) => state.setSelectedListID);
-  const setDisplayedMenu = useDisplayedMenuStore((state) => state.setDisplayedMenu);
+  const setDisplayedPage = usePageStore((state) => state.setDisplayedPage);
 
   return (
     <button
@@ -16,7 +16,7 @@ function NewListButton() {
         const list = { title: '', timeStamp: undefined, itemsList: new Map() };
         saveExistingLists(listID, list);
         setSelectedListID(listID);
-        setDisplayedMenu('itemsDisplay');
+        setDisplayedPage('itemsDisplay');
       }}
     >
       <i className="fa-solid fa-circle-plus"></i>
