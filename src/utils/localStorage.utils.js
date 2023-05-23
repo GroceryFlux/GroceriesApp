@@ -33,8 +33,8 @@ export const getLocalExistingLists = () => {
 
 export const setLocalShoppingList = (state) => {
   const saveState = [];
-  [...state.entries()].forEach(([listID, list]) => {
-    list ? saveState.push([listID, list]) : null;
+  state.forEach((item, itemID) => {
+    item ? saveState.push([itemID, item]) : null;
   });
 
   localStorage.setItem('shoppingList', JSON.stringify(saveState));

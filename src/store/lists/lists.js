@@ -49,7 +49,7 @@ export const useListsStore = create((set) => ({
 
   deleteCompleteShoppingList: () =>
     set((state) => {
-      [...state.shoppingList.entries()].forEach(([itemID, item]) => {
+      state.shoppingList.forEach((item, itemID) => {
         state.saveExistingLists(item.listID, {
           ...state.existingLists.get(item.listID),
           itemsList: state.existingLists
