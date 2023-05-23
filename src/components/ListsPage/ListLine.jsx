@@ -11,7 +11,6 @@ function ListLine({ listID, list }) {
 
   return (
     <li
-      key={listID}
       className="mb-1"
     >
       <div className="flex flex-row justify-between">
