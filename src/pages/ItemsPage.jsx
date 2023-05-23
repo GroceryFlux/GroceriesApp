@@ -15,6 +15,14 @@ function ItemsPage() {
   const list = useListsStore((state) => state.existingLists).get(listID);
   const itemFilter = useItemFilterStore((state) => state.itemFilter);
 
+  const items = filterItems(itemFilter, list.itemsList).map(([itemID, item]) => (
+    <ItemLine
+      key={itemID}
+      itemID={itemID}
+      item={item}
+    />
+  ))
+
   return (
     <>
       <div className="flex justify-between px-3 pt-5 mb-5">
@@ -28,15 +36,7 @@ function ItemsPage() {
         <SearchItemInput />
       </div>
       <div className="mx-5 py-3">
-        <ul>
-          {filterItems(itemFilter, list.itemsList).map(([itemID, item]) => (
-            <ItemLine
-              key={itemID}
-              itemID={itemID}
-              item={item}
-            />
-          ))}
-        </ul>
+        <ul>{items}</ul>
       </div>
     </>
   );

@@ -15,6 +15,14 @@ function ListsPage() {
   const listFilter = useListFilterStore((state) => state.listFilter);
   const sortType = useSortByStore((state) => state.sortType);
 
+  const lists = filterLists(listFilter, sortBy(sortType, existingLists)).map(([listID, list]) => (
+    <ListLine
+      key={listID}
+      listID={listID}
+      list={list}
+    />
+  ))
+
   return (
     <div className="w-3/4">
       <ListsPageHeader />
@@ -28,15 +36,7 @@ function ListsPage() {
           <SelectSortBy />
         </div>
         <div className="">
-          <ul>
-            {filterLists(listFilter, sortBy(sortType, existingLists)).map(([listID, list]) => (
-              <ListLine
-                key={listID}
-                listID={listID}
-                list={list}
-              />
-            ))}
-          </ul>
+          <ul>{lists}</ul>
         </div>
       </div>
     </div>
