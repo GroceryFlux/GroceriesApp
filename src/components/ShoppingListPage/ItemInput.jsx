@@ -6,13 +6,11 @@ function ItemInput({ item }) {
   const theme = useThemeStore((state) => state.theme);
 
   return (
-    <div>
-      <input
-        className={`${theme === 'dark' ? 'bg-slate-700 text-slate-200' : 'bg-white'}`}
-        defaultValue={item.itemName}
-        disabled
-      />
-    </div>
+    <input
+      className={`${theme === 'dark' ? 'bg-slate-700 text-slate-200' : 'bg-white'}`}
+      defaultValue={item.itemName}
+      disabled
+    />
   );
 }
 
