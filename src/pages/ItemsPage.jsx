@@ -7,8 +7,8 @@ import LastModifiedText from '../components/ItemsPage/LastModifiedText';
 import NewItemForm from '../components/ItemsPage/NewItemForm';
 import ItemLine from '../components/ItemsPage/ItemLine';
 import SearchItemInput from '../components/ItemsPage/SearchItemInput';
-import ReturnToListsFromItemButton from '../components/ItemsPage/ReturnToListsFromItemsButton';
 import { useItemFilterStore } from '../store/filtersAndSortBy/itemFilter';
+import BackButton from '../components/shared/BackButton';
 
 function ItemsPage() {
   const listID = useSelectedListIDStore((state) => state.selectedListID);
@@ -25,10 +25,10 @@ function ItemsPage() {
 
   return (
     <>
-      <div className="flex justify-between px-3 pt-5 mb-5">
-        <ReturnToListsFromItemButton />
+      <div className="flex items-center justify-around mt-4 mb-8 w-3/4">
+        <BackButton />
         <ListTitleInput />
-        <div className="min-w-[5rem]" />
+        <div/>
       </div>
       <LastModifiedText />
       <NewItemForm />
