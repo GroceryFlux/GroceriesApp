@@ -3,7 +3,7 @@ import { useListsStore } from '../store/lists/lists';
 import ShoppingListHeader from '../components/ShoppingListPage/ShoppingListPageHeader';
 import ItemLine from '../components/ShoppingListPage/ItemLine';
 import { useBoughtItemsStore } from '../store/displayedMenu/displayedMenu';
-import DisplayBoughtItemsButton from '../components/ShoppingListPage/displayBoughtItemsButton';
+import ToggleBoughtItemButton from '../components/ShoppingListPage/ToggleBoughtItemButton';
 
 function ShoppingListPage() {
   const shoppingList = useListsStore((state) => state.shoppingList);
@@ -50,7 +50,7 @@ function ShoppingListPage() {
       <ul className="mb-3 mt-3">{unboughtItems}</ul>
       <div className="flex flex-row gap-3">
         <h2>Completed</h2>
-        <DisplayBoughtItemsButton />
+        <ToggleBoughtItemButton />
       </div>
       {showBoughtItems && <ul className="mb-3 mt-3">{boughtItems}</ul>}
     </>
