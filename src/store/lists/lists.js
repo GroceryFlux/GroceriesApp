@@ -6,7 +6,7 @@ import {
   setLocalShoppingList,
 } from '../../utils/localStorage.utils';
 
-export const useListsStore = create((set) => ({
+export const useListsStore = create((set, get) => ({
   existingLists: getLocalExistingLists(),
   shoppingList: getLocalShoppingList(),
 
@@ -47,20 +47,18 @@ export const useListsStore = create((set) => ({
       return { existingLists: tempoExistingLists, shoppingList: tempoShoppingList };
     }),
 
-  deleteCompleteShoppingList: () =>
-    set((state) => {
-      state.shoppingList.forEach((item, itemID) => {
-        state.saveExistingLists(item.listID, {
-          ...state.existingLists.get(item.listID),
-          itemsList: state.existingLists
-            .get(item.listID)
-            .itemsList.set(itemID, { ...item, addToShoppingList: false, isBought: false }),
-        });
-        setLocalExistingLists(state.existingLists);
-      });
-      setLocalShoppingList(new Map());
-      return { shoppingList: new Map() };
-    }),
+  clearShoppingList: () => {
+    const state = get();
+    state.shoppingList.forEach((item, itemID) => {
+      state.saveExistingLists(item.listID, { 
+        ...state.existingLists.get(item.listID), 
+        itemsList: state.existingLists
+          .get(item.listID).itemsList
+          .set(itemID, { ...item, addToShoppingList:false, isBought: false }) })
+    })
+    setLocalShoppingList(new Map())
+    set(() => ({ shoppingList: new Map() }))
+  },
 
   deleteItemShoppingList: (itemID, item) =>
     set((state) => {

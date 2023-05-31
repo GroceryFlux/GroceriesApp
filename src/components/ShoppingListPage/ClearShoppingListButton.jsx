@@ -2,11 +2,11 @@ import React from 'react';
 import { useListsStore } from '../../store/lists/lists';
 
 function ClearShoppingListButton() {
-  const deleteCompleteShoppingList = useListsStore((state) => state.deleteCompleteShoppingList);
+  const clearShoppingList = useListsStore((state) => state.clearShoppingList);
 
   return (
     <div>
-      <button onClick={() => deleteCompleteShoppingList()}>
+      <button onClick={() => clearShoppingList()}>
         <i className="fa-regular fa-circle-xmark text-xl"></i>
       </button>
     </div>

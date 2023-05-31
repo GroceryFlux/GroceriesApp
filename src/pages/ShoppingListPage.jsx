@@ -7,7 +7,7 @@ import ToggleBoughtItemButton from '../components/ShoppingListPage/ToggleBoughtI
 
 function ShoppingListPage() {
   const shoppingList = useListsStore((state) => state.shoppingList);
-  
+  const showBoughtItems = useBoughtItemsStore((state) => state.showBoughtItems);
 
   if (shoppingList.size === 0) {
     return (
@@ -18,16 +18,15 @@ function ShoppingListPage() {
     );
   }
 
-  const showBoughtItems = useBoughtItemsStore((state) => state.showBoughtItems);
   const boughtItems = [];
   const unboughtItems = [];
 
-  shoppingList.forEach((item, itemId) => {
+  shoppingList.forEach((item, itemID) => {
     if (item.isBought) {
       boughtItems.push(
         <ItemLine
-          key={itemId}
-          itemID={itemId}
+          key={itemID}
+          itemID={itemID}
           item={item}
         />,
       );
@@ -36,8 +35,8 @@ function ShoppingListPage() {
 
     unboughtItems.push(
       <ItemLine
-        key={itemId}
-        itemID={itemId}
+        key={itemID}
+        itemID={itemID}
         item={item}
       />,
     );
