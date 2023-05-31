@@ -1,7 +1,7 @@
 import React from 'react';
 import { useThemeStore } from '../../store/theme/theme';
 
-function ThemeToggleButton() {
+function ToggleThemeButton() {
   const theme = useThemeStore((state) => state.theme);
   const toggleTheme = useThemeStore((state) => state.toggleTheme);
 
@@ -17,4 +17,4 @@ function ThemeToggleButton() {
   );
 }
 
-export default ThemeToggleButton;
+export default ToggleThemeButton;
