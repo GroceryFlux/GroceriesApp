@@ -51,7 +51,7 @@ export const getLocalShoppingList = () => {
   // eslint-disable-next-line no-unused-vars
   retrievedShoppingList.forEach(([listID, list]) => {
     [...list.itemsList].forEach(([itemID, item]) => {
-      if (item.addToShoppingList) {
+      if (item.isOnShoppingList) {
         localState.set(itemID, item);
       }
     });

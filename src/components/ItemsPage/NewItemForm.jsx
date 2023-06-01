@@ -14,8 +14,9 @@ function NewItemForm() {
         event.preventDefault();
         list.itemsList.set(crypto.randomUUID(), {
           itemName: event.target[0].value,
-          addToShoppingList: false,
+          isOnShoppingList: false,
           isBought: false,
+          listID: listID,
         });
         list.timeStamp = Date.now();
         saveExistingLists(listID, list);

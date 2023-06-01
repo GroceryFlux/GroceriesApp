@@ -3,22 +3,16 @@ import PropTypes from 'prop-types';
 import { useListsStore } from '../../store/lists/lists';
 
 function ShoppingListInterractionButton({ itemID, item }) {
-  const listID = useListsStore((state) => state.selectedListID);
-  const saveShoppingList = useListsStore((state) => state.saveShoppingList);
-  const deleteItemShoppingList = useListsStore((state) => state.deleteItemShoppingList);
+  const toggleShoppingListItem = useListsStore((state) => state.toggleShoppingListItem)
 
   return (
     <div
       className="mr-3"
-      onClick={() => {
-        item.addToShoppingList === false
-          ? saveShoppingList(itemID, { ...item, listID: listID, addToShoppingList: true, isBought: false })
-          : deleteItemShoppingList(itemID, item);
-      }}
+      onClick={() => toggleShoppingListItem(itemID, item)}
     >
       {item.isBought === true ? (
         <i className="fa-solid fa-check-double"></i>
-      ) : item.addToShoppingList === true ? (
+      ) : item.isOnShoppingList === true ? (
         <i className="fa-solid fa-check"></i>
       ) : (
         <i className="fa-solid fa-plus"></i>

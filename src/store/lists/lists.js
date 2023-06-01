@@ -21,7 +21,7 @@ export const useListsStore = create((set, get) => ({
 
   saveShoppingList: (itemID, item) =>
     set((state) => {
-      if (item.addToShoppingList) {
+      if (item.isOnShoppingList) {
         const tempoShoppingList = new Map(state.shoppingList);
         tempoShoppingList.set(itemID, item);
         setLocalShoppingList(tempoShoppingList);
@@ -67,7 +67,7 @@ export const useListsStore = create((set, get) => ({
         ...state.existingLists.get(item.listID), 
         itemsList: state.existingLists
           .get(item.listID).itemsList
-          .set(itemID, { ...item, addToShoppingList:false, isBought: false }) })
+          .set(itemID, { ...item, isOnShoppingList:false, isBought: false }) })
     })
     setLocalShoppingList(new Map())
     set(() => ({ shoppingList: new Map() }))
@@ -80,10 +80,17 @@ export const useListsStore = create((set, get) => ({
         ...state.existingLists.get(item.listID),
         itemsList: state.existingLists
           .get(item.listID)
-          .itemsList.set(itemID, { ...item, addToShoppingList: false, isBought: false }),
+          .itemsList.set(itemID, { ...item, isOnShoppingList: false, isBought: false }),
       });
       tempoShoppingList.delete(itemID);
       setLocalShoppingList(tempoShoppingList);
       return { shoppingList: tempoShoppingList };
     }),
+
+  toggleShoppingListItem: (itemID, item) => {
+    item.isOnShoppingList === false
+      ? get().saveShoppingList(itemID, { ...item, isOnShoppingList: true, isBought: false })
+      : get().deleteItemShoppingList(itemID, item);
+  },
+
 }));
