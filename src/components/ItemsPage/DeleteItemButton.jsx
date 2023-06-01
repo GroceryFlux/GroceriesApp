@@ -4,19 +4,12 @@ import { useListsStore } from '../../store/lists/lists';
 
 function DeleteItemButton({ itemID }) {
   const listID = useListsStore((state) => state.selectedListID);
-  const list = useListsStore((state) => state.existingLists).get(listID);
-  const shoppingList = useListsStore((state) => state.shoppingList);
-  const saveExistingLists = useListsStore((state) => state.saveExistingLists);
+  const deleteItem = useListsStore((state) => state.deleteItem)
 
   return (
     <div
       className="text-red-400 text-center"
-      onClick={() => {
-        list.itemsList.delete(itemID);
-        list.timeStamp = Date.now();
-        shoppingList.delete(itemID);
-        saveExistingLists(listID, list);
-      }}
+      onClick={() => deleteItem(listID, itemID)}
     >
       <i className="fa-solid fa-trash"></i>
     </div>

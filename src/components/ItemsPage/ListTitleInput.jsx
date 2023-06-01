@@ -20,7 +20,7 @@ function ListTitleInput() {
         list.timeStamp = Date.now();
         saveExistingLists(listID, list);
       }}
-    ></input>
+    />
   );
 }
 

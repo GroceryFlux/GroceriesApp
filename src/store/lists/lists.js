@@ -100,6 +100,14 @@ export const useListsStore = create((set, get) => ({
     list.timeStamp = Date.now();
     get().shoppingList.set(itemID, item);
     get().saveExistingLists(listID, list);
-  }
+  },
+
+  deleteItem: (listID, itemID) => {
+    const list = get().existingLists.get(listID)
+    list.itemsList.delete(itemID);
+    list.timeStamp = Date.now();
+    get().shoppingList.delete(itemID);
+    get().saveExistingLists(listID, list);
+  },
 
 }));
