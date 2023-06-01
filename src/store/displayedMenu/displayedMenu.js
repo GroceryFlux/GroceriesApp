@@ -1,9 +1,9 @@
 import { create } from 'zustand';
 
 export const usePageStore = create((set) => ({
-  displayedPage: 'listsDisplay',
+  displayedMenu: 'listsDisplay',
 
-  setDisplayedPage: (page) => set(() => ({ displayedPage: page })),
+  setDisplayedPage: (page) => set(() => ({ displayedMenu: page })),
 }));
 
 export const useBoughtItemsStore = create((set) => ({

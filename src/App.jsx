@@ -8,7 +8,21 @@ import { usePageStore } from './store/displayedMenu/displayedMenu';
 
 function App() {
   const theme = useThemeStore((state) => state.theme);
-  const displayedPage = usePageStore((state) => state.displayedPage);
+  const displayedMenu = usePageStore((state) => state.displayedMenu);
+
+  let displayedPage;
+
+  switch (displayedMenu) {
+  case 'itemsDisplay':
+    displayedPage = <ItemsPage />;
+    break;
+  case 'shoppingListDisplay':
+    displayedPage = <ShoppingListPage />;
+    break;
+  case 'listsDisplay':
+    displayedPage = <ListsPage />;
+    break;
+  }
 
   return (
     <>
@@ -17,13 +31,7 @@ function App() {
           theme === 'dark' ? 'bg-slate-700 text-slate-200' : ''
         }`}
       >
-        {displayedPage === 'itemsDisplay' ? (
-          <ItemsPage />
-        ) : displayedPage === 'shoppingListDisplay' ? (
-          <ShoppingListPage />
-        ) : (
-          <ListsPage />
-        )}
+        {displayedPage}
       </div>
     </>
   );
