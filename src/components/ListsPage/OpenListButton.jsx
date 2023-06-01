@@ -3,7 +3,7 @@ import { usePageStore } from '../../store/displayedMenu/displayedMenu';
 import PropTypes from 'prop-types';
 import { useListsStore } from '../../store/lists/lists';
 
-function EnterListButton({ listID, title }) {
+function OpenListButton({ listID, title }) {
   const setDisplayedPage = usePageStore((state) => state.setDisplayedPage);
   const setSelectedListID = useListsStore((state) => state.setSelectedListID);
 
@@ -19,9 +19,9 @@ function EnterListButton({ listID, title }) {
   );
 }
 
-EnterListButton.propTypes = {
+OpenListButton.propTypes = {
   listID: PropTypes.string,
   title: PropTypes.string,
 };
 
-export default EnterListButton;
+export default OpenListButton;

@@ -1,5 +1,5 @@
 import React from 'react';
-import DisplayShoppingListButton from './DisplayShoppingListButton';
+import OpenShoppingListButton from './OpenShoppingListButton';
 import ToggleThemeButton from './ToggleThemeButton';
 
 function ListsPageHeader() {
@@ -9,7 +9,7 @@ function ListsPageHeader() {
       <div className="">
         <h1 className="font-medium text-2xl text-center">Groceries</h1>
       </div>
-      <DisplayShoppingListButton />
+      <OpenShoppingListButton />
     </div>
   );
 }

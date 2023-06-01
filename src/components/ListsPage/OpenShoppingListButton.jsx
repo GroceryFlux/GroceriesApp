@@ -1,7 +1,7 @@
 import React from 'react';
 import { usePageStore } from '../../store/displayedMenu/displayedMenu';
 
-function DisplayShoppingListButton() {
+function OpenShoppingListButton() {
   const setDisplayedPage = usePageStore((state) => state.setDisplayedPage);
 
   return (
@@ -16,4 +16,4 @@ function DisplayShoppingListButton() {
   );
 }
 
-export default DisplayShoppingListButton;
+export default OpenShoppingListButton;

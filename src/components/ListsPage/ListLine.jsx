@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import EnterListButton from './EnterListButton';
+import OpenListButton from './OpenListButton';
 import DeleteListButton from './DeleteListButton';
 
 function ListLine({ listID, list }) {
@@ -10,7 +10,7 @@ function ListLine({ listID, list }) {
       className="mb-1"
     >
       <div className="flex flex-row justify-between">
-        <EnterListButton
+        <OpenListButton
           listID={listID}
           title={list.title}
         />
