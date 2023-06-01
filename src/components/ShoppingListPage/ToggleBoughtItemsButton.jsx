@@ -1,7 +1,7 @@
 import React from 'react';
 import { useBoughtItemsStore } from '../../store/displayedMenu/displayedMenu';
 
-function ToggleBoughtItemButton() {
+function ToggleBoughtItemsButton() {
   const showBoughtItems = useBoughtItemsStore((state) => state.showBoughtItems);
   const toggleBoughtItemsVisibility = useBoughtItemsStore((state) => state.toggleBoughtItemsVisibility);
   
@@ -17,4 +17,4 @@ function ToggleBoughtItemButton() {
   );
 }
 
-export default ToggleBoughtItemButton;
+export default ToggleBoughtItemsButton;

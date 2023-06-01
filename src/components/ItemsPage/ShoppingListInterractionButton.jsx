@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useSelectedListIDStore } from '../../store/selectedList/selectedList';
 import { useListsStore } from '../../store/lists/lists';
 
 function ShoppingListInterractionButton({ itemID, item }) {
-  const listID = useSelectedListIDStore((state) => state.selectedListID);
+  const listID = useListsStore((state) => state.selectedListID);
   const saveShoppingList = useListsStore((state) => state.saveShoppingList);
   const deleteItemShoppingList = useListsStore((state) => state.deleteItemShoppingList);
 

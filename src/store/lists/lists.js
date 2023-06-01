@@ -9,6 +9,7 @@ import {
 export const useListsStore = create((set, get) => ({
   existingLists: getLocalExistingLists(),
   shoppingList: getLocalShoppingList(),
+  selectedListID: undefined,
 
   saveExistingLists: (listID, list) =>
     set((state) => {
@@ -30,6 +31,18 @@ export const useListsStore = create((set, get) => ({
       }
       return state;
     }),
+
+  setSelectedListID: (listID) => set(() => {
+    return { selectedListID: listID }
+  }),
+
+  createList: () => {
+    const listID = crypto.randomUUID();
+    const list = { title: '', timeStamp: undefined, itemsList: new Map() };
+
+    get().setSelectedListID(listID);
+    get().saveExistingLists(listID, list);
+  },
 
   deleteList: (listID) =>
     set((state) => {

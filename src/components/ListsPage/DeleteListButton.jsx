@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function DeleteListButton({ deleteFunction, deleteID }) {
+  
+
   return (
     <button
       className="text-red-400 min-w-[3rem]"

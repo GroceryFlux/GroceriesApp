@@ -1,6 +1,5 @@
 import React from 'react';
 import { filterItems } from '../utils/filterValue.utils';
-import { useSelectedListIDStore } from '../store/selectedList/selectedList';
 import { useListsStore } from '../store/lists/lists';
 import ListTitleInput from '../components/ItemsPage/ListTitleInput';
 import LastModifiedText from '../components/ItemsPage/LastModifiedText';
@@ -11,7 +10,7 @@ import { useItemFilterStore } from '../store/filtersAndSortBy/itemFilter';
 import BackButton from '../components/shared/BackButton';
 
 function ItemsPage() {
-  const listID = useSelectedListIDStore((state) => state.selectedListID);
+  const listID = useListsStore((state) => state.selectedListID);
   const list = useListsStore((state) => state.existingLists).get(listID);
   const itemFilter = useItemFilterStore((state) => state.itemFilter);
 

@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useThemeStore } from '../../store/theme/theme';
-import { useSelectedListIDStore } from '../../store/selectedList/selectedList';
 import { useListsStore } from '../../store/lists/lists';
 
 function ModifyItemInput({ itemID, item }) {
   const theme = useThemeStore((state) => state.theme);
-  const listID = useSelectedListIDStore((state) => state.selectedListID);
+  const listID = useListsStore((state) => state.selectedListID);
   const list = useListsStore((state) => state.existingLists).get(listID);
   const shoppingList = useListsStore((state) => state.shoppingList);
   const saveExistingLists = useListsStore((state) => state.saveExistingLists);
