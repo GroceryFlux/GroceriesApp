@@ -1,5 +1,5 @@
-import React from "react"
-import { usePageStore } from "../../store/displayedMenu/displayedMenu";
+import React from 'react';
+import { usePageStore } from '../../store/displayedMenu/displayedMenu';
 
 function BackButton() {
   const setDisplayedPage = usePageStore((state) => state.setDisplayedPage);
@@ -12,7 +12,7 @@ function BackButton() {
     >
       <i className="fa-solid fa-chevron-left"></i>
     </button>
-  )
+  );
 }
 
-export default BackButton
+export default BackButton;

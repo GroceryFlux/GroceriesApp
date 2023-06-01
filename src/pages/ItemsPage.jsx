@@ -4,7 +4,7 @@ import { useListsStore } from '../store/lists/lists';
 import ListTitleInput from '../components/ItemsPage/ListTitleInput';
 import LastModifiedText from '../components/ItemsPage/LastModifiedText';
 import NewItemForm from '../components/ItemsPage/NewItemForm';
-import ItemLine from '../components/ItemsPage/ItemLine';
+import ItemLine from '../components/ItemsPage/ItemLine/ItemLine';
 import SearchItemInput from '../components/ItemsPage/SearchItemInput';
 import { useItemFilterStore } from '../store/filtersAndSortBy/itemFilter';
 import BackButton from '../components/shared/BackButton';
@@ -20,14 +20,14 @@ function ItemsPage() {
       itemID={itemID}
       item={item}
     />
-  ))
+  ));
 
   return (
     <>
       <div className="flex items-center justify-around mt-4 mb-8 w-3/4">
         <BackButton />
         <ListTitleInput />
-        <div/>
+        <div />
       </div>
       <LastModifiedText />
       <NewItemForm />

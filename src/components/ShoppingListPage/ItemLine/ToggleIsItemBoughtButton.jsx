@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useListsStore } from '../../store/lists/lists';
+import { useListsStore } from '../../../store/lists/lists';
 
 function ToggleIsItemBoughtButton({ itemID, item }) {
   const saveShoppingList = useListsStore((state) => state.saveShoppingList);

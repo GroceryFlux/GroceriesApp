@@ -4,19 +4,14 @@ import OpenListButton from './OpenListButton';
 import DeleteListButton from './DeleteListButton';
 
 function ListLine({ listID, list }) {
-
   return (
-    <li
-      className="mb-1"
-    >
+    <li className="mb-1">
       <div className="flex flex-row justify-between">
         <OpenListButton
           listID={listID}
           title={list.title}
         />
-        <DeleteListButton
-          listID={listID}
-        />
+        <DeleteListButton listID={listID} />
       </div>
     </li>
   );

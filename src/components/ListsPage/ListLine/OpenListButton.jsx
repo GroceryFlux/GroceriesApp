@@ -1,7 +1,7 @@
 import { React } from 'react';
-import { usePageStore } from '../../store/displayedMenu/displayedMenu';
+import { usePageStore } from '../../../store/displayedMenu/displayedMenu';
 import PropTypes from 'prop-types';
-import { useListsStore } from '../../store/lists/lists';
+import { useListsStore } from '../../../store/lists/lists';
 
 function OpenListButton({ listID, title }) {
   const setDisplayedPage = usePageStore((state) => state.setDisplayedPage);

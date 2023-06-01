@@ -39,16 +39,14 @@
 //   return element.some((subElement) => subElement % 2 === 0);
 // }
 
-
 const state = {
   i: [],
   getI: () => [...i],
-  setI: (i) => this.i = i,
-}
+  setI: (i) => (this.i = i),
+};
 
 const preSetI = state.getI();
 
-state.setI([1, 2])
+state.setI([1, 2]);
 
 const postSetI = state.getI();
-

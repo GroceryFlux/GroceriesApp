@@ -4,7 +4,6 @@ import { useBoughtItemsStore } from '../../store/displayedMenu/displayedMenu';
 function ToggleBoughtItemsButton() {
   const showBoughtItems = useBoughtItemsStore((state) => state.showBoughtItems);
   const toggleBoughtItemsVisibility = useBoughtItemsStore((state) => state.toggleBoughtItemsVisibility);
-  
 
   return (
     <div onClick={() => toggleBoughtItemsVisibility()}>

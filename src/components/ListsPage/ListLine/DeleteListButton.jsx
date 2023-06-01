@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useListsStore } from '../../store/lists/lists';
+import { useListsStore } from '../../../store/lists/lists';
 
 function DeleteListButton({ listID }) {
+  const [confirmDelete, setConfirmDelete] = useState(false);
 
-  const [confirmDelete, setConfirmDelete] = useState(false)
-  
-  const deleteList = useListsStore((state) => state.deleteList)
+  const deleteList = useListsStore((state) => state.deleteList);
 
-  if(confirmDelete) {
+  if (confirmDelete) {
     return (
       <div className="flex gap-4">
         <button onClick={() => deleteList(listID)}>
@@ -18,10 +17,9 @@ function DeleteListButton({ listID }) {
           <i className="fa-regular fa-rectangle-xmark text-green-400"></i>
         </button>
       </div>
-      
-    )
+    );
   }
-  
+
   return (
     <button
       className="text-red-400 min-w-[3rem]"

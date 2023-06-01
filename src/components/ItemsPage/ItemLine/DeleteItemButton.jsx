@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useListsStore } from '../../store/lists/lists';
+import { useListsStore } from '../../../store/lists/lists';
 
 function DeleteItemButton({ itemID }) {
   const listID = useListsStore((state) => state.selectedListID);
-  const deleteItem = useListsStore((state) => state.deleteItem)
+  const deleteItem = useListsStore((state) => state.deleteItem);
 
   return (
     <div

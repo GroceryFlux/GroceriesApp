@@ -6,7 +6,7 @@ function NewItemForm() {
   const listID = useListsStore((state) => state.selectedListID);
   const list = useListsStore((state) => state.existingLists).get(listID);
   const saveExistingLists = useListsStore((state) => state.saveExistingLists);
-  const theme = useThemeStore((state) => state.theme)
+  const theme = useThemeStore((state) => state.theme);
 
   return (
     <form

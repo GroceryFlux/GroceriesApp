@@ -32,9 +32,10 @@ export const useListsStore = create((set, get) => ({
       return state;
     }),
 
-  setSelectedListID: (listID) => set(() => {
-    return { selectedListID: listID }
-  }),
+  setSelectedListID: (listID) =>
+    set(() => {
+      return { selectedListID: listID };
+    }),
 
   createList: () => {
     const listID = crypto.randomUUID();
@@ -63,14 +64,15 @@ export const useListsStore = create((set, get) => ({
   clearShoppingList: () => {
     const state = get();
     state.shoppingList.forEach((item, itemID) => {
-      state.saveExistingLists(item.listID, { 
-        ...state.existingLists.get(item.listID), 
+      state.saveExistingLists(item.listID, {
+        ...state.existingLists.get(item.listID),
         itemsList: state.existingLists
-          .get(item.listID).itemsList
-          .set(itemID, { ...item, isOnShoppingList:false, isBought: false }) })
-    })
-    setLocalShoppingList(new Map())
-    set(() => ({ shoppingList: new Map() }))
+          .get(item.listID)
+          .itemsList.set(itemID, { ...item, isOnShoppingList: false, isBought: false }),
+      });
+    });
+    setLocalShoppingList(new Map());
+    set(() => ({ shoppingList: new Map() }));
   },
 
   deleteItemShoppingList: (itemID, item) =>
@@ -94,8 +96,8 @@ export const useListsStore = create((set, get) => ({
   },
 
   saveItemName: (newName, itemID, listID) => {
-    const list = get().existingLists.get(listID)
-    const item = list.itemsList.get(itemID)
+    const list = get().existingLists.get(listID);
+    const item = list.itemsList.get(itemID);
     item.itemName = newName;
     list.timeStamp = Date.now();
     get().shoppingList.set(itemID, item);
@@ -103,11 +105,10 @@ export const useListsStore = create((set, get) => ({
   },
 
   deleteItem: (listID, itemID) => {
-    const list = get().existingLists.get(listID)
+    const list = get().existingLists.get(listID);
     list.itemsList.delete(itemID);
     list.timeStamp = Date.now();
     get().shoppingList.delete(itemID);
     get().saveExistingLists(listID, list);
   },
-
 }));

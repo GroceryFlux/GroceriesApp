@@ -7,7 +7,7 @@ import SelectSortBy from '../components/ListsPage/SelectSortBy';
 import ListsPageHeader from '../components/ListsPage/ListsDisplayHeader';
 import { useListFilterStore } from '../store/filtersAndSortBy/listFilter';
 import { useSortByStore } from '../store/filtersAndSortBy/sortBy';
-import ListLine from '../components/ListsPage/ListLine';
+import ListLine from '../components/ListsPage/ListLine/ListLine';
 import SearchListInput from '../components/ListsPage/SearchListInput';
 
 function ListsPage() {
@@ -21,7 +21,7 @@ function ListsPage() {
       listID={listID}
       list={list}
     />
-  ))
+  ));
 
   return (
     <div className="w-3/4">

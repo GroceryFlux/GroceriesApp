@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useThemeStore } from '../../store/theme/theme';
+import { useThemeStore } from '../../../store/theme/theme';
 
 function ItemInput({ item }) {
   const theme = useThemeStore((state) => state.theme);

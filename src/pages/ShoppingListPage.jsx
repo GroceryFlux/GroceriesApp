@@ -1,9 +1,9 @@
 import React from 'react';
 import { useListsStore } from '../store/lists/lists';
 import ShoppingListHeader from '../components/ShoppingListPage/ShoppingListPageHeader';
-import ItemLine from '../components/ShoppingListPage/ItemLine';
 import { useBoughtItemsStore } from '../store/displayedMenu/displayedMenu';
 import ToggleBoughtItemsButton from '../components/ShoppingListPage/ToggleBoughtItemsButton';
+import ItemLine from '../components/ShoppingListPage/ItemLine/ItemLine';
 
 function ShoppingListPage() {
   const shoppingList = useListsStore((state) => state.shoppingList);
