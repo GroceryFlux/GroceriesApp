@@ -93,4 +93,13 @@ export const useListsStore = create((set, get) => ({
       : get().deleteItemShoppingList(itemID, item);
   },
 
+  saveItemName: (newName, itemID, listID) => {
+    const list = get().existingLists.get(listID)
+    const item = list.itemsList.get(itemID)
+    item.itemName = newName;
+    list.timeStamp = Date.now();
+    get().shoppingList.set(itemID, item);
+    get().saveExistingLists(listID, list);
+  }
+
 }));

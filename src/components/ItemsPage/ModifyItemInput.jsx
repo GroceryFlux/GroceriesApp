@@ -6,20 +6,13 @@ import { useListsStore } from '../../store/lists/lists';
 function ModifyItemInput({ itemID, item }) {
   const theme = useThemeStore((state) => state.theme);
   const listID = useListsStore((state) => state.selectedListID);
-  const list = useListsStore((state) => state.existingLists).get(listID);
-  const shoppingList = useListsStore((state) => state.shoppingList);
-  const saveExistingLists = useListsStore((state) => state.saveExistingLists);
+  const saveItemName = useListsStore((state) => state.saveItemName)
 
   return (
     <div className="flex flex-row">
       <input
         className={`${theme === 'dark' ? 'bg-slate-700 text-slate-200' : ''}`}
-        onBlur={(event) => {
-          item.itemName = event.target.value;
-          list.timeStamp = Date.now();
-          shoppingList.set(itemID, item);
-          saveExistingLists(listID, list);
-        }}
+        onBlur={(event) => saveItemName(event.target.value, itemID, listID)}
         defaultValue={item.itemName}
       />
     </div>
