@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ModifyItemInput from './ModifyItemInput';
-import ShoppingListInterractionButton from './ShoppingListInterractionButton';
+import ShoppingListInteractionButton from './ShoppingListInteractionButton';
 import DeleteItemButton from './DeleteItemButton';
 
 function ItemLine({ itemID, item }) {
@@ -12,7 +12,7 @@ function ItemLine({ itemID, item }) {
           itemID={itemID}
           item={item}
         />
-        <ShoppingListInterractionButton
+        <ShoppingListInteractionButton
           itemID={itemID}
           item={item}
         />
