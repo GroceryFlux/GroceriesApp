@@ -1,71 +1,37 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './index.css';
-import ListsDisplay from './components/ListsDisplay';
-import ItemsDisplay from './components/ItemsDisplay';
-import { setLocalExistingLists, getLocalExistingLists, getLocalShoppingList, setLocalShoppingList } from './utils/localStorage.utils';
-import ShoppingListDisplay from './components/ShoppingListDisplay';
+import ListsPage from './pages/ListsPage';
+import ItemsPage from './pages/ItemsPage';
+import { useThemeStore } from './store/theme/theme';
+import ShoppingListPage from './pages/ShoppingListPage';
+import { usePageStore } from './store/displayedMenu/displayedMenu';
 
 function App() {
-  const [isItemsDisplayVisible, setIsItemsDisplayVisible] = useState(false);
-  const [isShoppingListVisible, setIsShoppingListVisible] = useState(false)
-  const [selectedList, setSelectedList] = useState(null);
-  const [existingLists, setExistingLists] = useState(getLocalExistingLists);
-  const [shoppingList, setShoppingList]= useState(getLocalShoppingList);
-  const [theme, setTheme] = useState('Light');
+  const theme = useThemeStore((state) => state.theme);
+  const displayedMenu = usePageStore((state) => state.displayedMenu);
 
-  const saveList = (listID, list) => {
-    const newList = new Map(existingLists.set(listID, list));
-    setExistingLists(newList);
-    setLocalExistingLists(newList);
-  };
+  let displayedPage;
 
-  const saveShoppingList = (itemID, item) => {
-    const newShoppingList = new Map(shoppingList.set(itemID, item))
-    setShoppingList(newShoppingList)
-    setLocalShoppingList(shoppingList)
+  switch (displayedMenu) {
+  case 'itemsDisplay':
+    displayedPage = <ItemsPage />;
+    break;
+  case 'shoppingListDisplay':
+    displayedPage = <ShoppingListPage />;
+    break;
+  case 'listsDisplay':
+    displayedPage = <ListsPage />;
+    break;
   }
-
-  const deleteList = (listID) => {
-    existingLists.delete(listID);
-    setExistingLists(new Map(existingLists));
-    setLocalExistingLists(existingLists);
-  };
 
   return (
     <>
-      <div className={`flex flex-col min-w-[280px] items-center w-screen h-screen ${theme === 'Light' ? 'bg-slate-700 text-slate-200' : ''}`}>
-        {isItemsDisplayVisible ? (
-          <ItemsDisplay
-            setIsItemsDisplayVisible={setIsItemsDisplayVisible}
-            saveList={saveList}
-            selectedList={selectedList}
-            theme={theme}
-            shoppingList={shoppingList}
-            existingLists={existingLists}
-          />
-        ) : (
-          isShoppingListVisible ? (
-            <ShoppingListDisplay
-              setIsShoppingListVisible={setIsShoppingListVisible}
-              existingLists={existingLists}
-              saveList={saveList}
-              theme={theme}
-              shoppingList={shoppingList}
-              setShoppingList={setShoppingList}
-              saveShoppingList={saveShoppingList}
-            />
-          ) : (
-            <ListsDisplay
-              setIsItemsDisplayVisible={setIsItemsDisplayVisible}
-              setIsShoppingListVisible={setIsShoppingListVisible}
-              existingLists={existingLists}
-              setSelectedList={setSelectedList}
-              saveList={saveList}
-              deleteList={deleteList}
-              theme={theme}
-              setTheme={setTheme}
-            />
-          ))}
+      <div
+        className={`flex flex-col min-w-[280px] items-center w-screen h-screen ${
+          theme === 'dark' ? 'bg-slate-700 text-slate-200' : ''
+        }`}
+      >
+        {displayedPage}
       </div>
     </>
   );

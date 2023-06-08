@@ -31,10 +31,22 @@
 //   return [listId, list];
 // })
 
-const array1 = [[1, 2], [3, 4], [5]];
+// const array1 = [[1, 2], [3, 4], [5]];
 
-const filtered = array1.filter();
+// const filtered = array1.filter();
 
-function filterFunction(element) {
-  return element.some((subElement) => subElement % 2 === 0);
-}
+// function filterFunction(element) {
+//   return element.some((subElement) => subElement % 2 === 0);
+// }
+
+const state = {
+  i: [],
+  getI: () => [...i],
+  setI: (i) => (this.i = i),
+};
+
+const preSetI = state.getI();
+
+state.setI([1, 2]);
+
+const postSetI = state.getI();

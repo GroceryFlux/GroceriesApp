@@ -3,7 +3,7 @@ export const filterLists = (value, lists) => {
     return [...lists];
   }
 
-  const valueLowerCase = value.toLowerCase()
+  const valueLowerCase = value.toLowerCase();
 
   const filteredLists = [...lists].filter(
     (entry) =>

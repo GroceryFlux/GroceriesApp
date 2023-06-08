@@ -1,9 +1,8 @@
 export const setLocalExistingLists = (state) => {
   const savedState = [...state.entries()].map(([listID, list]) => {
     const itemsList = [...list.itemsList.entries()];
-      
-    return [listID, { ...list, itemsList: itemsList }];
 
+    return [listID, { ...list, itemsList: itemsList }];
   });
 
   localStorage.setItem('existingLists', JSON.stringify(savedState));
@@ -34,22 +33,29 @@ export const getLocalExistingLists = () => {
 
 export const setLocalShoppingList = (state) => {
   const saveState = [];
-  [...state.entries()].forEach(([listID, list]) => {
-    list ? saveState.push([listID, list]) : null
-  })
-  
-  localStorage.setItem('shoppingList', JSON.stringify(saveState))
-}
+  state.forEach((item, itemID) => {
+    item ? saveState.push([itemID, item]) : null;
+  });
+
+  localStorage.setItem('shoppingList', JSON.stringify(saveState));
+};
 
 export const getLocalShoppingList = () => {
-  const retrievedShoppingList = JSON.parse(localStorage.getItem('shoppingList'));
+  const retrievedShoppingList = JSON.parse(localStorage.getItem('existingLists'));
   const localState = new Map();
 
-  if(!retrievedShoppingList) {
-    return localState
+  if (!retrievedShoppingList) {
+    return localState;
   }
 
-  retrievedShoppingList.forEach(([listID, list]) => localState.set(listID, list))
+  // eslint-disable-next-line no-unused-vars
+  retrievedShoppingList.forEach(([listID, list]) => {
+    [...list.itemsList].forEach(([itemID, item]) => {
+      if (item.isOnShoppingList) {
+        localState.set(itemID, item);
+      }
+    });
+  });
 
-  return localState
-}
+  return localState;
+};
