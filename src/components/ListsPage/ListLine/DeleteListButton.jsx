@@ -11,10 +11,10 @@ function DeleteListButton({ listID }) {
     return (
       <div className="flex gap-4">
         <button onClick={() => deleteList(listID)}>
-          <i className="fa-regular fa-square-check text-red-400"></i>
+          <i className="fa-regular fa-square-check text-green-400"></i>
         </button>
         <button onClick={() => setConfirmDelete(false)}>
-          <i className="fa-regular fa-rectangle-xmark text-green-400"></i>
+          <i className="fa-regular fa-rectangle-xmark text-red-400"></i>
         </button>
       </div>
     );
