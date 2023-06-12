@@ -47,7 +47,6 @@ function ShoppingListPage() {
   return (
     <>
       <ShoppingListHeader />
-      <h2>Basket</h2>
       <ul className="mb-3 mt-3">{unboughtItems}</ul>
       <div className="flex flex-row gap-3">
         <h2>Purchased</h2>
