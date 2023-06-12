@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useListsStore } from '../../store/lists/lists';
 import { useThemeStore } from '../../store/theme/theme';
 
@@ -8,32 +8,46 @@ function NewItemForm() {
   const saveExistingLists = useListsStore((state) => state.saveExistingLists);
   const theme = useThemeStore((state) => state.theme);
 
+  const [hasItemName, setHasItemName] = useState(null)
+
+  function checkSubmit(event) {
+    if(event.target[0].value) {
+      setHasItemName(true)
+      list.itemsList.set(crypto.randomUUID(), {
+        itemName: event.target[0].value,
+        isOnShoppingList: false,
+        isBought: false,
+        listID: listID,
+      });
+      list.timeStamp = Date.now();
+      saveExistingLists(listID, list);
+      event.target[0].value = '';
+    }
+    else setHasItemName(false)
+  }
+    
   return (
     <form
       onSubmit={(event) => {
         event.preventDefault();
-        list.itemsList.set(crypto.randomUUID(), {
-          itemName: event.target[0].value,
-          isOnShoppingList: false,
-          isBought: false,
-          listID: listID,
-        });
-        list.timeStamp = Date.now();
-        saveExistingLists(listID, list);
-        event.target[0].value = '';
+        checkSubmit(event)
       }}
     >
       <div className="flex flex-row justify-center text-center my-4">
         <input
-          className={`text-center border-solid border-y-2 rounded-l-lg border-l-2 border-blue-400 p-1 ${
-            theme === 'dark' ? 'bg-slate-700 text-slate-200' : ''
-          }`}
-          placeholder="Bananas"
+          className={`text-center border-solid border-y-2 rounded-l-lg border-l-2 focus:outline-none placeholder:italic p-1 
+          ${theme === 'dark' ? 'bg-slate-700 text-slate-200' : ''}
+          ${hasItemName === false ? 'border-red-400' : null}
+          `}
+          placeholder="Add an item"
           defaultValue=""
+          onChange={(event) => event.target.value != '' ? setHasItemName(true) : null}
         />
         <button
           type="submit"
-          className="border-solid border-y-2 border-r-2 rounded-r-lg border-blue-400 text-blue-400 p-1"
+          className={`border-solid border-y-2 border-r-2 rounded-r-lg  p-1
+          ${hasItemName === false ? 'border-red-400 text-red-400' : null}
+          `}
         >
           &nbsp;<i className="fa-solid fa-circle-plus"></i>
         </button>
