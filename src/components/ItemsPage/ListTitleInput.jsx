@@ -7,8 +7,8 @@ function ListTitleInput() {
   const listID = useListsStore((state) => state.selectedListID);
   const list = useListsStore((state) => state.existingLists).get(listID);
   const saveExistingLists = useListsStore((state) => state.saveExistingLists);
-  
-  const [localTitle, setLocalTitle] = useState(list.title)
+
+  const [localTitle, setLocalTitle] = useState(list.title);
 
   return (
     <input

@@ -9,7 +9,7 @@ import { useThemeStore } from '../store/theme/theme';
 function ShoppingListPage() {
   const shoppingList = useListsStore((state) => state.shoppingList);
   const showBoughtItems = useBoughtItemsStore((state) => state.showBoughtItems);
-  const theme = useThemeStore((state) => state.theme)
+  const theme = useThemeStore((state) => state.theme);
 
   if (shoppingList.size === 0) {
     return (
@@ -52,12 +52,11 @@ function ShoppingListPage() {
         <h2>Purchased</h2>
         <ToggleBoughtItemsButton />
       </div>
-      {showBoughtItems && 
-      <ul 
-        className={`mb-3 mt-3 ${theme === 'dark' ? 'bg-slate-700 text-slate-400' : 'bg-white text-slate-400'}`}
-      >
-        {boughtItems}
-      </ul>}
+      {showBoughtItems && (
+        <ul className={`mb-3 mt-3 ${theme === 'dark' ? 'bg-slate-700 text-slate-400' : 'bg-white text-slate-400'}`}>
+          {boughtItems}
+        </ul>
+      )}
     </>
   );
 }

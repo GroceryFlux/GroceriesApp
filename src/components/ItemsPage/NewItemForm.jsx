@@ -8,11 +8,11 @@ function NewItemForm() {
   const saveExistingLists = useListsStore((state) => state.saveExistingLists);
   const theme = useThemeStore((state) => state.theme);
 
-  const [hasItemName, setHasItemName] = useState(null)
+  const [hasItemName, setHasItemName] = useState(null);
 
   function checkSubmit(event) {
-    if(event.target[0].value) {
-      setHasItemName(true)
+    if (event.target[0].value) {
+      setHasItemName(true);
       list.itemsList.set(crypto.randomUUID(), {
         itemName: event.target[0].value,
         isOnShoppingList: false,
@@ -22,15 +22,14 @@ function NewItemForm() {
       list.timeStamp = Date.now();
       saveExistingLists(listID, list);
       event.target[0].value = '';
-    }
-    else setHasItemName(false)
+    } else setHasItemName(false);
   }
-    
+
   return (
     <form
       onSubmit={(event) => {
         event.preventDefault();
-        checkSubmit(event)
+        checkSubmit(event);
       }}
     >
       <div className="flex flex-row justify-center text-center my-4">
@@ -41,7 +40,7 @@ function NewItemForm() {
           `}
           placeholder="Add an item"
           defaultValue=""
-          onChange={(event) => event.target.value != '' ? setHasItemName(true) : null}
+          onChange={(event) => (event.target.value != '' ? setHasItemName(true) : null)}
         />
         <button
           type="submit"
