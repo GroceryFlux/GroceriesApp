@@ -7,7 +7,7 @@ function ItemInput({ item }) {
 
   return (
     <input
-      className={`${theme === 'dark' ? 'bg-slate-700 text-slate-200' : 'bg-white'}`}
+      className={`${theme === 'dark' ? 'bg-slate-700' : 'bg-white'}`}
       defaultValue={item.itemName}
       disabled
     />
