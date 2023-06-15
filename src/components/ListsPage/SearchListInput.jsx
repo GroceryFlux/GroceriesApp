@@ -12,10 +12,10 @@ function SearchListInput() {
     <div className={`border rounded-lg ${theme === 'dark' ? 'bg-slate-700 text-slate-200' : ''}`}>
       <input
         placeholder="Search"
-        className={`focus: outline-none ml-1 text-center ${theme === 'dark' ? 'bg-slate-700 text-slate-200' : ''}`}
+        className={`outline-none ml-1 text-center ${theme === 'dark' ? 'bg-slate-700 text-slate-200' : ''}`}
         onChange={(event) => setListFilter(event.target.value)}
         value={listFilter}
-      ></input>
+      />
       <i
         className="mx-1 text-sm fa-solid fa-circle-xmark justify-center"
         onClick={() => resetListFilter()}

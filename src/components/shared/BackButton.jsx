@@ -11,14 +11,21 @@ function BackButton() {
   const saveExistingLists = useListsStore((state) => state.saveExistingLists);
 
   function checkEmptyList() {
-    if (displayedMenu === 'itemsDisplay') {
-      if (list.title === '' && list.itemsList.size === 0) {
-        deleteList(listID);
-      } else if (list.title === '') {
-        list.title = 'No title';
-        saveExistingLists(listID, list);
-      }
+    if (displayedMenu !== 'itemsDisplay') {
+      return;
     }
+
+    if (list.title !== '') {
+      return;
+    }
+
+    if (list.itemsList.size === 0) {
+      deleteList(listID);
+      return;
+    }
+
+    list.title = 'No title';
+    saveExistingLists(listID, list);
   }
 
   return (

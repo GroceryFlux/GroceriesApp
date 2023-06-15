@@ -11,18 +11,24 @@ function NewItemForm() {
   const [hasItemName, setHasItemName] = useState(null);
 
   function checkSubmit(event) {
-    if (event.target[0].value) {
-      setHasItemName(true);
-      list.itemsList.set(crypto.randomUUID(), {
-        itemName: event.target[0].value,
-        isOnShoppingList: false,
-        isBought: false,
-        listID: listID,
-      });
-      list.timeStamp = Date.now();
-      saveExistingLists(listID, list);
-      event.target[0].value = '';
-    } else setHasItemName(false);
+    if (!event.target[0].value) {
+      setHasItemName(false);
+      return;
+    }
+
+    setHasItemName(true);
+    
+    list.itemsList.set(crypto.randomUUID(), {
+      itemName: event.target[0].value,
+      isOnShoppingList: false,
+      isBought: false,
+      listID: listID,
+    });
+    
+    list.timeStamp = Date.now();
+    saveExistingLists(listID, list);
+
+    event.target[0].value = '';
   }
 
   return (
@@ -34,7 +40,7 @@ function NewItemForm() {
     >
       <div className="flex flex-row justify-center text-center my-4">
         <input
-          className={`text-center border-solid border-y-2 rounded-l-lg border-l-2 focus:outline-none placeholder:italic p-1 
+          className={`text-center border-solid border-y-2 rounded-l-lg border-l-2 outline-none placeholder:italic p-1 
           ${theme === 'dark' ? 'bg-slate-700 text-slate-200' : ''}
           ${hasItemName === false ? 'border-red-400' : null}
           `}
