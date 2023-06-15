@@ -17,14 +17,14 @@ function NewItemForm() {
     }
 
     setHasItemName(true);
-    
+
     list.itemsList.set(crypto.randomUUID(), {
       itemName: event.target[0].value,
       isOnShoppingList: false,
       isBought: false,
       listID: listID,
     });
-    
+
     list.timeStamp = Date.now();
     saveExistingLists(listID, list);
 
