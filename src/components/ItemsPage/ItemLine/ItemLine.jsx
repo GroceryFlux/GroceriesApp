@@ -7,7 +7,7 @@ import DeleteItemButton from './DeleteItemButton';
 function ItemLine({ itemID, item }) {
   return (
     <li>
-      <div className="flex flex-row justify-between py-1">
+      <div className="flex flex-row py-1">
         <ModifyItemInput
           itemID={itemID}
           item={item}

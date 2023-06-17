@@ -6,7 +6,7 @@ import DeleteListButton from './DeleteListButton';
 function ListLine({ listID, list }) {
   return (
     <li className="mb-1">
-      <div className="flex flex-row justify-between">
+      <div className="flex justify-between">
         <OpenListButton
           listID={listID}
           title={list.title}

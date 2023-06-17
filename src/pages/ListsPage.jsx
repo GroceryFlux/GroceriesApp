@@ -24,20 +24,18 @@ function ListsPage() {
   ));
 
   return (
-    <div className="w-3/4">
+    <div className="w-[80%] min-w-[200px]">
       <ListsPageHeader />
       <div className="flex gap-4 my-4">
         <div className="text-lg">Recurrent lists</div>
         <NewListButton />
       </div>
-      <div className="flex flex-col">
-        <div className="flex flex-row gap-3 mb-4">
-          <SearchListInput />
-          <SelectSortBy />
-        </div>
-        <div className="">
-          <ul>{lists}</ul>
-        </div>
+      <div className="flex gap-3 mb-4 shrink-0">
+        <SearchListInput />
+        <SelectSortBy />
+      </div>
+      <div className="">
+        <ul>{lists}</ul>
       </div>
     </div>
   );

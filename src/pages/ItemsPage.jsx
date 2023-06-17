@@ -24,7 +24,7 @@ function ItemsPage() {
 
   return (
     <>
-      <div className="flex items-center justify-around mt-4 mb-8 w-3/4">
+      <div className="flex items-center justify-around mt-4 mb-8">
         <BackButton />
         <ListTitleInput />
         <div />

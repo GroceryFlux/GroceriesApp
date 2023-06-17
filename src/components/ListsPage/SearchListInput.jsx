@@ -7,20 +7,31 @@ function SearchListInput() {
   const setListFilter = useListFilterStore((state) => state.setListFilter);
   const listFilter = useListFilterStore((state) => state.listFilter);
   const resetListFilter = useListFilterStore((state) => state.resetListFilter);
+  const displayListFilter = useListFilterStore((state) => state.displayListFilter)
+  const setDisplayListFilter = useListFilterStore((state) => state.setDisplayListFilter)
+
 
   return (
-    <div className={`border rounded-lg ${theme === 'dark' ? 'bg-slate-700 text-slate-200' : ''}`}>
-      <input
-        placeholder="Search"
-        className={`outline-none ml-1 text-center ${theme === 'dark' ? 'bg-slate-700 text-slate-200' : ''}`}
-        onChange={(event) => setListFilter(event.target.value)}
-        value={listFilter}
+    <>
+      <i 
+        className="fa-solid fa-magnifying-glass self-center"
+        onClick={() => setDisplayListFilter()}
       />
-      <i
-        className="mx-1 text-sm fa-solid fa-circle-xmark justify-center"
-        onClick={() => resetListFilter()}
-      ></i>
-    </div>
+      {displayListFilter && (
+        <div className={`border rounded-lg ${theme === 'dark' ? 'bg-slate-700 text-slate-200' : ''}`}>
+          <input
+            placeholder="Search"
+            className={`outline-none ml-1 text-center w-[100px] ${theme === 'dark' ? 'bg-slate-700 text-slate-200' : ''}`}
+            onChange={(event) => setListFilter(event.target.value)}
+            value={listFilter}
+          />
+          <i
+            className="mx-1 text-sm fa-solid fa-circle-xmark justify-center"
+            onClick={() => resetListFilter()}
+          ></i>
+        </div>
+      )}
+    </>
   );
 }
 
