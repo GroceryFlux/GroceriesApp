@@ -15,11 +15,13 @@ function BackButton() {
       return;
     }
 
-    if (list.title !== '') {
+    const hasTitle = list.title !== '';
+    if (hasTitle) {
       return;
     }
 
-    if (list.itemsList.size === 0) {
+    const hasNoItems = list.itemsList.size === 0;
+    if (hasNoItems) {
       deleteList(listID);
       return;
     }
