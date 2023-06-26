@@ -17,11 +17,8 @@ function SearchListInput() {
         <MagnifyingGlassIcon />
       </button>
 
-      <div className={`flex grow shrink pr-4 ${displayListFilter ? 'visible': 'invisible'}`}>
-        <div
-          className={`flex grow shrink border rounded-lg
-          ${theme === 'dark' ? 'bg-slate-700 text-slate-200' : ''}`}
-        >
+      <div className={`flex grow shrink pr-4 ${displayListFilter ? 'visible' : 'invisible'}`}>
+        <div className={`flex grow shrink border rounded-lg`}>
           <input
             placeholder="Search"
             className={`grow shrink w-2 outline-none rounded-lg text-center 
