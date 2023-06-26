@@ -5,5 +5,5 @@ export const useListFilterStore = create((set) => ({
   listFilter: '',
   setListFilter: (value) => set(() => ({ listFilter: value })),
   resetListFilter: () => set(() => ({ listFilter: '' })),
-  setDisplayListFilter: () => set((state) => ({ displayListFilter: !state.displayListFilter }))
+  setDisplayListFilter: () => set((state) => ({ displayListFilter: !state.displayListFilter })),
 }));

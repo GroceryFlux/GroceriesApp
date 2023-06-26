@@ -13,7 +13,7 @@ function SelectSortBy() {
       name="selectSortBy"
       defaultValue={sortType}
       onChange={(event) => setSortType(event.target.value)}
-      className={`w-14 ${theme === 'dark' ? 'bg-slate-700 text-slate-200' : ''}`}
+      className={`-ml-1 w-14 ${theme === 'dark' ? 'bg-slate-700 text-slate-200' : ''}`}
     >
       <option
         value="sort"

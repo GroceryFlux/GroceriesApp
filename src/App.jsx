@@ -27,7 +27,7 @@ function App() {
   return (
     <>
       <div
-        className={`flex flex-col min-w-[280px] items-center w-screen h-screen ${
+        className={`flex flex-col items-center min-h-screen w-screen ${
           theme === 'dark' ? 'bg-slate-700 text-slate-200' : ''
         }`}
       >

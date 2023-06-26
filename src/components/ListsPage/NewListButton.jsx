@@ -1,6 +1,7 @@
 import React from 'react';
 import { useListsStore } from '../../store/lists/lists';
 import { usePageStore } from '../../store/displayedMenu/displayedMenu';
+import { PlusIcon } from '../Icons';
 
 function NewListButton() {
   const setDisplayedPage = usePageStore((state) => state.setDisplayedPage);
@@ -8,13 +9,12 @@ function NewListButton() {
 
   return (
     <button
-      className="text-xl"
       onClick={() => {
         createList();
         setDisplayedPage('itemsDisplay');
       }}
     >
-      <i className="fa-solid fa-circle-plus"></i>
+      <PlusIcon />
     </button>
   );
 }
