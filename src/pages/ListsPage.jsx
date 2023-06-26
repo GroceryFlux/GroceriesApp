@@ -32,7 +32,7 @@ function ListsPage() {
         <div className="text-lg">Recurrent lists</div>
         <NewListButton />
       </div>
-      <div className="flex gap-3 h-7">
+      <div className="flex gap-3">
         <SelectSorting />
         <SearchListInput />
       </div>

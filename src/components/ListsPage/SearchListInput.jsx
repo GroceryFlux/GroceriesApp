@@ -17,15 +17,14 @@ function SearchListInput() {
         <MagnifyingGlassIcon />
       </button>
 
-      <div className={`${displayListFilter ? 'visible' : 'invisible'}`}>
+      <div className={`flex grow shrink pr-4 ${displayListFilter ? 'visible': 'invisible'}`}>
         <div
-          className={`flex shrink border rounded-lg ease-in duration-300
-          ${theme === 'dark' ? 'bg-slate-700 text-slate-200' : ''}
-          ${displayListFilter ? 'translate-x-0' : '-translate-x-80'}`}
+          className={`flex grow shrink border rounded-lg
+          ${theme === 'dark' ? 'bg-slate-700 text-slate-200' : ''}`}
         >
           <input
             placeholder="Search"
-            className={`outline-none rounded-lg text-center 
+            className={`grow shrink w-2 outline-none rounded-lg text-center 
             ${theme === 'dark' ? 'bg-slate-700 text-slate-200' : ''}`}
             onChange={(event) => setListFilter(event.target.value)}
             value={listFilter}
