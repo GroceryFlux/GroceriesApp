@@ -4,3 +4,7 @@ export * from './MoonIcon.jsx';
 export * from './PlusIcon.jsx';
 export * from './SunIcon.jsx';
 export * from './XIcon.jsx';
+export * from './TrashIcon.jsx'
+export * from './CancelIcon.jsx'
+export * from './ConfirmDeleteIcon.jsx'
+export * from './SortIcon.jsx'

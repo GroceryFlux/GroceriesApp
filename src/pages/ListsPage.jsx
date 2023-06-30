@@ -3,12 +3,12 @@ import { filterLists } from '../utils/filterValue.utils';
 import { sortBy } from '../utils/timeStampAndSortBy';
 import { useListsStore } from '../store/lists/lists';
 import NewListButton from '../components/ListsPage/NewListButton';
-import SelectSortBy from '../components/ListsPage/SelectSortBy';
 import ListsPageHeader from '../components/ListsPage/ListsDisplayHeader';
 import { useListFilterStore } from '../store/filtersAndSortBy/listFilter';
 import { useSortByStore } from '../store/filtersAndSortBy/sortBy';
 import ListLine from '../components/ListsPage/ListLine/ListLine';
 import SearchListInput from '../components/ListsPage/SearchListInput';
+import SelectSorting from '../components/ListsPage/SelectSorting';
 
 function ListsPage() {
   const existingLists = useListsStore((state) => state.existingLists);
@@ -33,7 +33,7 @@ function ListsPage() {
         <NewListButton />
       </div>
       <div className="flex gap-3 h-7">
-        <SelectSortBy />
+        <SelectSorting />
         <SearchListInput />
       </div>
       <div className="">
