@@ -1,16 +1,16 @@
 import React from 'react';
 import { usePageStore } from '../../store/displayedMenu/displayedMenu';
-import { CartIcon } from '../Icons';
+import { OutlineCartIcon } from '../Icons';
 
 function OpenShoppingListButton() {
   const setDisplayedPage = usePageStore((state) => state.setDisplayedPage);
 
   return (
     <button
-      className="pt-0.5"
+      className="text-spurple"
       onClick={() => setDisplayedPage('shoppingListDisplay')}
     >
-      <CartIcon />
+      <OutlineCartIcon />
     </button>
   );
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const CartIcon = () => {
+export const OutlineCartIcon = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
