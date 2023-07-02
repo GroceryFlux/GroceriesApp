@@ -8,10 +8,19 @@ function ToggleThemeButton() {
 
   return (
     <button
-      className="pt-0.5"
+      className="pt-2.5"
       onClick={toggleTheme}
     >
-      {theme === 'dark' ? <MoonIcon /> : <SunIcon />}
+      {/*theme === 'dark' ? <MoonIcon /> : <SunIcon />*/}
+
+      <label className={`swap ${theme === 'dark' ? 'swap-active' : ''} swap-rotate`}>
+        <div className="swap-on">
+          <MoonIcon />
+        </div>
+        <div className="swap-off">
+          <SunIcon />
+        </div>
+      </label>
     </button>
   );
 }

@@ -11,15 +11,15 @@ function DeleteListButton({ listID }) {
   if (confirmDelete) {
     return (
       <div className="flex gap-3">
-        <button 
+        <button
           onClick={() => deleteList(listID)}
-          className='text-green-400'
+          className="text-green-400"
         >
           <ConfirmDeleteIcon />
         </button>
-        <button 
+        <button
           onClick={() => setConfirmDelete(false)}
-          className='text-red-400'
+          className="text-red-400"
         >
           <CancelIcon />
         </button>

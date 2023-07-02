@@ -13,6 +13,7 @@ function OpenListButton({ listID, title }) {
         setSelectedListID(listID);
         setDisplayedPage('itemsDisplay');
       }}
+      className="w-full text-left text-lg font-bold"
     >
       {title}
     </button>
