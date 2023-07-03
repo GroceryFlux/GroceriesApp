@@ -11,7 +11,7 @@ function ListLine({ listID, list }) {
         <div className="flex justify-between">
           <OpenListButton
             listID={listID}
-            title={list.title}
+            list={list}
           />
           <DeleteListButton listID={listID} />
         </div>

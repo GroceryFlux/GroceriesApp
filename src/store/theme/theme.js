@@ -1,6 +1,12 @@
 import { create } from 'zustand';
+import { getTheme, setTheme } from '../../utils/localStorage.utils';
 
 export const useThemeStore = create((set) => ({
-  theme: 'dark',
-  toggleTheme: () => set((state) => ({ theme: state.theme === 'dark' ? 'light' : 'dark' })),
+  theme: getTheme(),
+  toggleTheme: () => {
+    set((state) => ((
+      state.theme === 'night' ? setTheme('light') : setTheme('night'),
+      { theme: state.theme === 'night' ? 'light' : 'night' }
+    )));
+  },
 }));

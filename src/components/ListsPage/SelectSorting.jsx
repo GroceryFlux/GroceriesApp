@@ -11,7 +11,7 @@ function SelectSorting() {
   const theme = useThemeStore((state) => state.theme);
 
   return (
-    <div className="relative inline-block text-spurple pt-1">
+    <div className="relative inline-block text-primary pt-1">
       <button onClick={() => setShowDropdown(!showDropdown)}>
         <SortIcon />
       </button>

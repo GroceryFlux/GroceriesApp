@@ -13,7 +13,7 @@ function NewListButton() {
         createList();
         setDisplayedPage('itemsDisplay');
       }}
-      className="text-spurple"
+      className="text-primary"
     >
       <PlusIcon />
     </button>

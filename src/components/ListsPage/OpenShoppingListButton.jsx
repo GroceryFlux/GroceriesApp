@@ -7,7 +7,7 @@ function OpenShoppingListButton() {
 
   return (
     <button
-      className="text-spurple"
+      className="text-primary"
       onClick={() => setDisplayedPage('shoppingListDisplay')}
     >
       <OutlineCartIcon />

@@ -9,6 +9,7 @@ import { useSortByStore } from '../store/filtersAndSortBy/sortBy';
 import ListLine from '../components/ListsPage/ListLine/ListLine';
 import SearchListInput from '../components/ListsPage/SearchListInput';
 import SelectSorting from '../components/ListsPage/SelectSorting';
+import SearchListButton from '../components/ListsPage/SearchListButton';
 
 function ListsPage() {
   const existingLists = useListsStore((state) => state.existingLists);
@@ -28,14 +29,16 @@ function ListsPage() {
       <div className="flex items-center justify-between gap-8 pt-4">
         <ListsPageHeader />
       </div>
-
       <div className="flex justify-between flex-wrap">
         <div className="text-2xl">Recurrent lists</div>
         <div className="flex gap-4">
           <NewListButton />
           <SelectSorting />
-          <SearchListInput />
+          <SearchListButton />
         </div>
+      </div>
+      <div className="-my-7">
+        <SearchListInput />
       </div>
       <ul className="flex flex-col">
         {lists}

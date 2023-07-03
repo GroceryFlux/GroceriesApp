@@ -13,7 +13,7 @@ function ToggleThemeButton() {
     >
       {/*theme === 'dark' ? <MoonIcon /> : <SunIcon />*/}
 
-      <label className={`swap ${theme === 'dark' ? 'swap-active' : ''} swap-rotate`}>
+      <label className={`swap ${theme === 'light' ? 'swap-active' : ''} swap-rotate`}>
         <div className="swap-on">
           <MoonIcon />
         </div>

@@ -10,6 +10,8 @@ function App() {
   const theme = useThemeStore((state) => state.theme);
   const displayedMenu = usePageStore((state) => state.displayedMenu);
 
+  document.getElementsByTagName('html')[0].setAttribute('data-theme', theme)
+
   let displayedPage;
 
   switch (displayedMenu) {
@@ -27,9 +29,7 @@ function App() {
   return (
     <>
       <div
-        className={`flex flex-col items-center min-h-screen w-screen ${
-          theme === 'dark' ? 'bg-slate-700 text-slate-200' : ''
-        }`}
+        className={`flex flex-col items-center min-h-screen w-screen`}
       >
         {displayedPage}
       </div>
