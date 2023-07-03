@@ -18,9 +18,7 @@ function SearchListInput() {
             onChange={(event) => setListFilter(event.target.value)}
             value={listFilter}
           />
-          <button 
-            onClick={() => resetListFilter()}
-          >
+          <button onClick={() => resetListFilter()}>
             <XIcon />
           </button>
         </div>

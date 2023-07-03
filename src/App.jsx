@@ -10,7 +10,7 @@ function App() {
   const theme = useThemeStore((state) => state.theme);
   const displayedMenu = usePageStore((state) => state.displayedMenu);
 
-  document.getElementsByTagName('html')[0].setAttribute('data-theme', theme)
+  document.getElementsByTagName('html')[0].setAttribute('data-theme', theme);
 
   let displayedPage;
 
@@ -28,11 +28,7 @@ function App() {
 
   return (
     <>
-      <div
-        className={`flex flex-col items-center min-h-screen w-screen`}
-      >
-        {displayedPage}
-      </div>
+      <div className={`flex flex-col items-center min-h-screen w-screen`}>{displayedPage}</div>
     </>
   );
 }
