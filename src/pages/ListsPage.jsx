@@ -25,7 +25,7 @@ function ListsPage() {
   ));
 
   return (
-    <div className="flex flex-col w-full gap-8 px-10">
+    <div className="flex flex-col w-full gap-8 px-10 text-info">
       <div className="flex items-center justify-between gap-8 pt-4">
         <ListsPageHeader />
       </div>

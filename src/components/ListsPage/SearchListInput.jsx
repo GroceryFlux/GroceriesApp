@@ -13,8 +13,8 @@ function SearchListInput() {
       <div className={`flex grow shrink ${displayListFilter ? 'visible' : 'invisible'}`}>
         <div className="flex grow shrink border border-slate-300 rounded-xl bg-neutral">
           <input
-            placeholder="Search"
-            className="grow shrink outline-none rounded-xl bg-neutral pl-4"
+            placeholder="Looking for a list or item ?"
+            className="grow shrink placeholder:text-sm outline-none rounded-xl bg-neutral pl-2"
             onChange={(event) => setListFilter(event.target.value)}
             value={listFilter}
           />
