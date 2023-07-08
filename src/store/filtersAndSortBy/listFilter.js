@@ -1,9 +1,9 @@
 import { create } from 'zustand';
 
 export const useListFilterStore = create((set) => ({
-  displayListFilter: false,
+  showListFilter: false,
   listFilter: '',
   setListFilter: (value) => set(() => ({ listFilter: value })),
   resetListFilter: () => set(() => ({ listFilter: '' })),
-  setDisplayListFilter: () => set((state) => ({ displayListFilter: !state.displayListFilter })),
+  toggleListFilter: () => set((state) => ({ showListFilter: !state.showListFilter })),
 }));

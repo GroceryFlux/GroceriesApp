@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ItemInput from './ItemInput';
-import ToggleIsItemBoughtButton from './ToggleIsItemBoughtButton';
+import IsItemBoughtCheckBox from './IsItemBoughtCheckbox';
 
 function ItemLine({ itemID, item }) {
   return (
     <li key={itemID}>
-      <div className="flex flex-row gap-2">
-        <ToggleIsItemBoughtButton
+      <div className="flex flex-row gap-2 items-center">
+        <IsItemBoughtCheckBox 
           itemID={itemID}
           item={item}
         />

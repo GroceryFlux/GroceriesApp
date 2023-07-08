@@ -6,14 +6,14 @@ function SearchListInput() {
   const setListFilter = useListFilterStore((state) => state.setListFilter);
   const listFilter = useListFilterStore((state) => state.listFilter);
   const resetListFilter = useListFilterStore((state) => state.resetListFilter);
-  const displayListFilter = useListFilterStore((state) => state.displayListFilter);
+  const showListFilter = useListFilterStore((state) => state.showListFilter);
 
   return (
     <>
-      <div className={`flex grow shrink ${displayListFilter ? 'visible' : 'invisible'}`}>
-        <div className="flex grow shrink border border-slate-300 rounded-xl bg-neutral">
+      <div className={`flex grow shrink ${showListFilter ? 'visible' : 'invisible'}`}>
+        <div className="flex grow shrink border border-accent rounded-xl bg-neutral">
           <input
-            placeholder="Looking for a list or item ?"
+            placeholder="Looking for a list or an item ?"
             className="grow shrink placeholder:text-sm outline-none rounded-xl bg-neutral pl-2"
             onChange={(event) => setListFilter(event.target.value)}
             value={listFilter}

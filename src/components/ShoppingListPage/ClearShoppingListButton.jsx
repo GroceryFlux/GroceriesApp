@@ -1,15 +1,17 @@
 import React from 'react';
 import { useListsStore } from '../../store/lists/lists';
+import ClearIcon from '../Icons/ClearIcon';
 
 function ClearShoppingListButton() {
   const clearShoppingList = useListsStore((state) => state.clearShoppingList);
 
   return (
-    <div>
-      <button onClick={() => clearShoppingList()}>
-        <i className="fa-regular fa-circle-xmark text-xl"></i>
-      </button>
-    </div>
+    <button 
+      onClick={() => clearShoppingList()}
+      className='text-primary'
+    >
+      <ClearIcon />
+    </button>
   );
 }
 

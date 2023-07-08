@@ -11,8 +11,6 @@ function ToggleThemeButton() {
       className="pt-2.5"
       onClick={toggleTheme}
     >
-      {/*theme === 'dark' ? <MoonIcon /> : <SunIcon />*/}
-
       <label className={`swap ${theme === 'light' ? 'swap-active' : ''} swap-rotate`}>
         <div className="swap-on">
           <MoonIcon />

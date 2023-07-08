@@ -1,13 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useThemeStore } from '../../../store/theme/theme';
 
 function ItemInput({ item }) {
-  const theme = useThemeStore((state) => state.theme);
 
   return (
     <input
-      className={`${theme === 'dark' ? 'bg-slate-700' : 'bg-white'}`}
+      className="bg-base-100"
       defaultValue={item.itemName}
       disabled
     />

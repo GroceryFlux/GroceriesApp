@@ -12,50 +12,21 @@ module.exports = {
   daisyui: {
     themes: [
       {
-        day: {
+        light: {
           "base-100": "#FEF9E9", //Base-100 is used for main background
-          "base-200": "#E3E1D7", //Base-200 is used for secondary background
           "primary": "#627fd0", //Primary is used for blue icons
-          "neutral": "#FFFDF2", //Neutral is used for borders
+          "neutral": "#fef3c7", //Neutral is used for secondary backgrounds
           "info": "#605D5C", //Info is used for text
+          "accent": "#fcd34d", //Accent is used for borders
+        },
+        dark: {
+          "base-100": "#0f1729", //Base-100 is used for main background
+          "primary": "#627fd0", //Primary is used for blue icons
+          "neutral": "#1d283a", //Neutral is used for secondary backgrounds
+          "info": "#C3C1C1", //Info is used for text
+          "accent": "#475569", //Accent is used for borders
         },
       },
-      //     "light",
-      //     "dark",
-      //     "cupcake",
-      //     "bumblebee",
-      //     "emerald",
-      //     "corporate",
-      //     "synthwave",
-      "retro",
-      //     "cyberpunk",
-      //     "valentine",
-      //     "halloween",
-      //     "garden",
-      //     "forest",
-      //     "aqua",
-      //     "lofi",
-      //     "pastel",
-      //     "fantasy",
-      //     "wireframe",
-      //     "black",
-      //     "luxury",
-      //     "dracula",
-      //     "cmyk",
-      //     "autumn",
-      //     "business",
-      //     "acid",
-      //     "lemonade",
-      { 
-        night: {
-          ...require("daisyui/src/theming/themes")["[data-theme=night]"],
-          "base-200": "#1B090E",
-          "primary": "#627fd0",
-          "info": "#C3C1C1",
-        } 
-      },
-      //     "coffee",
-      //     "winter"
     ],
   },
   plugins: [require('daisyui')],

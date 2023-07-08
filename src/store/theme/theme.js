@@ -1,14 +1,11 @@
 import { create } from 'zustand';
-import { getTheme, setTheme } from '../../utils/localStorage.utils';
+import { getInitialTheme, setTheme } from '../../utils/localStorage.utils';
 
-export const useThemeStore = create((set) => ({
-  theme: getTheme(),
+export const useThemeStore = create((set, get) => ({
+  theme: getInitialTheme(),
   toggleTheme: () => {
-    set(
-      (state) => (
-        state.theme === 'night' ? setTheme('light') : setTheme('night'),
-        { theme: state.theme === 'night' ? 'light' : 'night' }
-      ),
-    );
+    get().theme === 'dark' ? setTheme('light') : setTheme('dark')
+
+    set((state) => ({ theme: state.theme === 'dark' ? 'light' : 'dark' }));
   },
 }));

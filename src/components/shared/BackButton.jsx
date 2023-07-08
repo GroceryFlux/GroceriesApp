@@ -1,6 +1,7 @@
 import React from 'react';
 import { usePageStore } from '../../store/displayedMenu/displayedMenu';
 import { useListsStore } from '../../store/lists/lists';
+import ReturnIcon from '../Icons/ReturnIcon';
 
 function BackButton() {
   const setDisplayedPage = usePageStore((state) => state.setDisplayedPage);
@@ -39,7 +40,7 @@ function BackButton() {
       className="text-1xl font-bold"
       type="button"
     >
-      <i className="fa-solid fa-chevron-left"></i>
+      <ReturnIcon/>
     </button>
   );
 }

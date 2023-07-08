@@ -7,7 +7,7 @@ import NewItemForm from '../components/ItemsPage/NewItemForm';
 import ItemLine from '../components/ItemsPage/ItemLine/ItemLine';
 import SearchItemInput from '../components/ItemsPage/SearchItemInput';
 import { useItemFilterStore } from '../store/filtersAndSortBy/itemFilter';
-import BackButton from '../components/shared/BackButton';
+import Header from '../components/shared/Header'
 
 function ItemsPage() {
   const listID = useListsStore((state) => state.selectedListID);
@@ -23,12 +23,11 @@ function ItemsPage() {
   ));
 
   return (
-    <>
-      <div className="flex items-center justify-around mt-4 mb-8">
-        <BackButton />
-        <ListTitleInput />
-        <div />
+    <div className="flex flex-col w-full gap-8 px-10 text-info">
+      <div className="flex items-center justify-between gap-8 pt-4">
+        <Header />
       </div>
+      <ListTitleInput />
       <LastModifiedText />
       <NewItemForm />
       <div className="flex justify-center">
@@ -37,7 +36,7 @@ function ItemsPage() {
       <div className="mx-5 py-3">
         <ul>{items}</ul>
       </div>
-    </>
+    </div>
   );
 }
 

@@ -21,7 +21,7 @@ function SelectSorting() {
           <ul>
             <li
               className={`px-2 py-1 rounded-t-lg
-            ${sortType === 'last_modified' ? 'bg-base-200' : ''}
+            ${sortType === 'last_modified' ? 'bg-neutral' : ''}
           `}
             >
               <button
@@ -33,7 +33,7 @@ function SelectSorting() {
             </li>
             <li
               className={`px-2 py-1 rounded-b-lg
-            ${sortType === 'alphabetical' ? 'bg-base-200' : ''}
+            ${sortType === 'alphabetical' ? 'bg-neutral' : ''}
           `}
             >
               <button

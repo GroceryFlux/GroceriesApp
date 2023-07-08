@@ -19,5 +19,5 @@ export const filterItems = (value, items) => {
     return [...items];
   }
 
-  return [...items].filter((entry) => entry[1].itemName.includes(value));
+  return [...items].filter((entry) => entry[1].itemName.toLowerCase().includes(value.toLowerCase()));
 };

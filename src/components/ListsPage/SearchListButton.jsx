@@ -3,11 +3,11 @@ import { MagnifyingGlassIcon } from '../Icons';
 import { useListFilterStore } from '../../store/filtersAndSortBy/listFilter';
 
 function SearchListButton() {
-  const setDisplayListFilter = useListFilterStore((state) => state.setDisplayListFilter);
+  const toggleListFilter = useListFilterStore((state) => state.toggleListFilter);
   return (
     <button
       className="text-primary"
-      onClick={() => setDisplayListFilter()}
+      onClick={() =>toggleListFilter()}
     >
       <MagnifyingGlassIcon />
     </button>
