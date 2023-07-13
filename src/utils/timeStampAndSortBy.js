@@ -27,9 +27,31 @@ export const sortBy = (sortType, lists) => {
 };
 
 export const toDate = (timeStamp) => {
-  return new Date(timeStamp).toLocaleDateString('default');
-};
+  const deltaTime = (Date.now() - timeStamp) / 6000;
+  const lastSaved = new Date(timeStamp);
+  const actualTime = new Date(Date.now());
+  const actualDay = actualTime.getDay();
+  const actualMonth = actualTime.getMonth();
+  const actualYear = actualTime.getFullYear();
 
-export const toTime = (timeStamp) => {
-  return new Date(timeStamp).toLocaleTimeString('default');
+  if (deltaTime < 10) {
+    return ': Few seconds ago';
+  }
+  if (deltaTime < 150) {
+    return ': Few minutes ago';
+  }
+  if (deltaTime < 600) {
+    return ': Last hour';
+  }
+
+  if (actualYear === lastSaved.getFullYear() && actualMonth === lastSaved.getMonth()) {
+    if (actualDay === lastSaved.getDay()) {
+      return ': Today';
+    }
+    if (actualDay - lastSaved.getDay() === 1) {
+      return ': Testerday';
+    }
+  }
+
+  return `: ${lastSaved.toLocaleDateString('default')}`;
 };

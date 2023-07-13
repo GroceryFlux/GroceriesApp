@@ -7,16 +7,18 @@ import DeleteItemButton from './DeleteItemButton';
 function ItemLine({ itemID, item }) {
   return (
     <li>
-      <div className="flex flex-row py-1">
+      <div className="flex justify-between">
         <ModifyItemInput
           itemID={itemID}
           item={item}
         />
-        <ShoppingListInteractionButton
-          itemID={itemID}
-          item={item}
-        />
-        <DeleteItemButton itemID={itemID} />
+        <div className="flex gap-2 items-center">
+          <ShoppingListInteractionButton
+            itemID={itemID}
+            item={item}
+          />
+          <DeleteItemButton itemID={itemID} />
+        </div>
       </div>
     </li>
   );

@@ -68,9 +68,7 @@ function ShoppingListPage() {
           <h2>Purchased</h2>
           <ToggleBoughtItemsButton />
         </div>
-        {showBoughtItems && (
-          <ul>{boughtItems}</ul>
-        )}
+        {showBoughtItems && <ul>{boughtItems}</ul>}
       </div>
     </>
   );

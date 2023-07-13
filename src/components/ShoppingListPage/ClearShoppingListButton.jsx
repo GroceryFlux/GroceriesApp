@@ -6,9 +6,9 @@ function ClearShoppingListButton() {
   const clearShoppingList = useListsStore((state) => state.clearShoppingList);
 
   return (
-    <button 
+    <button
       onClick={() => clearShoppingList()}
-      className='text-primary'
+      className="text-primary"
     >
       <ClearIcon />
     </button>

@@ -7,7 +7,7 @@ function Header() {
     <>
       <BackButton />
       <h1 className="font-medium text-4xl text-center">Groceries</h1>
-      <SpacingIcon/>
+      <SpacingIcon />
     </>
   );
 }

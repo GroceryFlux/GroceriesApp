@@ -29,7 +29,7 @@ function ListsPage() {
       <div className="flex items-center justify-between gap-8 pt-4">
         <ListsPageHeader />
       </div>
-      <div className='flex flex-col gap-1'>
+      <div className="flex flex-col gap-1">
         <div className="flex justify-between flex-wrap">
           <div className="text-2xl">Recurrent lists</div>
           <div className="flex gap-4">
@@ -38,9 +38,9 @@ function ListsPage() {
             <SearchListButton />
           </div>
         </div>
-        
+
         <SearchListInput />
-        
+
         <ul className="flex flex-col">
           <div className="divider mt-0 mb-1" />
           {lists}

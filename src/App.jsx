@@ -8,7 +8,6 @@ import { usePageStore } from './store/displayedMenu/displayedMenu';
 function App() {
   const displayedMenu = usePageStore((state) => state.displayedMenu);
 
-
   let displayedPage;
 
   switch (displayedMenu) {

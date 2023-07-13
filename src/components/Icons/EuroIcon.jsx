@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ClearIcon = () => {
+export const EuroIcon = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -13,10 +13,8 @@ const ClearIcon = () => {
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
-        d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+        d="M14.25 7.756a4.5 4.5 0 100 8.488M7.5 10.5h5.25m-5.25 3h5.25M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
       />
     </svg>
   );
 };
-
-export default ClearIcon;

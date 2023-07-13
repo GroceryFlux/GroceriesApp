@@ -7,7 +7,7 @@ function ItemLine({ itemID, item }) {
   return (
     <li key={itemID}>
       <div className="flex flex-row gap-2 items-center">
-        <IsItemBoughtCheckBox 
+        <IsItemBoughtCheckBox
           itemID={itemID}
           item={item}
         />

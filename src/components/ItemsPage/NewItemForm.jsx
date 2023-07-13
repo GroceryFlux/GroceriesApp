@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { useListsStore } from '../../store/lists/lists';
-import { useThemeStore } from '../../store/theme/theme';
+import { PlusSolidIcon } from '../Icons';
 
 function NewItemForm() {
   const listID = useListsStore((state) => state.selectedListID);
   const list = useListsStore((state) => state.existingLists).get(listID);
   const saveExistingLists = useListsStore((state) => state.saveExistingLists);
-  const theme = useThemeStore((state) => state.theme);
 
   const [hasItemName, setHasItemName] = useState(null);
 
@@ -38,10 +37,13 @@ function NewItemForm() {
         checkSubmit(event);
       }}
     >
-      <div className="flex flex-row justify-center text-center my-4">
+      <div
+        className={`flex grow shrink justify-between text-center border border-accent rounded-2xl bg-neutral ${
+          hasItemName === false ? 'border-red-400' : null
+        }`}
+      >
         <input
-          className={`text-center border-solid border-y-2 rounded-l-lg border-l-2 outline-none placeholder:italic p-1 
-          ${theme === 'dark' ? 'bg-slate-700 text-slate-200' : ''}
+          className={`bg-neutral grow shrink outline-none placeholder:italic ml-3
           ${hasItemName === false ? 'border-red-400' : null}
           `}
           placeholder="Add an item"
@@ -50,11 +52,11 @@ function NewItemForm() {
         />
         <button
           type="submit"
-          className={`border-solid border-y-2 border-r-2 rounded-r-lg  p-1
+          className={`
           ${hasItemName === false ? 'border-red-400 text-red-400' : null}
           `}
         >
-          &nbsp;<i className="fa-solid fa-circle-plus"></i>
+          <PlusSolidIcon />
         </button>
       </div>
     </form>

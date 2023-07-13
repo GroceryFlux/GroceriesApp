@@ -9,21 +9,6 @@ function OpenListButton({ listID, list }) {
 
   const itemsPreview = [...list.itemsList].map(([, item]) => item.itemName).join(', ');
 
-  // function itemsPreview(listSize, itemNames) {
-  //   let preview = '';
-  //   if (listSize === 0) {
-  //     preview = 'is empty'
-  //     return preview
-  //   }
-  //   for (let i = 0; i < listSize; i++) {
-  //     if (i < listSize - 1) {
-  //       preview = `${preview + itemNames[i]}, `;
-  //     } 
-  //     else preview = preview + itemNames[i];
-  //   }
-  //   return preview;
-  // }
-
   return (
     <button
       onClick={() => {

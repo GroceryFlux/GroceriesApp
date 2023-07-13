@@ -15,9 +15,7 @@ function SelectSorting() {
       </button>
 
       {showDropdown && (
-        <div
-          className="w-[5rem] absolute z-10 left-0 border-solid border-2 rounded-lg border-primary bg-base-100"
-        >
+        <div className="w-[5rem] absolute z-10 left-0 border-solid border-2 rounded-lg border-primary bg-base-100">
           <ul>
             <li
               className={`px-2 py-1 rounded-t-lg

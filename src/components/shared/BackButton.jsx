@@ -40,7 +40,7 @@ function BackButton() {
       className="text-1xl font-bold"
       type="button"
     >
-      <ReturnIcon/>
+      <ReturnIcon />
     </button>
   );
 }

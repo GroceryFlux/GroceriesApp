@@ -66,20 +66,19 @@ export const setTheme = (theme) => {
 };
 
 export const getTheme = () => {
-  const theme = localStorage.getItem('theme')
+  const theme = localStorage.getItem('theme');
 
-  if(theme){
-    return theme
+  if (theme) {
+    return theme;
   }
 
-  return 'light'
+  return 'light';
 };
 
 export const getInitialTheme = () => {
-  const theme = getTheme()
+  const theme = getTheme();
 
   setTheme(theme);
 
   return theme;
-}
-
+};

@@ -7,7 +7,7 @@ function SearchListButton() {
   return (
     <button
       className="text-primary"
-      onClick={() =>toggleListFilter()}
+      onClick={() => toggleListFilter()}
     >
       <MagnifyingGlassIcon />
     </button>

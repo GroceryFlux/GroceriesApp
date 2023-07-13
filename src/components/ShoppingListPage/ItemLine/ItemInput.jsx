@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function ItemInput({ item }) {
-
   return (
     <input
       className="bg-base-100"
