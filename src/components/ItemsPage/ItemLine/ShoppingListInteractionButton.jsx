@@ -1,18 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useListsStore } from '../../../store/lists/lists';
-import { EuroIcon, OutlineCartIcon, PlusNoRoundIcon } from '../../Icons';
+import { BagCheck, CartArrowIcon, CartCheckIcon, MinimalisticBagCheck, HandleBagCheck } from '../../Icons';
 
 function getIcon(item) {
   if (item.isBought) {
-    return <EuroIcon />;
+    return <HandleBagCheck />;
   }
 
   if (item.isOnShoppingList) {
-    return <OutlineCartIcon />;
+    return <CartCheckIcon />;
   }
 
-  return <PlusNoRoundIcon />;
+  return <CartArrowIcon />;
 }
 
 function ShoppingListInteractionButton({ itemID, item }) {
