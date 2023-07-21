@@ -10,7 +10,7 @@ function SearchListInput() {
 
   return (
     <>
-      <div className={`flex grow shrink ${showListFilter ? 'visible' : 'invisible'}`}>
+      <div className={`flex ${showListFilter ? 'visible' : 'invisible'}`}>
         <div className="flex grow shrink border border-accent rounded-xl bg-neutral">
           <input
             placeholder="Looking for a list or an item ?"

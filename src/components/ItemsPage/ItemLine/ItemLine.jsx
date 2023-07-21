@@ -8,17 +8,17 @@ function ItemLine({ itemID, item }) {
   return (
     <li>
       <div className="flex justify-between">
-        <ModifyItemInput
-          itemID={itemID}
-          item={item}
-        />
         <div className="flex gap-2 items-center">
           <ShoppingListInteractionButton
             itemID={itemID}
             item={item}
           />
-          <DeleteItemButton itemID={itemID} />
+          <ModifyItemInput
+            itemID={itemID}
+            item={item}
+          />
         </div>
+        <DeleteItemButton itemID={itemID} />
       </div>
     </li>
   );

@@ -12,8 +12,8 @@ function ListTitleInput() {
     <input
       placeholder="Add a title"
       defaultValue={list.title}
-      className={`border border-solid border-accent text-center focus:outline-none placeholder:italic text-2xl rounded-2xl bg-neutral
-        ${localTitle === '' ? 'border-red-400' : null}
+      className={`grow shrink text-center text-ellipsis focus:outline-none text-4xl font-medium bg-inherit max-w-[60%]
+        ${localTitle === '' ? 'placeholder: text-4xl placeholder:text-red-400' : null}
       `}
       onBlur={(event) => {
         list.title = event.target.value;

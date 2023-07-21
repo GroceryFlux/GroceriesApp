@@ -38,12 +38,12 @@ function NewItemForm() {
       }}
     >
       <div
-        className={`flex grow shrink justify-between text-center border border-accent rounded-2xl bg-neutral ${
+        className={`flex grow shrink justify-between text-center text-xl border border-accent rounded-2xl bg-neutral ${
           hasItemName === false ? 'border-red-400' : null
         }`}
       >
         <input
-          className={`bg-neutral grow shrink outline-none placeholder:italic ml-3
+          className={`bg-neutral grow shrink outline-none ml-3
           ${hasItemName === false ? 'border-red-400' : null}
           `}
           placeholder="Add an item"
