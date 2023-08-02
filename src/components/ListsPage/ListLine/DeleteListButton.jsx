@@ -29,7 +29,7 @@ function DeleteListButton({ listID }) {
 
   return (
     <button
-      className="text-red-400"
+      className="text-red-500/70"
       onClick={() => setConfirmDelete(true)}
     >
       <TrashIcon />

@@ -31,22 +31,22 @@ export const toDate = (timeStamp) => {
   const lastSaved = new Date(timeStamp);
 
   if (deltaTime < 10) {
-    return ': Few seconds ago';
+    return 'a few seconds ago';
   }
   if (deltaTime < 150) {
-    return ': Few minutes ago';
+    return 'a few minutes ago';
   }
   if (deltaTime < 600) {
-    return ': Last hour';
+    return 'last hour';
   }
 
   if (deltaTime < 14400) {
-    return ': Today';
+    return 'today';
   }
 
   if (deltaTime < 28800) {
-    return ': Yesterday';
+    return 'yesterday';
   }
 
-  return `: ${lastSaved.toLocaleDateString('default')}`;
+  return `${lastSaved.toLocaleDateString('default')}`;
 };

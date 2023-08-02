@@ -7,7 +7,6 @@ import ItemLine from '../components/ItemsPage/ItemLine/ItemLine';
 import SearchItemInput from '../components/ItemsPage/SearchItemInput';
 import { useItemFilterStore } from '../store/filtersAndSortBy/itemFilter';
 import ItemPageHeader from '../components/ItemsPage/ItemPageHeader';
-import SearchItemButton from '../components/ItemsPage/SearchItemButton';
 
 function ItemsPage() {
   const listID = useListsStore((state) => state.selectedListID);
@@ -23,21 +22,20 @@ function ItemsPage() {
   ));
 
   return (
-    <div className="flex flex-col w-full gap-3 px-10 text-info">
+    <div className="flex flex-col w-full gap-1 px-10 text-info">
       <div className="flex items-center justify-between gap-8 pt-4">
         <ItemPageHeader />
       </div>
+
       <LastModifiedText />
-      <div className='flex flex-col gap-3'>
-        <div className="flex justify-between flex-wrap">
-          <NewItemForm />
-          <div className='flex'>
-            <SearchItemButton />
-          </div>
-        </div>
-        <SearchItemInput />
+
+      <div className="flex w-full -mt-[1px]">
+        <NewItemForm />
       </div>
-      <ul className="flex flex-col gap-2">{items}</ul>
+
+      <SearchItemInput />
+
+      <ul className="flex flex-col gap-3 mt-[1.25rem]">{items}</ul>
     </div>
   );
 }

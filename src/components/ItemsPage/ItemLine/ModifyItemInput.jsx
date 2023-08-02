@@ -8,7 +8,7 @@ function ModifyItemInput({ itemID, item }) {
 
   return (
     <input
-      className="bg-base-100 text-info"
+      className="w-0 grow bg-base-100 text-info rounded-md focus:outline focus:outline-blue-500/50 pl-1"
       onBlur={(event) => saveItemName(event.target.value, itemID, listID)}
       defaultValue={item.itemName}
     />

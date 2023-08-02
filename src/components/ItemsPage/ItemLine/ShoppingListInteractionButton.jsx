@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useListsStore } from '../../../store/lists/lists';
-import { BagCheck, CartArrowIcon, CartCheckIcon, MinimalisticBagCheck, HandleBagCheck } from '../../Icons';
+import { CartArrowIcon, CartCheckIcon, HandleBagCheck } from '../../Icons';
 
 function getIcon(item) {
   if (item.isBought) {
