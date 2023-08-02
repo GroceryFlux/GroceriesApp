@@ -7,11 +7,11 @@ function LastModifiedText() {
   const list = useListsStore((state) => state.existingLists).get(listID);
 
   return (
-    <div className="-mt-1.5">
+    <div>
       {list.timeStamp === undefined ? (
-        <h3 className="text-center italic text-xs">Start adding items to your list</h3>
+        <h3 className="text-center text-xs">&nbsp;</h3>
       ) : (
-        <h3 className="text-center italic text-xs text-gray-500">Last modified{toDate(list.timeStamp)}</h3>
+        <h3 className="text-center text-xs text-slate-500/80">edited {toDate(list.timeStamp)}</h3>
       )}
     </div>
   );

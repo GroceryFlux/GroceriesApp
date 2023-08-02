@@ -6,7 +6,7 @@ function SearchItemInput() {
   const setItemFilter = useItemFilterStore((state) => state.setItemFilter);
   const itemFilter = useItemFilterStore((state) => state.itemFilter);
   const resetItemFilter = useItemFilterStore((state) => state.resetItemFilter);
-  const showItemFilter = useItemFilterStore((state) => state.showItemFilter)
+  const showItemFilter = useItemFilterStore((state) => state.showItemFilter);
 
   return (
     <div className={`flex -mt-1 ${showItemFilter ? 'visible' : 'invisible'}`}>

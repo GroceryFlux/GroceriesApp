@@ -8,12 +8,12 @@ function DeleteItemButton({ itemID }) {
   const deleteItem = useListsStore((state) => state.deleteItem);
 
   return (
-    <div
-      className="text-red-400"
+    <button
+      className="text-red-500/70"
       onClick={() => deleteItem(listID, itemID)}
     >
       <TrashIcon />
-    </div>
+    </button>
   );
 }
 

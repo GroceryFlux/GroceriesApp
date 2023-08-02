@@ -1,16 +1,16 @@
-import React from 'react'
-import BackButton from '../shared/BackButton'
-import SpacingIcon from '../Icons/SpacingIcon'
-import ListTitleInput from './ListTitleInput'
+import React from 'react';
+import BackButton from '../shared/BackButton';
+import SpacingIcon from '../Icons/SpacingIcon';
+import ListTitleInput from './ListTitleInput';
 
 function ItemPageHeader() {
-  return(
+  return (
     <>
       <BackButton />
       <ListTitleInput />
       <SpacingIcon />
     </>
-  )
+  );
 }
 
-export default ItemPageHeader
+export default ItemPageHeader;

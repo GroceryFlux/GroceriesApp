@@ -109,11 +109,11 @@ export const useListsStore = create((set, get) => ({
     list.itemsList.delete(itemID);
     list.timeStamp = Date.now();
 
-    const newShoppingList = new Map(get().shoppingList)
+    const newShoppingList = new Map(get().shoppingList);
     newShoppingList.delete(itemID);
-    set(() => ({ shoppingList: newShoppingList }))
-    
-    setLocalShoppingList(get().shoppingList)
+    set(() => ({ shoppingList: newShoppingList }));
+
+    setLocalShoppingList(get().shoppingList);
 
     get().saveExistingLists(listID, list);
   },

@@ -6,6 +6,7 @@ export * from './ClearIcon.jsx';
 export * from './ConfirmDeleteIcon.jsx';
 export * from './EuroIcon.jsx';
 export * from './HandleBagCheck.jsx';
+export * from './HandleIcon.jsx';
 export * from './MagnifyingGlassIcon.jsx';
 export * from './MinimalisticBagCheck.jsx';
 export * from './MoonIcon.jsx';
