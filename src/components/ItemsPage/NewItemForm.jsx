@@ -4,6 +4,7 @@ import { PlusIcon } from '../Icons';
 import SearchItemButton from './SearchItemButton.jsx';
 
 let timeout;
+export const newItemFormId = 'newItemInput';
 
 function NewItemForm() {
   const listID = useListsStore((state) => state.selectedListID);
@@ -51,6 +52,7 @@ function NewItemForm() {
           ${hasError ? 'outline outline-red-500/50 focus:outline-red-500/50' : ''}
           `}
             placeholder="Strawberries"
+            id={newItemFormId}
             onInput={() => setHasError(false)}
           />
           <div className="w-full px-2 -mt-1">

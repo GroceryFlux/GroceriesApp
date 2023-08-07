@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 function ItemInput({ item }) {
   return (
     <input
-      className="bg-base-100"
+      className={`bg-base-100 opacity-1 ${item.isBought ? 'text-slate-600' : 'text-info'}`}
       defaultValue={item.itemName}
-      disabled
+      readOnly={true}
     />
   );
 }

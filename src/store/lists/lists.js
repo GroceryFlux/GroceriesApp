@@ -10,6 +10,18 @@ export const useListsStore = create((set, get) => ({
   existingLists: getLocalExistingLists(),
   shoppingList: getLocalShoppingList(),
   selectedListID: undefined,
+  animation: '-translate-y-1/2',
+  timeoutId: 0,
+
+  startAnimation: () => {
+    clearTimeout(get().timeoutId);
+
+    set(() => ({ animation: '-translate-y-1/4' }));
+
+    const timeoutId = setTimeout(() => set(() => ({ animation: '-translate-y-1/2' })), 150);
+
+    set(() => ({ timeoutId }));
+  },
 
   saveExistingLists: (listID, list) =>
     set((state) => {
@@ -19,18 +31,22 @@ export const useListsStore = create((set, get) => ({
       return { existingLists: tempoExistingLists };
     }),
 
-  saveShoppingList: (itemID, item) =>
-    set((state) => {
-      if (item.isOnShoppingList) {
-        const tempoShoppingList = new Map(state.shoppingList);
-        tempoShoppingList.set(itemID, item);
-        setLocalShoppingList(tempoShoppingList);
-        const currentList = state.existingLists.get(item.listID);
-        state.saveExistingLists(item.listID, { ...currentList, itemsList: currentList.itemsList.set(itemID, item) });
-        return { shoppingList: tempoShoppingList };
-      }
-      return state;
-    }),
+  saveShoppingList: (itemID, item) => {
+    if (!item.isOnShoppingList) {
+      return;
+    }
+
+    const newShoppingList = new Map(get().shoppingList);
+    newShoppingList.set(itemID, item);
+
+    set(() => ({ shoppingList: newShoppingList }));
+    setLocalShoppingList(newShoppingList);
+
+    const currentList = get().existingLists.get(item.listID);
+    get().saveExistingLists(item.listID, { ...currentList, itemsList: currentList.itemsList.set(itemID, item) });
+
+    get().startAnimation();
+  },
 
   setSelectedListID: (listID) =>
     set(() => {
@@ -75,24 +91,30 @@ export const useListsStore = create((set, get) => ({
     set(() => ({ shoppingList: new Map() }));
   },
 
-  deleteItemShoppingList: (itemID, item) =>
-    set((state) => {
-      const tempoShoppingList = new Map(state.shoppingList);
-      state.saveExistingLists(item.listID, {
-        ...state.existingLists.get(item.listID),
-        itemsList: state.existingLists
-          .get(item.listID)
-          .itemsList.set(itemID, { ...item, isOnShoppingList: false, isBought: false }),
-      });
-      tempoShoppingList.delete(itemID);
-      setLocalShoppingList(tempoShoppingList);
-      return { shoppingList: tempoShoppingList };
-    }),
+  deleteItemShoppingList: (itemID, item) => {
+    const newShoppingList = new Map(get().shoppingList);
+
+    get().saveExistingLists(item.listID, {
+      ...get().existingLists.get(item.listID),
+      itemsList: get()
+        .existingLists.get(item.listID)
+        .itemsList.set(itemID, { ...item, isOnShoppingList: false, isBought: false }),
+    });
+
+    newShoppingList.delete(itemID);
+    setLocalShoppingList(newShoppingList);
+
+    set(() => ({ shoppingList: newShoppingList }));
+    get().startAnimation();
+  },
 
   toggleShoppingListItem: (itemID, item) => {
-    item.isOnShoppingList === false
-      ? get().saveShoppingList(itemID, { ...item, isOnShoppingList: true, isBought: false })
-      : get().deleteItemShoppingList(itemID, item);
+    if (item.isOnShoppingList) {
+      get().deleteItemShoppingList(itemID, item);
+      return;
+    }
+
+    get().saveShoppingList(itemID, { ...item, isOnShoppingList: true, isBought: false });
   },
 
   saveItemName: (newName, itemID, listID) => {

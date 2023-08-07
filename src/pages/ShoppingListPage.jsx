@@ -3,8 +3,8 @@ import { useListsStore } from '../store/lists/lists';
 import { useBoughtItemsStore } from '../store/displayedMenu/displayedMenu';
 import ToggleBoughtItemsButton from '../components/ShoppingListPage/ToggleBoughtItemsButton';
 import ItemLine from '../components/ShoppingListPage/ItemLine/ItemLine';
-import ClearShoppingListButton from '../components/ShoppingListPage/ClearShoppingListButton';
-import Header from '../components/shared/Header';
+import ShoppingListHeader from '../components/ShoppingListPage/ShoppingListHeader.jsx';
+import ClearShoppingListButton from '../components/ShoppingListPage/ClearShoppingListButton.jsx';
 
 function ShoppingListPage() {
   const shoppingList = useListsStore((state) => state.shoppingList);
@@ -14,10 +14,10 @@ function ShoppingListPage() {
     return (
       <div className="flex flex-col w-full gap-8 px-10 text-info">
         <div className="flex items-center justify-between gap-8 pt-4">
-          <Header />
+          <ShoppingListHeader />
         </div>
         <div className="flex justify-between flex-wrap">
-          <div className="text-2xl">Shopping list</div>
+          <div className="text-xl">Missing</div>
           <div className="flex gap-4">
             <ClearShoppingListButton />
           </div>
@@ -55,20 +55,24 @@ function ShoppingListPage() {
     <>
       <div className="flex flex-col w-full gap-8 px-10 text-info">
         <div className="flex items-center justify-between gap-8 pt-4">
-          <Header />
+          <ShoppingListHeader />
         </div>
         <div className="flex justify-between flex-wrap">
-          <div className="text-2xl">Shopping list</div>
+          <div className="text-xl">Missing</div>
           <div className="flex gap-4">
             <ClearShoppingListButton />
           </div>
         </div>
-        <ul className="">{unboughtItems}</ul>
-        <div className="flex flex-row gap-3">
-          <h2>Purchased</h2>
-          <ToggleBoughtItemsButton />
+        <ul className="flex flex-col gap-2">
+          {unboughtItems.length > 0 ? unboughtItems : <li className="text-slate-700">Nothing left! 🎉</li>}
+        </ul>
+        <div className="flex flex-col gap-2">
+          <div className="flex flex-row gap-3">
+            <h2 className="text-slate-500">Purchased</h2>
+            <ToggleBoughtItemsButton />
+          </div>
+          <ul className={`flex flex-col gap-2 ${showBoughtItems ? 'visible' : 'invisible'}`}>{boughtItems}</ul>
         </div>
-        {showBoughtItems && <ul>{boughtItems}</ul>}
       </div>
     </>
   );

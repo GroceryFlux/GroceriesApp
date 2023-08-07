@@ -23,19 +23,19 @@ function ItemsPage() {
 
   return (
     <div className="flex flex-col w-full gap-1 px-10 text-info">
-      <div className="flex items-center justify-between gap-8 pt-4">
+      <div className="flex items-center justify-between pt-4">
         <ItemPageHeader />
       </div>
 
       <LastModifiedText />
 
-      <div className="flex w-full -mt-[1px]">
+      <div className="flex w-full mt-[0.12rem]">
         <NewItemForm />
       </div>
 
       <SearchItemInput />
 
-      <ul className="flex flex-col gap-3 mt-[1.25rem]">{items}</ul>
+      <ul className="flex flex-col gap-3 mt-[1.3rem]">{items}</ul>
     </div>
   );
 }

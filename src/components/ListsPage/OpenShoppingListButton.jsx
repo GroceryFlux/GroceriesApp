@@ -1,17 +1,29 @@
 import React from 'react';
 import { usePageStore } from '../../store/displayedMenu/displayedMenu';
 import { OutlineCartIcon } from '../Icons';
+import { useListsStore } from '../../store/lists/lists.js';
 
 function OpenShoppingListButton() {
-  const setDisplayedPage = usePageStore((state) => state.setDisplayedPage);
+  const toggleShoppingListVisible = usePageStore((state) => state.toggleShoppingListVisible);
+  const shoppingList = useListsStore((state) => state.shoppingList);
+  const animation = useListsStore((state) => state.animation);
 
   return (
-    <button
-      className="text-primary"
-      onClick={() => setDisplayedPage('shoppingListDisplay')}
-    >
-      <OutlineCartIcon />
-    </button>
+    <div className="indicator">
+      <span
+        className={`duration-150 ${animation} indicator-item badge bg-teal-900 border-none ${
+          shoppingList.size > 0 ? 'visible' : 'invisible'
+        }`}
+      >
+        {shoppingList.size}
+      </span>
+      <button
+        className="text-primary"
+        onClick={() => toggleShoppingListVisible()}
+      >
+        <OutlineCartIcon />
+      </button>
+    </div>
   );
 }
 
