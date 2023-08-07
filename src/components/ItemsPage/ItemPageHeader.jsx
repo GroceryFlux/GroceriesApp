@@ -1,14 +1,14 @@
 import React from 'react';
 import BackButton from '../shared/BackButton';
-import SpacingIcon from '../Icons/SpacingIcon';
 import ListTitleInput from './ListTitleInput';
+import OpenShoppingListButton from '../ListsPage/OpenShoppingListButton.jsx';
 
 function ItemPageHeader() {
   return (
     <>
       <BackButton />
       <ListTitleInput />
-      <SpacingIcon />
+      <OpenShoppingListButton />
     </>
   );
 }

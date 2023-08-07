@@ -1,6 +1,6 @@
 import React from 'react';
 import { useListsStore } from '../../store/lists/lists';
-import ClearIcon from '../Icons/ClearIcon';
+import { TrashIcon } from '../Icons';
 
 function ClearShoppingListButton() {
   const clearShoppingList = useListsStore((state) => state.clearShoppingList);
@@ -8,9 +8,10 @@ function ClearShoppingListButton() {
   return (
     <button
       onClick={() => clearShoppingList()}
-      className="text-primary"
+      className="flex text-red-500/70 pt-1 pr-1"
     >
-      <ClearIcon />
+      Clear list
+      <TrashIcon />
     </button>
   );
 }

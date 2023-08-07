@@ -9,7 +9,7 @@ function IsItemBoughtCheckBox({ itemID, item }) {
     <input
       type="checkbox"
       defaultChecked={item.isBought}
-      className="checkbox checkbox-xs"
+      className="checkbox checkbox-sm checkbox-accent"
       onClick={() => {
         saveShoppingList(itemID, { ...item, isBought: !item.isBought });
       }}

@@ -6,13 +6,13 @@ function ToggleBoughtItemsButton() {
   const toggleBoughtItemsVisibility = useBoughtItemsStore((state) => state.toggleBoughtItemsVisibility);
 
   return (
-    <div onClick={() => toggleBoughtItemsVisibility()}>
+    <button onClick={() => toggleBoughtItemsVisibility()}>
       {showBoughtItems === false ? (
-        <i className="fa-solid fa-chevron-up"></i>
-      ) : (
         <i className="fa-solid fa-chevron-down"></i>
+      ) : (
+        <i className="fa-solid fa-chevron-up"></i>
       )}
-    </div>
+    </button>
   );
 }
 
