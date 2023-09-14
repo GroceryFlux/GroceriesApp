@@ -41,14 +41,14 @@ export const toDate = (timeStamp) => {
     return 'last hour';
   }
 
-  if (deltaTime < 14400) {
+  if (deltaTime < 1440) {
     if (currentDate.getDate() === lastSaved.getDate()) {
       return 'today';
     }
     return 'yesterday';
   }
 
-  if (deltaTime < 28800) {
+  if (deltaTime < 2880) {
     if (currentDate.getDate() === lastSaved.getDate() + 1) {
       return 'yesterday';
     }
