@@ -18,8 +18,10 @@ function OpenListButton({ listID, list }) {
       className="w-0 grow text-left"
     >
       <div className="flex flex-row items-baseline gap-2">
-        <div className="text-lg font-bold">{list.title}</div>
-        <div className="text-xs text-gray-500 truncate">{itemsPreview}</div>
+        <div className={`${list.title === 'No title' ? 'text-md italic font-semibold' : 'text-lg font-bold'}`}>
+          {list.title}
+        </div>
+        <div className="text-xs text-info-content truncate">{itemsPreview}</div>
       </div>
     </button>
   );

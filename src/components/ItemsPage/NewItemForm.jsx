@@ -48,7 +48,7 @@ function NewItemForm() {
         <div className="flex flex-col w-28 grow py-2">
           <input
             className={`
-          w-full bg-base-100 text-slate-200 py-1 px-2 rounded-md focus:outline focus:outline-blue-500/50 placeholder:text-slate-700 placeholder:italic
+          w-full bg-base-100 text-info py-1 px-2 rounded-md focus:outline focus:outline-blue-500/50 placeholder:info-content placeholder:italic
           ${hasError ? 'outline outline-red-500/50 focus:outline-red-500/50' : ''}
           `}
             placeholder="Strawberries"
@@ -56,7 +56,7 @@ function NewItemForm() {
             onInput={() => setHasError(false)}
           />
           <div className="w-full px-2 -mt-1">
-            <div className="border-b-2 border-b-slate-600 w-full"></div>
+            <div className="border-b-2 border-b-info-content w-full"></div>
           </div>
         </div>
 

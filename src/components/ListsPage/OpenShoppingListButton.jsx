@@ -11,7 +11,7 @@ function OpenShoppingListButton() {
   return (
     <div className="indicator">
       <span
-        className={`duration-150 ${animation} indicator-item badge bg-teal-900 border-none ${
+        className={`duration-150 ${animation} indicator-item badge bg-secondary border-none ${
           shoppingList.size > 0 ? 'visible' : 'invisible'
         }`}
       >
