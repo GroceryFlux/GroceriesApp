@@ -27,7 +27,7 @@ function BackButton() {
       return;
     }
 
-    list.title = 'No title';
+    list.title = '';
     saveExistingLists(listID, list);
   }
 

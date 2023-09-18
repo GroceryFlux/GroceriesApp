@@ -25,7 +25,7 @@ function ListTitleInput() {
       >
         <input
           placeholder="Title"
-          defaultValue={list.title === 'No title' ? '' : list.title}
+          defaultValue={list.title}
           className="h-[40px] w-full text-center text-ellipsis text-4xl rounded-md focus:outline focus:outline-blue-500/50 font-medium bg-inherit placeholder:info-content placeholder:italic"
           autoFocus={!hasTitle(list)}
           onBlur={(event) => {

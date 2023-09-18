@@ -27,9 +27,10 @@ export const sortBy = (sortType, lists) => {
 };
 
 export const toDate = (timeStamp) => {
-  const deltaTime = (Date.now() - timeStamp) / 60000;
   const currentDate = new Date(Date.now());
   const lastSaved = new Date(timeStamp);
+  const deltaTime = (Date.now() - timeStamp) / 60000;
+  const toEndOfDay = parseInt((24-currentDate.getHours())*60 + currentDate.getMinutes())
 
   if (deltaTime < 1) {
     return 'a few seconds ago';
@@ -41,18 +42,12 @@ export const toDate = (timeStamp) => {
     return 'last hour';
   }
 
-  if (deltaTime < 1440) {
-    if (currentDate.getDate() === lastSaved.getDate()) {
-      return 'today';
-    }
-    return 'yesterday';
+  if (deltaTime < toEndOfDay) {
+    return 'today';
   }
 
-  if (deltaTime < 2880) {
-    if (currentDate.getDate() === lastSaved.getDate() + 1) {
-      return 'yesterday';
-    }
-    return 'a few days ago';
+  if (deltaTime < (toEndOfDay + 1440)) {
+    return 'yesterday';
   }
 
   return `${lastSaved.toLocaleDateString('default')}`;
