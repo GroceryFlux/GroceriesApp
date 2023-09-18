@@ -30,7 +30,7 @@ export const toDate = (timeStamp) => {
   const currentDate = new Date(Date.now());
   const lastSaved = new Date(timeStamp);
   const deltaTime = (Date.now() - timeStamp) / 60000;
-  const toEndOfDay = parseInt((24-currentDate.getHours())*60 + currentDate.getMinutes())
+  const toEndOfDay = parseInt((24 - currentDate.getHours()) * 60 + currentDate.getMinutes());
 
   if (deltaTime < 1) {
     return 'a few seconds ago';
@@ -46,7 +46,7 @@ export const toDate = (timeStamp) => {
     return 'today';
   }
 
-  if (deltaTime < (toEndOfDay + 1440)) {
+  if (deltaTime < toEndOfDay + 1440) {
     return 'yesterday';
   }
 
