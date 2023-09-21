@@ -1,21 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useThemeStore } from '../../../store/theme/theme';
 import { useListsStore } from '../../../store/lists/lists';
 
 function ModifyItemInput({ itemID, item }) {
-  const theme = useThemeStore((state) => state.theme);
   const listID = useListsStore((state) => state.selectedListID);
   const saveItemName = useListsStore((state) => state.saveItemName);
 
   return (
-    <div className="flex flex-row">
-      <input
-        className={`${theme === 'dark' ? 'bg-slate-700 text-slate-200' : ''}`}
-        onBlur={(event) => saveItemName(event.target.value, itemID, listID)}
-        defaultValue={item.itemName}
-      />
-    </div>
+    <input
+      className="w-0 grow bg-base-100 text-info rounded-md focus:outline focus:outline-blue-500/50 pl-1"
+      onBlur={(event) => saveItemName(event.target.value, itemID, listID)}
+      defaultValue={item.itemName}
+    />
   );
 }
 

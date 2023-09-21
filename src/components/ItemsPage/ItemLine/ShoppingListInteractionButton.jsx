@@ -1,30 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useListsStore } from '../../../store/lists/lists';
+import { CartArrowIcon, CartCheckIcon, HandleBagCheck } from '../../Icons';
 
 function getIcon(item) {
   if (item.isBought) {
-    return <i className="fa-solid fa-check-double"></i>;
+    return <HandleBagCheck />;
   }
 
   if (item.isOnShoppingList) {
-    return <i className="fa-solid fa-check"></i>;
+    return <CartCheckIcon />;
   }
 
-  return <i className="fa-solid fa-plus"></i>;
+  return <CartArrowIcon />;
 }
 
 function ShoppingListInteractionButton({ itemID, item }) {
   const toggleShoppingListItem = useListsStore((state) => state.toggleShoppingListItem);
 
-  return (
-    <div
-      className="mr-3"
-      onClick={() => toggleShoppingListItem(itemID, item)}
-    >
-      {getIcon(item)}
-    </div>
-  );
+  return <button onClick={() => toggleShoppingListItem(itemID, item)}>{getIcon(item)}</button>;
 }
 
 ShoppingListInteractionButton.propTypes = {

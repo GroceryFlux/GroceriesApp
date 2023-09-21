@@ -1,3 +1,5 @@
+import { startOfDay, subDays } from 'date-fns';
+
 const compare = (value1, value2) => {
   if (value1 > value2) {
     return -1;
@@ -27,9 +29,32 @@ export const sortBy = (sortType, lists) => {
 };
 
 export const toDate = (timeStamp) => {
-  return new Date(timeStamp).toLocaleDateString('default');
-};
+  const lastSaved = new Date(timeStamp);
+  const minutesToNow = (Date.now() - timeStamp) / 60000;
 
-export const toTime = (timeStamp) => {
-  return new Date(timeStamp).toLocaleTimeString('default');
+  if (minutesToNow < 1) {
+    return 'a few seconds ago';
+  }
+
+  if (minutesToNow < 10) {
+    return 'a few minutes ago';
+  }
+  
+  if (minutesToNow < 60) {
+    return 'last hour';
+  }
+
+  const startOfToday = startOfDay(new Date()).getTime();
+
+  if (timeStamp > startOfToday) {
+    return 'today';
+  }
+
+  const startOfYesterday = subDays(startOfToday, 1);
+
+  if (timeStamp > startOfYesterday) {
+    return 'yesterday';
+  }
+
+  return `${lastSaved.toLocaleDateString('default')}`;
 };

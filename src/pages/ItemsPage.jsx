@@ -1,13 +1,12 @@
 import React from 'react';
 import { filterItems } from '../utils/filterValue.utils';
 import { useListsStore } from '../store/lists/lists';
-import ListTitleInput from '../components/ItemsPage/ListTitleInput';
 import LastModifiedText from '../components/ItemsPage/LastModifiedText';
 import NewItemForm from '../components/ItemsPage/NewItemForm';
 import ItemLine from '../components/ItemsPage/ItemLine/ItemLine';
 import SearchItemInput from '../components/ItemsPage/SearchItemInput';
 import { useItemFilterStore } from '../store/filtersAndSortBy/itemFilter';
-import BackButton from '../components/shared/BackButton';
+import ItemPageHeader from '../components/ItemsPage/ItemPageHeader';
 
 function ItemsPage() {
   const listID = useListsStore((state) => state.selectedListID);
@@ -23,21 +22,21 @@ function ItemsPage() {
   ));
 
   return (
-    <>
-      <div className="flex items-center justify-around mt-4 mb-8 w-3/4">
-        <BackButton />
-        <ListTitleInput />
-        <div />
+    <div className="flex flex-col w-full gap-1 px-10 text-info">
+      <div className="flex items-center justify-between pt-4">
+        <ItemPageHeader />
       </div>
+
       <LastModifiedText />
-      <NewItemForm />
-      <div className="flex justify-center">
-        <SearchItemInput />
+
+      <div className="flex w-full mt-[0.12rem]">
+        <NewItemForm />
       </div>
-      <div className="mx-5 py-3">
-        <ul>{items}</ul>
-      </div>
-    </>
+
+      <SearchItemInput />
+
+      <ul className="flex flex-col gap-3 mt-[1.3rem]">{items}</ul>
+    </div>
   );
 }
 

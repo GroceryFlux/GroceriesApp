@@ -59,3 +59,26 @@ export const getLocalShoppingList = () => {
 
   return localState;
 };
+
+export const setTheme = (theme) => {
+  document.getElementsByTagName('html')[0].setAttribute('data-theme', theme);
+  localStorage.setItem('theme', theme);
+};
+
+export const getTheme = () => {
+  const theme = localStorage.getItem('theme');
+
+  if (theme) {
+    return theme;
+  }
+
+  return 'light';
+};
+
+export const getInitialTheme = () => {
+  const theme = getTheme();
+
+  setTheme(theme);
+
+  return theme;
+};

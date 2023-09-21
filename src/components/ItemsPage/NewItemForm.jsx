@@ -1,22 +1,27 @@
 import React, { useState } from 'react';
 import { useListsStore } from '../../store/lists/lists';
-import { useThemeStore } from '../../store/theme/theme';
+import { PlusIcon } from '../Icons';
+import SearchItemButton from './SearchItemButton.jsx';
+
+let timeout;
+export const newItemFormId = 'newItemInput';
 
 function NewItemForm() {
   const listID = useListsStore((state) => state.selectedListID);
   const list = useListsStore((state) => state.existingLists).get(listID);
   const saveExistingLists = useListsStore((state) => state.saveExistingLists);
-  const theme = useThemeStore((state) => state.theme);
 
-  const [hasItemName, setHasItemName] = useState(null);
+  const [hasError, setHasError] = useState(false);
 
   function checkSubmit(event) {
     if (!event.target[0].value) {
-      setHasItemName(false);
+      setHasError(true);
+      clearTimeout(timeout);
+      timeout = setTimeout(() => setHasError(false), 1500);
       return;
     }
 
-    setHasItemName(true);
+    setHasError(false);
 
     list.itemsList.set(crypto.randomUUID(), {
       itemName: event.target[0].value,
@@ -37,25 +42,32 @@ function NewItemForm() {
         event.preventDefault();
         checkSubmit(event);
       }}
+      className="flex w-full justify-between items-center gap-4"
     >
-      <div className="flex flex-row justify-center text-center my-4">
-        <input
-          className={`text-center border-solid border-y-2 rounded-l-lg border-l-2 outline-none placeholder:italic p-1 
-          ${theme === 'dark' ? 'bg-slate-700 text-slate-200' : ''}
-          ${hasItemName === false ? 'border-red-400' : null}
+      <div className="flex w-full gap-4">
+        <div className="flex flex-col w-28 grow py-2">
+          <input
+            className={`
+          w-full bg-base-100 text-info py-1 px-2 rounded-md focus:outline focus:outline-blue-500/50 placeholder:info-content placeholder:italic
+          ${hasError ? 'outline outline-red-500/50 focus:outline-red-500/50' : ''}
           `}
-          placeholder="Add an item"
-          defaultValue=""
-          onChange={(event) => (event.target.value != '' ? setHasItemName(true) : null)}
-        />
+            placeholder="Strawberries"
+            id={newItemFormId}
+            onInput={() => setHasError(false)}
+          />
+          <div className="w-full px-2 -mt-1">
+            <div className="border-b-2 border-b-info-content w-full"></div>
+          </div>
+        </div>
+
         <button
           type="submit"
-          className={`border-solid border-y-2 border-r-2 rounded-r-lg  p-1
-          ${hasItemName === false ? 'border-red-400 text-red-400' : null}
-          `}
+          className="text-primary"
         >
-          &nbsp;<i className="fa-solid fa-circle-plus"></i>
+          <PlusIcon />
         </button>
+
+        <SearchItemButton />
       </div>
     </form>
   );

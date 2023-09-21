@@ -1,19 +1,17 @@
 import React from 'react';
 import { useListsStore } from '../../store/lists/lists';
-import { toDate, toTime } from '../../utils/timeStampAndSortBy';
+import { toDate } from '../../utils/timeStampAndSortBy';
 
 function LastModifiedText() {
   const listID = useListsStore((state) => state.selectedListID);
   const list = useListsStore((state) => state.existingLists).get(listID);
 
   return (
-    <div className="flex justify-center mb-2">
+    <div>
       {list.timeStamp === undefined ? (
-        <h3 className="text-center italic text-xs">Start adding items to your list</h3>
+        <h3 className="text-center text-xs">&nbsp;</h3>
       ) : (
-        <h3 className="text-center italic text-xs">
-          Last modified on {toDate(list.timeStamp)} at {toTime(list.timeStamp)}
-        </h3>
+        <h3 className="text-center text-xs text-slate-500/80">edited {toDate(list.timeStamp)}</h3>
       )}
     </div>
   );

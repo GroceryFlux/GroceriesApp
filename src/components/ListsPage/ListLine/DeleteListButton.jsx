@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useListsStore } from '../../../store/lists/lists';
+import { CancelIcon, ConfirmDeleteIcon, TrashIcon } from '../../Icons';
 
 function DeleteListButton({ listID }) {
   const [confirmDelete, setConfirmDelete] = useState(false);
@@ -9,12 +10,18 @@ function DeleteListButton({ listID }) {
 
   if (confirmDelete) {
     return (
-      <div className="flex gap-4">
-        <button onClick={() => deleteList(listID)}>
-          <i className="fa-regular fa-square-check text-green-400"></i>
+      <div className="flex gap-3">
+        <button
+          onClick={() => deleteList(listID)}
+          className="text-green-400"
+        >
+          <ConfirmDeleteIcon />
         </button>
-        <button onClick={() => setConfirmDelete(false)}>
-          <i className="fa-regular fa-rectangle-xmark text-red-400"></i>
+        <button
+          onClick={() => setConfirmDelete(false)}
+          className="text-red-400"
+        >
+          <CancelIcon />
         </button>
       </div>
     );
@@ -22,10 +29,10 @@ function DeleteListButton({ listID }) {
 
   return (
     <button
-      className="text-red-400 min-w-[3rem]"
+      className="text-red-500/70"
       onClick={() => setConfirmDelete(true)}
     >
-      <i className="fa-solid fa-trash"></i>
+      <TrashIcon />
     </button>
   );
 }
