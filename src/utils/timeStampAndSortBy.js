@@ -39,7 +39,7 @@ export const toDate = (timeStamp) => {
   if (minutesToNow < 10) {
     return 'a few minutes ago';
   }
-  
+
   if (minutesToNow < 60) {
     return 'last hour';
   }

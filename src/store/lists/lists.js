@@ -91,6 +91,10 @@ export const useListsStore = create((set, get) => ({
     set(() => ({ shoppingList: new Map() }));
   },
 
+  getMissingItemsAmount: () => {
+    return [...get().shoppingList.entries()].filter(([, value]) => !value.isBought).length;
+  },
+
   deleteItemShoppingList: (itemID, item) => {
     const newShoppingList = new Map(get().shoppingList);
 

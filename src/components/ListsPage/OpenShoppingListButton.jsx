@@ -5,17 +5,19 @@ import { useListsStore } from '../../store/lists/lists.js';
 
 function OpenShoppingListButton() {
   const toggleShoppingListVisible = usePageStore((state) => state.toggleShoppingListVisible);
-  const shoppingList = useListsStore((state) => state.shoppingList);
   const animation = useListsStore((state) => state.animation);
+  const getMissingItemsAmount = useListsStore((state) => state.getMissingItemsAmount);
+
+  const missingItemsAmount = getMissingItemsAmount();
 
   return (
     <div className="indicator">
       <span
         className={`duration-150 ${animation} indicator-item badge bg-secondary border-none ${
-          shoppingList.size > 0 ? 'visible' : 'invisible'
+          missingItemsAmount > 0 ? 'visible' : 'invisible'
         }`}
       >
-        {shoppingList.size}
+        {missingItemsAmount}
       </span>
       <button
         className="text-primary"
