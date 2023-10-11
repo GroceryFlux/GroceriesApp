@@ -2,10 +2,6 @@ import React from 'react';
 import { useListsStore } from '../../store/lists/lists';
 import { newItemFormId } from './NewItemForm.jsx';
 
-function hasTitle(list) {
-  return list.title !== '';
-}
-
 function focusNextInput(event) {
   event.preventDefault();
 
@@ -27,7 +23,6 @@ function ListTitleInput() {
           placeholder="Title"
           defaultValue={list.title}
           className="h-[40px] w-full text-center text-ellipsis text-4xl rounded-md focus:outline focus:outline-blue-500/50 font-medium bg-inherit placeholder:info-content placeholder:italic"
-          autoFocus={!hasTitle(list)}
           onBlur={(event) => {
             list.title = event.target.value;
             list.timeStamp = Date.now();

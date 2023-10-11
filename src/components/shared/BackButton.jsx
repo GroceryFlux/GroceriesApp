@@ -27,8 +27,11 @@ function BackButton() {
       return;
     }
 
-    list.title = '';
-    saveExistingLists(listID, list);
+    if (list.title === '') {
+      return;
+    }
+
+    saveExistingLists(listID, list)
   }
 
   return (

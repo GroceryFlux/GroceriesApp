@@ -5,7 +5,7 @@ function ItemInput({ item }) {
   return (
     <input
       className={`bg-base-100 opacity-1 ${item.isBought ? 'text-slate-600' : 'text-info'}`}
-      defaultValue={item.itemName}
+      value={item.itemName}
       readOnly={true}
     />
   );
