@@ -41,14 +41,13 @@ export const useListsStore = create((set, get) => ({
 
     get().startAnimation();
 
-    const newShoppingList = new Map(get().shoppingList)
-    newShoppingList.set(itemID, item)
-    setLocalShoppingList(newShoppingList)
+    const newShoppingList = new Map(get().shoppingList);
+    newShoppingList.set(itemID, item);
+    setLocalShoppingList(newShoppingList);
 
     set(() => {
-      return { shoppingList: newShoppingList }
-    })
-
+      return { shoppingList: newShoppingList };
+    });
   },
 
   setSelectedListID: (listID) =>
@@ -129,7 +128,7 @@ export const useListsStore = create((set, get) => ({
     const item = list.itemsList.get(itemID);
     item.itemName = newName;
     list.timeStamp = Date.now();
-    get().saveShoppingList(itemID, item)
+    get().saveShoppingList(itemID, item);
   },
 
   deleteItem: (listID, itemID) => {

@@ -35,7 +35,6 @@ export const setLocalShoppingList = (state) => {
   const saveState = [];
   state.forEach((item, itemID) => {
     item.isOnShoppingList ? saveState.push([itemID, item]) : null;
-    
   });
 
   localStorage.setItem('shoppingList', JSON.stringify(saveState));

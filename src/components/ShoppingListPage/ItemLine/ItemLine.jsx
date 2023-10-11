@@ -12,9 +12,7 @@ function ItemLine({ itemID, item, listTitle }) {
           item={item}
         />
         <ItemInput item={item} />
-        <div className="italic text-xs truncate">
-          {listTitle ? listTitle : 'No title'}
-        </div>
+        <div className="italic text-xs truncate">{listTitle ? listTitle : 'No title'}</div>
       </div>
     </li>
   );

@@ -31,7 +31,7 @@ function BackButton() {
       return;
     }
 
-    saveExistingLists(listID, list)
+    saveExistingLists(listID, list);
   }
 
   return (

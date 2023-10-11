@@ -7,7 +7,7 @@ import ShoppingListHeader from '../components/ShoppingListPage/ShoppingListHeade
 import ClearShoppingListButton from '../components/ShoppingListPage/ClearShoppingListButton.jsx';
 
 function ShoppingListPage() {
-  const shoppingList = useListsStore((state) => state.shoppingList);  
+  const shoppingList = useListsStore((state) => state.shoppingList);
   const existingLists = useListsStore((state) => state.existingLists);
   const showBoughtItems = useBoughtItemsStore((state) => state.showBoughtItems);
 
@@ -74,7 +74,9 @@ function ShoppingListPage() {
             <h2 className="text-slate-500">Purchased</h2>
             <ToggleBoughtItemsButton />
           </div>
-          <ul className={`flex flex-col gap-2 text-slate-500 ${showBoughtItems ? 'visible' : 'invisible'}`}>{boughtItems}</ul>
+          <ul className={`flex flex-col gap-2 text-slate-500 ${showBoughtItems ? 'visible' : 'invisible'}`}>
+            {boughtItems}
+          </ul>
         </div>
       </div>
     </>
