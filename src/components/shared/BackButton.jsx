@@ -9,7 +9,6 @@ function BackButton() {
   const list = useListsStore((state) => state.existingLists.get(listID));
   const deleteList = useListsStore((state) => state.deleteList);
   const displayedMenu = usePageStore((state) => state.displayedMenu);
-  const saveExistingLists = useListsStore((state) => state.saveExistingLists);
 
   function checkEmptyList() {
     if (displayedMenu !== 'itemsDisplay') {
@@ -26,12 +25,6 @@ function BackButton() {
       deleteList(listID);
       return;
     }
-
-    if (list.title === '') {
-      return;
-    }
-
-    saveExistingLists(listID, list);
   }
 
   return (
