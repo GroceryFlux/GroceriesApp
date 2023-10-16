@@ -8,6 +8,7 @@ import ClearShoppingListButton from '../components/ShoppingListPage/ClearShoppin
 
 function ShoppingListPage() {
   const shoppingList = useListsStore((state) => state.shoppingList);
+  const existingLists = useListsStore((state) => state.existingLists);
   const showBoughtItems = useBoughtItemsStore((state) => state.showBoughtItems);
 
   if (shoppingList.size === 0) {
@@ -37,6 +38,7 @@ function ShoppingListPage() {
           key={itemID}
           itemID={itemID}
           item={item}
+          listTitle={existingLists.get(item.listID).title}
         />,
       );
       return;
@@ -47,6 +49,7 @@ function ShoppingListPage() {
         key={itemID}
         itemID={itemID}
         item={item}
+        listTitle={existingLists.get(item.listID).title}
       />,
     );
   });
@@ -71,7 +74,9 @@ function ShoppingListPage() {
             <h2 className="text-slate-500">Purchased</h2>
             <ToggleBoughtItemsButton />
           </div>
-          <ul className={`flex flex-col gap-2 ${showBoughtItems ? 'visible' : 'invisible'}`}>{boughtItems}</ul>
+          <ul className={`flex flex-col gap-2 text-slate-500 ${showBoughtItems ? 'visible' : 'invisible'}`}>
+            {boughtItems}
+          </ul>
         </div>
       </div>
     </>

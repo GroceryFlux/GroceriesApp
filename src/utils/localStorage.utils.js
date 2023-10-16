@@ -34,27 +34,22 @@ export const getLocalExistingLists = () => {
 export const setLocalShoppingList = (state) => {
   const saveState = [];
   state.forEach((item, itemID) => {
-    item ? saveState.push([itemID, item]) : null;
+    item.isOnShoppingList ? saveState.push([itemID, item]) : null;
   });
 
   localStorage.setItem('shoppingList', JSON.stringify(saveState));
 };
 
 export const getLocalShoppingList = () => {
-  const retrievedShoppingList = JSON.parse(localStorage.getItem('existingLists'));
+  const retrievedShoppingList = JSON.parse(localStorage.getItem('shoppingList'));
   const localState = new Map();
 
   if (!retrievedShoppingList) {
     return localState;
   }
 
-  // eslint-disable-next-line no-unused-vars
-  retrievedShoppingList.forEach(([listID, list]) => {
-    [...list.itemsList].forEach(([itemID, item]) => {
-      if (item.isOnShoppingList) {
-        localState.set(itemID, item);
-      }
-    });
+  retrievedShoppingList.forEach(([itemID, item]) => {
+    localState.set(itemID, item);
   });
 
   return localState;

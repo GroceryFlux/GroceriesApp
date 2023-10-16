@@ -36,16 +36,18 @@ export const useListsStore = create((set, get) => ({
       return;
     }
 
-    const newShoppingList = new Map(get().shoppingList);
-    newShoppingList.set(itemID, item);
-
-    set(() => ({ shoppingList: newShoppingList }));
-    setLocalShoppingList(newShoppingList);
-
     const currentList = get().existingLists.get(item.listID);
     get().saveExistingLists(item.listID, { ...currentList, itemsList: currentList.itemsList.set(itemID, item) });
 
     get().startAnimation();
+
+    const newShoppingList = new Map(get().shoppingList);
+    newShoppingList.set(itemID, item);
+    setLocalShoppingList(newShoppingList);
+
+    set(() => {
+      return { shoppingList: newShoppingList };
+    });
   },
 
   setSelectedListID: (listID) =>
@@ -126,8 +128,7 @@ export const useListsStore = create((set, get) => ({
     const item = list.itemsList.get(itemID);
     item.itemName = newName;
     list.timeStamp = Date.now();
-    get().shoppingList.set(itemID, item);
-    get().saveExistingLists(listID, list);
+    get().saveShoppingList(itemID, item);
   },
 
   deleteItem: (listID, itemID) => {

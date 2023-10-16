@@ -9,7 +9,7 @@ function SearchItemInput() {
   const showItemFilter = useItemFilterStore((state) => state.showItemFilter);
 
   return (
-    <div className={`flex -mt-1 ${showItemFilter ? 'visible' : 'invisible'}`}>
+    <div className={`flex mt-1 ${showItemFilter ? 'visible' : 'invisible'}`}>
       <div className="flex grow shrink border border-accent rounded-xl bg-neutral">
         <input
           placeholder="Looking for an item ?"
