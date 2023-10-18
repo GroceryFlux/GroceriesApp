@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useListsStore } from '../../store/lists/lists';
 import { PlusIcon } from '../Icons';
 import SearchItemButton from './SearchItemButton.jsx';
+//import { findItemDetails } from '../../utils/findItemDetails';
 
 let timeout;
 export const newItemFormId = 'newItemInput';
@@ -22,6 +23,8 @@ function NewItemForm() {
     }
 
     setHasError(false);
+
+    //console.log(findItemDetails(event.target[0].value))
 
     list.itemsList.set(crypto.randomUUID(), {
       itemName: event.target[0].value,
