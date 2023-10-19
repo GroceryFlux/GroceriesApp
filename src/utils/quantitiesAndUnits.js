@@ -20,7 +20,8 @@ export function findItemDetails(value) {
     const valueFirstCharacter = value[0];
     if (isValueInteger.test(valueFirstCharacter) === true) {
       let quantityAndUnit = Qty(value);
-      foundData.foundItemUnit = quantityAndUnit._units === undefined ? 'unitless' : quantityAndUnit._units;
+      foundData.foundItemUnit =
+        quantityAndUnit.numerator[0].slice(1, -1) === 1 ? 'unitless' : quantityAndUnit.numerator[0].slice(1, -1);
       foundData.foundItemQuantity = quantityAndUnit.scalar;
     } else if (acceptedUnits.includes(value)) {
       foundData.foundItemUnit = value;
@@ -30,4 +31,15 @@ export function findItemDetails(value) {
   }
   foundData.foundItemName = foundData.foundItemName.trim();
   return foundData;
+}
+
+export function addItems(qty1, unit1, qty2, unit2) {
+  const qtyA = Qty(qty1, unit1);
+  const qtyB = Qty(qty2, unit2);
+  if (qtyA.isCompatible(qtyB)) {
+    const updatedQtyA = qtyA.to(qtyB);
+    const sum = updatedQtyA.add(qtyB);
+    return { quantity: sum.scalar, unit: sum.numerator[0].slice(1, -1) };
+  }
+  return 'incompatible';
 }

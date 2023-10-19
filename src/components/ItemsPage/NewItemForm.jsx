@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useListsStore } from '../../store/lists/lists';
 import { PlusIcon } from '../Icons';
 import SearchItemButton from './SearchItemButton.jsx';
-//import { findItemDetails } from '../../utils/findItemDetails';
+import { hasItemDuplicates } from '../../utils/duplicates';
+import { addItems, findItemDetails } from '../../utils/quantitiesAndUnits';
 
 let timeout;
 export const newItemFormId = 'newItemInput';
@@ -10,12 +11,15 @@ export const newItemFormId = 'newItemInput';
 function NewItemForm() {
   const listID = useListsStore((state) => state.selectedListID);
   const list = useListsStore((state) => state.existingLists).get(listID);
-  const saveExistingLists = useListsStore((state) => state.saveExistingLists);
+  const saveNewItem = useListsStore((state) => state.saveNewItem);
+  const saveItem = useListsStore((state) => state.saveItem);
 
   const [hasError, setHasError] = useState(false);
 
   function checkSubmit(event) {
-    if (!event.target[0].value) {
+    const inputValue = event.target[0].value;
+
+    if (!inputValue) {
       setHasError(true);
       clearTimeout(timeout);
       timeout = setTimeout(() => setHasError(false), 1500);
@@ -24,18 +28,28 @@ function NewItemForm() {
 
     setHasError(false);
 
-    //console.log(findItemDetails(event.target[0].value))
+    const itemHasDuplicates = hasItemDuplicates(list.itemsList, findItemDetails(inputValue).foundItemName);
 
-    list.itemsList.set(crypto.randomUUID(), {
-      itemName: event.target[0].value,
-      isOnShoppingList: false,
-      isBought: false,
-      listID: listID,
-    });
+    if (!itemHasDuplicates.id) {
+      saveNewItem(findItemDetails(inputValue), list, listID);
+      event.target[0].value = '';
+      return;
+    }
 
-    list.timeStamp = Date.now();
-    saveExistingLists(listID, list);
+    const existingItemQuantity = list.itemsList.get(itemHasDuplicates.id).itemQuantity;
+    const existingItemUnit = list.itemsList.get(itemHasDuplicates.id).itemUnit;
+    const duplicateItemQuantity = findItemDetails(inputValue).foundItemQuantity;
+    const duplicateItemUnit = findItemDetails(inputValue).foundItemUnit;
 
+    const sumItem = addItems(existingItemQuantity, existingItemUnit, duplicateItemQuantity, duplicateItemUnit);
+
+    const itemDetails = {
+      foundItemName: list.itemsList.get(itemHasDuplicates.id).itemName,
+      foundItemQuantity: sumItem.quantity,
+      foundItemUnit: sumItem.unit,
+    };
+
+    saveItem(itemDetails, itemHasDuplicates.id, listID);
     event.target[0].value = '';
   }
 

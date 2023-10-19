@@ -123,12 +123,27 @@ export const useListsStore = create((set, get) => ({
     get().saveShoppingList(itemID, { ...item, isOnShoppingList: true, isBought: false });
   },
 
-  saveItemName: (newName, itemID, listID) => {
+  saveItem: (itemDetails, itemID, listID) => {
     const list = get().existingLists.get(listID);
     const item = list.itemsList.get(itemID);
-    item.itemName = newName;
+    item.itemName = itemDetails.foundItemName;
+    item.itemQuantity = itemDetails.foundItemQuantity;
+    item.itemUnit = itemDetails.foundItemUnit;
     list.timeStamp = Date.now();
-    get().saveShoppingList(itemID, item);
+    get().saveExistingLists(listID, list);
+  },
+
+  saveNewItem: (itemDetails, list, listID) => {
+    list.itemsList.set(crypto.randomUUID(), {
+      itemName: itemDetails.foundItemName,
+      isOnShoppingList: false,
+      isBought: false,
+      listID: listID,
+      itemQuantity: itemDetails.foundItemQuantity,
+      itemUnit: itemDetails.foundItemUnit,
+    });
+    list.timeStamp = Date.now();
+    get().saveExistingLists(listID, list);
   },
 
   deleteItem: (listID, itemID) => {
