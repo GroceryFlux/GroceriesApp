@@ -5,6 +5,8 @@ import {
   setLocalExistingLists,
   setLocalShoppingList,
 } from '../../utils/localStorage.utils';
+import { findItemDuplicateId } from '../../utils/duplicates';
+import { addItems, areItemsCompatible, substractItems } from '../../utils/quantitiesAndUnits';
 
 export const useListsStore = create((set, get) => ({
   existingLists: getLocalExistingLists(),
@@ -23,6 +25,8 @@ export const useListsStore = create((set, get) => ({
     set(() => ({ timeoutId }));
   },
 
+  //functions used for lists :
+
   saveExistingLists: (listID, list) =>
     set((state) => {
       const tempoExistingLists = new Map(state.existingLists);
@@ -30,25 +34,6 @@ export const useListsStore = create((set, get) => ({
       setLocalExistingLists(tempoExistingLists);
       return { existingLists: tempoExistingLists };
     }),
-
-  saveShoppingList: (itemID, item) => {
-    if (!item.isOnShoppingList) {
-      return;
-    }
-
-    const currentList = get().existingLists.get(item.listID);
-    get().saveExistingLists(item.listID, { ...currentList, itemsList: currentList.itemsList.set(itemID, item) });
-
-    get().startAnimation();
-
-    const newShoppingList = new Map(get().shoppingList);
-    newShoppingList.set(itemID, item);
-    setLocalShoppingList(newShoppingList);
-
-    set(() => {
-      return { shoppingList: newShoppingList };
-    });
-  },
 
   setSelectedListID: (listID) =>
     set(() => {
@@ -69,7 +54,7 @@ export const useListsStore = create((set, get) => ({
       const tempoShoppingList = new Map();
       const actualShoppingList = [...state.shoppingList];
       actualShoppingList.forEach(([itemID, item]) => {
-        if (item.listID !== listID) {
+        if (item.associatedIDs[0].listID !== listID) {
           tempoShoppingList.set(itemID, item);
         }
       });
@@ -79,68 +64,33 @@ export const useListsStore = create((set, get) => ({
       return { existingLists: tempoExistingLists, shoppingList: tempoShoppingList };
     }),
 
-  clearShoppingList: () => {
-    const state = get();
-    state.shoppingList.forEach((item, itemID) => {
-      state.saveExistingLists(item.listID, {
-        ...state.existingLists.get(item.listID),
-        itemsList: state.existingLists
-          .get(item.listID)
-          .itemsList.set(itemID, { ...item, isOnShoppingList: false, isBought: false }),
-      });
-    });
-    setLocalShoppingList(new Map());
-    set(() => ({ shoppingList: new Map() }));
-  },
+  //functions used for items
 
-  getMissingItemsAmount: () => {
-    return [...get().shoppingList.entries()].filter(([, value]) => !value.isBought).length;
-  },
+  saveItem: (extractedItemDetails, itemID, listID) => {
+    const oldItem = get().existingLists.get(listID).itemsList.get(itemID);
+    get().removeItemFromShoppingList(oldItem);
 
-  deleteItemShoppingList: (itemID, item) => {
-    const newShoppingList = new Map(get().shoppingList);
-
-    get().saveExistingLists(item.listID, {
-      ...get().existingLists.get(item.listID),
-      itemsList: get()
-        .existingLists.get(item.listID)
-        .itemsList.set(itemID, { ...item, isOnShoppingList: false, isBought: false }),
-    });
-
-    newShoppingList.delete(itemID);
-    setLocalShoppingList(newShoppingList);
-
-    set(() => ({ shoppingList: newShoppingList }));
-    get().startAnimation();
-  },
-
-  toggleShoppingListItem: (itemID, item) => {
-    if (item.isOnShoppingList) {
-      get().deleteItemShoppingList(itemID, item);
-      return;
-    }
-
-    get().saveShoppingList(itemID, { ...item, isOnShoppingList: true, isBought: false });
-  },
-
-  saveItem: (itemDetails, itemID, listID) => {
     const list = get().existingLists.get(listID);
     const item = list.itemsList.get(itemID);
-    item.itemName = itemDetails.foundItemName;
-    item.itemQuantity = itemDetails.foundItemQuantity;
-    item.itemUnit = itemDetails.foundItemUnit;
+    item.itemName = extractedItemDetails.itemName;
+    item.quantity = extractedItemDetails.quantity;
+    item.unit = extractedItemDetails.unit;
     list.timeStamp = Date.now();
+
+    const newItem = list.itemsList.get(itemID);
     get().saveExistingLists(listID, list);
+    get().addItemOnShoppingList(newItem);
   },
 
-  saveNewItem: (itemDetails, list, listID) => {
-    list.itemsList.set(crypto.randomUUID(), {
-      itemName: itemDetails.foundItemName,
+  saveNewItem: (extractedItemDetails, list, listID) => {
+    const newID = crypto.randomUUID();
+    list.itemsList.set(newID, {
+      itemName: extractedItemDetails.itemName,
       isOnShoppingList: false,
       isBought: false,
-      listID: listID,
-      itemQuantity: itemDetails.foundItemQuantity,
-      itemUnit: itemDetails.foundItemUnit,
+      associatedIDs: [{ itemID: newID, listID: listID }],
+      quantity: extractedItemDetails.quantity,
+      unit: extractedItemDetails.unit,
     });
     list.timeStamp = Date.now();
     get().saveExistingLists(listID, list);
@@ -148,15 +98,242 @@ export const useListsStore = create((set, get) => ({
 
   deleteItem: (listID, itemID) => {
     const list = get().existingLists.get(listID);
+    const item = list.itemsList.get(itemID);
+
+    if (item.isOnShoppingList) {
+      get().deleteItemFromShoppingList(item);
+    }
+
     list.itemsList.delete(itemID);
     list.timeStamp = Date.now();
 
-    const newShoppingList = new Map(get().shoppingList);
-    newShoppingList.delete(itemID);
-    set(() => ({ shoppingList: newShoppingList }));
-
-    setLocalShoppingList(get().shoppingList);
-
     get().saveExistingLists(listID, list);
+  },
+
+  updateItemFromShopplingList: (item, newItem) => {
+    const listDetails = get().existingLists.get(item.associatedIDs[0].listID);
+    const newItemsList = new Map(listDetails.itemsList);
+
+    newItemsList.set(item.associatedIDs[0].itemID, newItem);
+    get().saveExistingLists(item.associatedIDs[0].listID, { ...listDetails, itemsList: newItemsList });
+  },
+
+  toggleItemIsBought: (itemID, item) => {
+    get().saveShoppingList(itemID, { ...item, isBought: !item.isBought });
+
+    item.associatedIDs.forEach((IDs) => {
+      const listID = IDs.listID;
+      const itemID = IDs.itemID;
+
+      const listDetails = get().existingLists.get(listID);
+      const itemDetails = listDetails.itemsList.get(itemID);
+
+      const newItemsList = new Map(listDetails.itemsList).set(itemID, { ...itemDetails, isBought: !item.isBought });
+
+      get().saveExistingLists(listID, { ...listDetails, itemsList: newItemsList });
+    });
+  },
+
+  toggleItemOnShoppingList: (item) => {
+    if (item.isOnShoppingList) {
+      get().removeItemFromShoppingList(item);
+      return;
+    }
+
+    get().addItemOnShoppingList({ ...item, isOnShoppingList: true, isBought: false });
+  },
+
+  //functions used for shoppingList
+
+  saveShoppingList: (id, item) => {
+    const newShoppingList = new Map(get().shoppingList);
+
+    newShoppingList.set(id, item);
+    setLocalShoppingList(newShoppingList);
+
+    set(() => {
+      return { shoppingList: newShoppingList };
+    });
+  },
+
+  addItemOnShoppingList: (item) => {
+    get().startAnimation();
+
+    const newID = crypto.randomUUID();
+
+    const originalItemId = findItemDuplicateId(get().shoppingList, item.itemName);
+
+    const itemID = item.associatedIDs[0].itemID;
+    const listID = item.associatedIDs[0].listID;
+
+    if (!originalItemId) {
+      get().saveShoppingList(newID, { ...item, isOnShoppingList: true });
+
+      const newItemDetails = {
+        ...item,
+        associatedIDs: [{ itemID: itemID, listID: listID, shoppingListID: newID }],
+        isOnShoppingList: true,
+      };
+      get().updateItemFromShopplingList(item, newItemDetails);
+
+      return;
+    }
+
+    const existingQuantity = get().shoppingList.get(originalItemId).quantity;
+    const existingUnit = get().shoppingList.get(originalItemId).unit;
+    const duplicateQuantity = item.quantity;
+    const duplicateUnit = item.unit;
+
+    const itemsAreComptible = areItemsCompatible(existingQuantity, existingUnit, duplicateQuantity, duplicateUnit);
+
+    const existingIsBought = get().shoppingList.get(originalItemId).isBought;
+    const duplicateIsBought = item.isBought;
+
+    const haveSameIsBought = existingIsBought === duplicateIsBought;
+
+    if (!itemsAreComptible || !haveSameIsBought) {
+      get().saveShoppingList(newID, { ...item, isOnShoppingList: true });
+
+      const newItemDetails = {
+        ...item,
+        associatedIDs: [{ itemID: itemID, listID: listID, shoppingListID: newID }],
+        isOnShoppingList: true,
+      };
+      get().updateItemFromShopplingList(item, newItemDetails);
+
+      return;
+    }
+
+    const existingAssociatedIDs = get().shoppingList.get(originalItemId).associatedIDs;
+
+    const updatedIDs = [...existingAssociatedIDs, { itemID: itemID, listID: listID }];
+
+    const summedItem = addItems(existingQuantity, existingUnit, duplicateQuantity, duplicateUnit);
+
+    get().saveShoppingList(originalItemId, {
+      ...item,
+      quantity: summedItem.quantity,
+      unit: summedItem.unit,
+      associatedIDs: updatedIDs,
+      isOnShoppingList: true,
+    });
+
+    const newItemDetails = {
+      ...item,
+      associatedIDs: [{ itemID: itemID, listID: listID, shoppingListID: originalItemId }],
+      isOnShoppingList: true,
+    };
+    get().updateItemFromShopplingList(item, newItemDetails);
+  },
+
+  removeItemFromShoppingList: (item) => {
+    const associatedShoppingListID = item.associatedIDs[0].shoppingListID;
+
+    const itemID = item.associatedIDs[0].itemID;
+    const listID = item.associatedIDs[0].listID;
+
+    if (!associatedShoppingListID) {
+      return;
+    }
+
+    const shoppingListItem = get().shoppingList.get(associatedShoppingListID);
+
+    const itemsAreComptible = areItemsCompatible(
+      shoppingListItem.quantity,
+      shoppingListItem.unit,
+      item.quantity,
+      item.unit,
+    );
+    const shoppingListQtyIsBigger = shoppingListItem.quantity > item.quantity;
+
+    if (itemsAreComptible && shoppingListQtyIsBigger) {
+      const itemDetails = get().shoppingList.get(associatedShoppingListID);
+      const associatedIDs = itemDetails.associatedIDs;
+
+      const index = associatedIDs.findIndex((IDs) => IDs.itemID === itemID);
+
+      associatedIDs.splice(index, 1);
+
+      const substraction = substractItems(shoppingListItem.quantity, shoppingListItem.unit, item.quantity, item.unit);
+
+      get().saveShoppingList(associatedShoppingListID, {
+        ...item,
+        quantity: substraction.quantity,
+        unit: substraction.unit,
+        associatedIDs: associatedIDs,
+      });
+
+      const newItemDetails = {
+        ...item,
+        associatedIDs: [{ itemID: itemID, listID: listID }],
+        isOnShoppingList: false,
+        isBought: false,
+      };
+      get().updateItemFromShopplingList(item, newItemDetails);
+
+      return;
+    }
+
+    get().deleteItemFromShoppingList(item);
+  },
+
+  clearShoppingList: () => {
+    const state = get();
+
+    state.shoppingList.forEach((item) => {
+      item.associatedIDs.forEach((IDs) => {
+        const listID = IDs.listID;
+        const itemID = IDs.itemID;
+        const itemDetails = get().existingLists.get(listID).itemsList.get(itemID);
+
+        state.saveExistingLists(listID, {
+          ...state.existingLists.get(listID),
+          itemsList: state.existingLists
+            .get(listID)
+            .itemsList.set(itemID, {
+              ...itemDetails,
+              isOnShoppingList: false,
+              isBought: false,
+              associatedIDs: [{ itemID: itemID, listID: listID }],
+            }),
+        });
+      });
+    });
+
+    setLocalShoppingList(new Map());
+
+    set(() => ({
+      shoppingList: new Map(),
+    }));
+  },
+
+  getMissingItemsAmount: () => {
+    return [...get().shoppingList.entries()].filter(([, value]) => !value.isBought).length;
+  },
+
+  deleteItemFromShoppingList: (item) => {
+    const newShoppingList = new Map(get().shoppingList);
+
+    const listID = item.associatedIDs[0].listID;
+    const itemID = item.associatedIDs[0].itemID;
+    const shoppingListID = item.associatedIDs[0].shoppingListID;
+
+    get().saveExistingLists(listID, {
+      ...get().existingLists.get(listID),
+      itemsList: get()
+        .existingLists.get(listID)
+        .itemsList.set(itemID, {
+          ...item,
+          isOnShoppingList: false,
+          isBought: false,
+          associatedIDs: [{ itemID: itemID, listID: listID }],
+        }),
+    });
+
+    newShoppingList.delete(shoppingListID);
+    setLocalShoppingList(newShoppingList);
+
+    set(() => ({ shoppingList: newShoppingList }));
+    get().startAnimation();
   },
 }));

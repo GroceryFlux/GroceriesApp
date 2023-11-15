@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useListsStore } from '../../../store/lists/lists';
 
 function IsItemBoughtCheckBox({ itemID, item }) {
-  const saveShoppingList = useListsStore((state) => state.saveShoppingList);
+  const toggleItemIsBought = useListsStore((state) => state.toggleItemIsBought);
 
   return (
     <input
@@ -11,7 +11,7 @@ function IsItemBoughtCheckBox({ itemID, item }) {
       defaultChecked={item.isBought}
       className="checkbox checkbox-sm checkbox-accent"
       onClick={() => {
-        saveShoppingList(itemID, { ...item, isBought: !item.isBought });
+        toggleItemIsBought(itemID, item);
       }}
     />
   );

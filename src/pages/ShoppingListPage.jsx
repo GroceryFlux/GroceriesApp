@@ -32,13 +32,18 @@ function ShoppingListPage() {
   const unboughtItems = [];
 
   shoppingList.forEach((item, itemID) => {
+    const associatedListTitles = [];
+    item.associatedIDs.forEach((IDs) => {
+      associatedListTitles.push(existingLists.get(IDs.listID).title);
+    });
+
     if (item.isBought) {
       boughtItems.push(
         <ItemLine
           key={itemID}
           itemID={itemID}
           item={item}
-          listTitle={existingLists.get(item.listID).title}
+          listTitles={associatedListTitles}
         />,
       );
       return;
@@ -49,7 +54,7 @@ function ShoppingListPage() {
         key={itemID}
         itemID={itemID}
         item={item}
-        listTitle={existingLists.get(item.listID).title}
+        listTitles={associatedListTitles}
       />,
     );
   });

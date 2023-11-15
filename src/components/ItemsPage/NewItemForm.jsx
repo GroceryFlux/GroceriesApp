@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { useListsStore } from '../../store/lists/lists';
 import { PlusIcon } from '../Icons';
 import SearchItemButton from './SearchItemButton.jsx';
-import { hasItemDuplicates } from '../../utils/duplicates';
-import { addItems, findItemDetails } from '../../utils/quantitiesAndUnits';
+import { findItemDuplicateId } from '../../utils/duplicates';
+import { addItems, areItemsCompatible, extractItemDetails } from '../../utils/quantitiesAndUnits';
 
-let timeout;
+let warningBorderTimeout;
 export const newItemFormId = 'newItemInput';
 
 function NewItemForm() {
@@ -16,49 +16,55 @@ function NewItemForm() {
 
   const [hasError, setHasError] = useState(false);
 
-  function checkSubmit(event) {
+  function onSubmit(event) {
+    event.preventDefault();
+
     const inputValue = event.target[0].value;
 
     if (!inputValue) {
       setHasError(true);
-      clearTimeout(timeout);
-      timeout = setTimeout(() => setHasError(false), 1500);
+      clearTimeout(warningBorderTimeout);
+      warningBorderTimeout = setTimeout(() => setHasError(false), 1500);
       return;
     }
 
-    setHasError(false);
+    const extractedItemDetails = extractItemDetails(inputValue);
+    const originalItemId = findItemDuplicateId(list.itemsList, extractedItemDetails.itemName);
 
-    const itemHasDuplicates = hasItemDuplicates(list.itemsList, findItemDetails(inputValue).foundItemName);
-
-    if (!itemHasDuplicates.id) {
-      saveNewItem(findItemDetails(inputValue), list, listID);
+    if (!originalItemId) {
+      saveNewItem(extractedItemDetails, list, listID);
       event.target[0].value = '';
       return;
     }
 
-    const existingItemQuantity = list.itemsList.get(itemHasDuplicates.id).itemQuantity;
-    const existingItemUnit = list.itemsList.get(itemHasDuplicates.id).itemUnit;
-    const duplicateItemQuantity = findItemDetails(inputValue).foundItemQuantity;
-    const duplicateItemUnit = findItemDetails(inputValue).foundItemUnit;
+    const existingQuantity = list.itemsList.get(originalItemId).quantity;
+    const existingUnit = list.itemsList.get(originalItemId).unit;
+    const duplicateQuantity = extractedItemDetails.quantity;
+    const duplicateUnit = extractedItemDetails.unit;
 
-    const sumItem = addItems(existingItemQuantity, existingItemUnit, duplicateItemQuantity, duplicateItemUnit);
+    const itemsAreCompatible = areItemsCompatible(existingQuantity, existingUnit, duplicateQuantity, duplicateUnit);
 
-    const itemDetails = {
-      foundItemName: list.itemsList.get(itemHasDuplicates.id).itemName,
-      foundItemQuantity: sumItem.quantity,
-      foundItemUnit: sumItem.unit,
+    if (!itemsAreCompatible) {
+      saveNewItem(extractedItemDetails, list, listID);
+      event.target[0].value = '';
+      return;
+    }
+
+    const sumItem = addItems(existingQuantity, existingUnit, duplicateQuantity, duplicateUnit);
+
+    const updatedItemDetails = {
+      itemName: list.itemsList.get(originalItemId).itemName,
+      quantity: sumItem.quantity,
+      unit: sumItem.unit,
     };
 
-    saveItem(itemDetails, itemHasDuplicates.id, listID);
+    saveItem(updatedItemDetails, originalItemId, listID);
     event.target[0].value = '';
   }
 
   return (
     <form
-      onSubmit={(event) => {
-        event.preventDefault();
-        checkSubmit(event);
-      }}
+      onSubmit={onSubmit}
       className="flex w-full justify-between items-center gap-4"
     >
       <div className="flex w-full gap-4">

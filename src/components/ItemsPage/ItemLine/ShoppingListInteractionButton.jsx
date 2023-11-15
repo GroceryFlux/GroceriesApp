@@ -15,10 +15,10 @@ function getIcon(item) {
   return <CartArrowIcon />;
 }
 
-function ShoppingListInteractionButton({ itemID, item }) {
-  const toggleShoppingListItem = useListsStore((state) => state.toggleShoppingListItem);
+function ShoppingListInteractionButton({ item }) {
+  const toggleItemOnShoppingList = useListsStore((state) => state.toggleItemOnShoppingList);
 
-  return <button onClick={() => toggleShoppingListItem(itemID, item)}>{getIcon(item)}</button>;
+  return <button onClick={() => toggleItemOnShoppingList(item)}>{getIcon(item)}</button>;
 }
 
 ShoppingListInteractionButton.propTypes = {
