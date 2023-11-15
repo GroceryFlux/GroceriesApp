@@ -5,41 +5,145 @@ const acceptedKinds = [].concat(Qty.getUnits('mass'), Qty.getUnits('length'), Qt
 let acceptedUnits = [];
 acceptedKinds.forEach((kind) => (acceptedUnits = acceptedUnits.concat(Qty.getAliases(kind))));
 
-export function findItemDetails(value) {
-  const array = value.trim().split(' ');
+const isValueInteger = /^[0-9]*$/;
 
-  const foundData = {
-    foundItemName: '',
-    foundItemQuantity: '',
-    foundItemUnit: '',
+function removeBracketsFromUnit(value) {
+  return value.slice(1, -1);
+}
+
+function convertUnitToAbreviation(unit) {
+  const abreviatedUnit = Qty.getAliases(unit)[0];
+  return abreviatedUnit;
+}
+
+function extractItemName(value, extractedItemName) {
+  if (!extractedItemName) {
+    return value;
+  }
+
+  return `${extractedItemName} ${value}`;
+}
+
+function hasQuantity(value) {
+  const firstCharacter = value[0];
+  return isValueInteger.test(firstCharacter);
+}
+
+function extractQuantity(value) {
+  const quantityAndUnit = Qty(value);
+  return quantityAndUnit.scalar;
+}
+
+function extractUnit(value) {
+  const quantitiesAndUnits = Qty(value);
+  const rawUnit = quantitiesAndUnits.numerator[0];
+  const fullUnit = removeBracketsFromUnit(rawUnit);
+  const unit = convertUnitToAbreviation(fullUnit);
+
+  if (acceptedUnits.includes(unit)) {
+    return unit;
+  }
+
+  return '1';
+}
+
+export function extractItemDetails(input) {
+  const array = input.trim().split(' ');
+
+  const extractedItemDetails = {
+    itemName: '',
+    quantity: '',
+    unit: '1',
   };
 
-  const isValueInteger = /^[0-9]*$/;
   for (let i = 0; i < array.length; i++) {
     const value = array[i];
-    const valueFirstCharacter = value[0];
-    if (isValueInteger.test(valueFirstCharacter) === true) {
-      let quantityAndUnit = Qty(value);
-      foundData.foundItemUnit =
-        quantityAndUnit.numerator[0].slice(1, -1) === 1 ? 'unitless' : quantityAndUnit.numerator[0].slice(1, -1);
-      foundData.foundItemQuantity = quantityAndUnit.scalar;
-    } else if (acceptedUnits.includes(value)) {
-      foundData.foundItemUnit = value;
-    } else {
-      foundData.foundItemName = `${foundData.foundItemName} ${value}`;
+
+    if (hasQuantity(value)) {
+      extractedItemDetails.quantity = extractQuantity(value);
+      extractedItemDetails.unit = extractUnit(value);
+      continue;
     }
+
+    if (acceptedUnits.includes(value)) {
+      extractedItemDetails.unit = extractUnit(value);
+      continue;
+    }
+
+    extractedItemDetails.itemName = extractItemName(value, extractedItemDetails.itemName);
   }
-  foundData.foundItemName = foundData.foundItemName.trim();
-  return foundData;
+
+  return extractedItemDetails;
 }
 
 export function addItems(qty1, unit1, qty2, unit2) {
+  if (qty1 === '' && qty2 === '') {
+    return { quantity: '', unit: '1' };
+  }
+
+  if (unit1 === '1' && unit2 === '1') {
+    return { quantity: qty1 + qty2, unit: '1' };
+  }
+
   const qtyA = Qty(qty1, unit1);
   const qtyB = Qty(qty2, unit2);
-  if (qtyA.isCompatible(qtyB)) {
-    const updatedQtyA = qtyA.to(qtyB);
-    const sum = updatedQtyA.add(qtyB);
-    return { quantity: sum.scalar, unit: sum.numerator[0].slice(1, -1) };
+
+  const rawSum = qtyA.add(qtyB);
+  const sum = rawSum.toPrec(0.01);
+  const summedQuantity = sum.scalar;
+  const summedFullUnit = convertUnitToAbreviation(sum.numerator[0].slice(1, -1));
+  const summedUnit = convertUnitToAbreviation(summedFullUnit);
+
+  return { quantity: summedQuantity, unit: summedUnit };
+}
+
+export function substractItems(qty1, unit1, qty2, unit2) {
+  if (qty1 === '' && qty2 === '') {
+    return { quantity: '', unit: '1' };
   }
-  return 'incompatible';
+
+  if (unit1 === '1' && unit2 === '1') {
+    return { quantity: qty1 - qty2, unit: '1' };
+  }
+
+  const qtyA = Qty(qty1, unit1);
+  const qtyB = Qty(qty2, unit2);
+
+  const rawSub = qtyA.sub(qtyB);
+  const sub = rawSub.toPrec(0.01);
+  const substractedQuantity = sub.scalar;
+  const substractedFullUnit = sub.numerator[0].slice(1, -1);
+  const substractedUnit = convertUnitToAbreviation(substractedFullUnit);
+
+  return { quantity: substractedQuantity, unit: substractedUnit };
+}
+
+export function areItemsCompatible(qty1, unit1, qty2, unit2) {
+  if (unit1 === '1' && unit2 === '1') {
+    return true;
+  }
+
+  const qtyA = Qty(qty1, unit1);
+  const qtyB = Qty(qty2, unit2);
+
+  if (!qtyA.isCompatible(qtyB)) {
+    return false;
+  }
+
+  return true;
+}
+
+export function getDefaultValue(item) {
+  const hasQuantity = item.quantity ? true : false;
+  const hasUnit = item.unit !== '1';
+
+  if (!hasQuantity && !hasUnit) {
+    return item.itemName;
+  }
+
+  if (!hasUnit) {
+    return `${item.quantity} ${item.itemName}`;
+  }
+
+  return `${item.quantity} ${item.unit} ${item.itemName}`;
 }

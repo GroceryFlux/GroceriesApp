@@ -1,32 +1,84 @@
-export function findItemDuplicates(map) {
-  const mapEntries = [...map.entries()];
-  const foundDuplicates = new Map();
-  mapEntries.forEach((entry) => {
-    let ids = [];
-    const id = entry[0];
-    const itemName = entry[1].itemName;
-    if (foundDuplicates.has(itemName)) {
-      let newIds = foundDuplicates.get(itemName);
-      newIds.push(id);
-      ids = newIds;
-    } else ids.push(id);
-    foundDuplicates.set(itemName, ids);
-  });
-  return foundDuplicates;
+import { addItems, areItemsCompatible } from './quantitiesAndUnits';
+
+function retrieveData(foundEntry) {
+  const data = {
+    itemID: foundEntry[0],
+    itemName: foundEntry[1].itemName.toLowerCase(),
+    associatedIDs: foundEntry[1].associatedIDs,
+    quantity: foundEntry[1].quantity,
+    unit: foundEntry[1].unit,
+    isBought: foundEntry[1].isBought,
+  };
+
+  return data;
 }
 
-//findItemDuplicates will be used later in shoppingList
+export function combineShoppingList(mapEntries) {
+  const foundItemNames = new Map();
 
-export function hasItemDuplicates(map, searchValue) {
-  const mapEntries = [...map.entries()];
-  let foundId = false;
-  mapEntries.forEach((entry) => {
-    const id = entry[0];
-    const value = entry[1];
-    if (value.itemName.toLowerCase() === searchValue.toLowerCase()) {
-      foundId = id;
+  const combinedShoppingList = new Map();
+
+  mapEntries.forEach((foundEntry) => {
+    const { itemID, itemName, associatedIDs, quantity, unit, isBought } = retrieveData(foundEntry);
+
+    if (!foundItemNames.has(itemName)) {
+      foundItemNames.set(itemName, itemID);
+
+      combinedShoppingList.set(itemID, {
+        associatedIDs: [{ itemID: itemID, listID: associatedIDs[0].listID }],
+        itemName: itemName,
+        quantity: quantity,
+        unit: unit,
+        isBought: isBought,
+        isOnShoppingList: true,
+      });
+
       return;
     }
+
+    const firstID = foundItemNames.get(itemName);
+    const itemDetails = combinedShoppingList.get(firstID);
+
+    const requiresNewEntry =
+      isBought !== itemDetails.isBought || !areItemsCompatible(itemDetails.quantity, itemDetails.unit, quantity, unit);
+
+    if (requiresNewEntry) {
+      combinedShoppingList.set(itemID, {
+        associatedIDs: [{ itemID: itemID, listID: associatedIDs[0].listID }],
+        itemName: itemName,
+        quantity: quantity,
+        unit: unit,
+        isBought: isBought,
+        isOnShoppingList: true,
+      });
+
+      return;
+    }
+
+    const updatedIDs = [...itemDetails.associatedIDs, { itemID: itemID, listID: associatedIDs[0].listID }];
+
+    const sum = addItems(itemDetails.quantity, itemDetails.unit, quantity, unit);
+
+    combinedShoppingList.set(firstID, {
+      ...itemDetails,
+      associatedIDs: updatedIDs,
+      quantity: sum.quantity,
+      unit: sum.unit,
+    });
   });
-  return { id: foundId };
+
+  return combinedShoppingList;
+}
+
+export function findItemDuplicateId(map, searchValue) {
+  const mapEntries = [...map.entries()];
+
+  const foundEntry = mapEntries.find(([, value]) => value.itemName.toLowerCase() === searchValue.toLowerCase());
+
+  if (foundEntry) {
+    const id = foundEntry[0];
+    return id;
+  }
+
+  return undefined;
 }
