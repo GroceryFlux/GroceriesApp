@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useListsStore } from '../../../store/lists/lists';
+import { toggleItemIsBought } from '../../../UseCases/ShoppingList/BusinessLogic';
 
 function IsItemBoughtCheckBox({ itemID, item }) {
-  const toggleItemIsBought = useListsStore((state) => state.toggleItemIsBought);
 
   return (
     <input
@@ -11,7 +10,7 @@ function IsItemBoughtCheckBox({ itemID, item }) {
       defaultChecked={item.isBought}
       className="checkbox checkbox-sm checkbox-accent"
       onClick={() => {
-        toggleItemIsBought(itemID, item);
+        toggleItemIsBought({ itemID, item });
       }}
     />
   );

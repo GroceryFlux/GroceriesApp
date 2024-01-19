@@ -1,7 +1,6 @@
 import React from 'react';
 import { filterLists } from '../utils/filterValue.utils';
 import { sortBy } from '../utils/timeStampAndSortBy';
-import { useListsStore } from '../store/lists/lists';
 import NewListButton from '../components/ListsPage/NewListButton';
 import ListsPageHeader from '../components/ListsPage/ListsPageHeader';
 import { useListFilterStore } from '../store/filtersAndSortBy/listFilter';
@@ -10,9 +9,10 @@ import ListLine from '../components/ListsPage/ListLine/ListLine';
 import SearchListInput from '../components/ListsPage/SearchListInput';
 import SelectSorting from '../components/ListsPage/SelectSorting';
 import SearchListButton from '../components/ListsPage/SearchListButton';
+import { useExistingListsStore } from '../UseCases/ExistingLists/Store';
 
 function ListsPage() {
-  const existingLists = useListsStore((state) => state.existingLists);
+  const existingLists = useExistingListsStore((state) => state.existingLists)
   const listFilter = useListFilterStore((state) => state.listFilter);
   const sortType = useSortByStore((state) => state.sortType);
 

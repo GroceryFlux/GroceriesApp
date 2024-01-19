@@ -1,16 +1,17 @@
 import React from 'react';
 import { filterItems } from '../utils/filterValue.utils';
-import { useListsStore } from '../store/lists/lists';
 import LastModifiedText from '../components/ItemsPage/LastModifiedText';
 import NewItemForm from '../components/ItemsPage/NewItemForm';
 import ItemLine from '../components/ItemsPage/ItemLine/ItemLine';
 import SearchItemInput from '../components/ItemsPage/SearchItemInput';
 import { useItemFilterStore } from '../store/filtersAndSortBy/itemFilter';
 import ItemPageHeader from '../components/ItemsPage/ItemPageHeader';
+import { useSelectedListStore } from '../UseCases/SelectedList/Store';
+import { useExistingListsStore } from '../UseCases/ExistingLists/Store';
 
 function ItemsPage() {
-  const listID = useListsStore((state) => state.selectedListID);
-  const list = useListsStore((state) => state.existingLists).get(listID);
+  const listID = useSelectedListStore((state) => state.selectedListID)
+  const list = useExistingListsStore((state) => state.existingLists).get(listID)
   const itemFilter = useItemFilterStore((state) => state.itemFilter);
 
   const items = filterItems(itemFilter, list.itemsList).map(([itemID, item]) => (

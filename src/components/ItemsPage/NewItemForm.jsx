@@ -1,64 +1,67 @@
 import React, { useState } from 'react';
-import { useListsStore } from '../../store/lists/lists';
 import { PlusIcon } from '../Icons';
 import SearchItemButton from './SearchItemButton.jsx';
 import { findItemDuplicateId } from '../../utils/duplicates';
 import { addItems, areItemsCompatible, extractItemDetails } from '../../utils/quantitiesAndUnits';
+import { useSelectedListStore } from '../../UseCases/SelectedList/Store.js';
+import { getItemFromExistingList, getList, saveItemInExistingList } from '../../UseCases/ExistingLists/Repository.js';
+import { createItem } from '../../UseCases/ExistingLists/BusinessLogic.js';
+import { updateItemInShoppingList } from '../../UseCases/ShoppingList/BusinessLogic.js';
 
 let warningBorderTimeout;
 export const newItemFormId = 'newItemInput';
 
 function NewItemForm() {
-  const listID = useListsStore((state) => state.selectedListID);
-  const list = useListsStore((state) => state.existingLists).get(listID);
-  const saveNewItem = useListsStore((state) => state.saveNewItem);
-  const saveItem = useListsStore((state) => state.saveItem);
+  const listID = useSelectedListStore((state) => state.selectedListID);
+  const list = getList(listID);
 
   const [hasError, setHasError] = useState(false);
 
   function onSubmit(event) {
     event.preventDefault();
 
-    const inputValue = event.target[0].value;
+    const input = event.target[0].value;
 
-    if (!inputValue) {
+    if (!input) {
       setHasError(true);
       clearTimeout(warningBorderTimeout);
       warningBorderTimeout = setTimeout(() => setHasError(false), 1500);
       return;
     }
 
-    const extractedItemDetails = extractItemDetails(inputValue);
+    const extractedItemDetails = extractItemDetails(input);
     const originalItemId = findItemDuplicateId(list.itemsList, extractedItemDetails.itemName);
 
     if (!originalItemId) {
-      saveNewItem(extractedItemDetails, list, listID);
+      createItem({ input, listID });
       event.target[0].value = '';
       return;
     }
 
-    const existingQuantity = list.itemsList.get(originalItemId).quantity;
-    const existingUnit = list.itemsList.get(originalItemId).unit;
-    const duplicateQuantity = extractedItemDetails.quantity;
-    const duplicateUnit = extractedItemDetails.unit;
+    const existingItem = getItemFromExistingList({ itemID: originalItemId, listID })
 
-    const itemsAreCompatible = areItemsCompatible(existingQuantity, existingUnit, duplicateQuantity, duplicateUnit);
+    const itemsAreCompatible = areItemsCompatible(existingItem.quantity, existingItem.unit, extractedItemDetails.quantity, extractedItemDetails.unit);
 
     if (!itemsAreCompatible) {
-      saveNewItem(extractedItemDetails, list, listID);
+      createItem({ input, listID });
       event.target[0].value = '';
       return;
     }
 
-    const sumItem = addItems(existingQuantity, existingUnit, duplicateQuantity, duplicateUnit);
+    const sumItem = addItems(existingItem.quantity, existingItem.unit, extractedItemDetails.quantity, extractedItemDetails.unit);
 
-    const updatedItemDetails = {
-      itemName: list.itemsList.get(originalItemId).itemName,
+    const updatedItem = {
+      ...existingItem,
       quantity: sumItem.quantity,
       unit: sumItem.unit,
     };
 
-    saveItem(updatedItemDetails, originalItemId, listID);
+    if(!existingItem.isOnShoppingList) {
+      saveItemInExistingList({ item: updatedItem, itemID: originalItemId, listID });
+      return
+    }
+
+    updateItemInShoppingList({ oldItem: existingItem, newItem: updatedItem })
     event.target[0].value = '';
   }
 

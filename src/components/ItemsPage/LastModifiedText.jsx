@@ -1,10 +1,11 @@
 import React from 'react';
-import { useListsStore } from '../../store/lists/lists';
 import { toDate } from '../../utils/timeStampAndSortBy';
+import { useSelectedListStore } from '../../UseCases/SelectedList/Store';
+import { getList } from '../../UseCases/ExistingLists/Repository';
 
 function LastModifiedText() {
-  const listID = useListsStore((state) => state.selectedListID);
-  const list = useListsStore((state) => state.existingLists).get(listID);
+  const listID = useSelectedListStore((state) => state.selectedListID);
+  const list = getList(listID);
 
   return (
     <div>

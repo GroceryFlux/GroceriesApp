@@ -1,11 +1,11 @@
 import React from 'react';
-import { useListsStore } from '../../store/lists/lists';
 import { usePageStore } from '../../store/displayedMenu/displayedMenu';
 import { PlusIcon } from '../Icons';
+import { createList } from '../../UseCases/ExistingLists/BusinessLogic';
 
 function NewListButton() {
   const setDisplayedPage = usePageStore((state) => state.setDisplayedPage);
-  const createList = useListsStore((state) => state.createList);
+
 
   return (
     <button

@@ -1,6 +1,7 @@
 import React from 'react';
-import { useListsStore } from '../../store/lists/lists';
 import { newItemFormId } from './NewItemForm.jsx';
+import { useSelectedListStore } from '../../UseCases/SelectedList/Store.js';
+import { getList, saveList } from '../../UseCases/ExistingLists/Repository.js';
 
 function focusNextInput(event) {
   event.preventDefault();
@@ -9,9 +10,8 @@ function focusNextInput(event) {
 }
 
 function ListTitleInput() {
-  const listID = useListsStore((state) => state.selectedListID);
-  const list = useListsStore((state) => state.existingLists).get(listID);
-  const saveExistingLists = useListsStore((state) => state.saveExistingLists);
+  const listID = useSelectedListStore((state) => state.selectedListID);
+  const list = getList(listID);
 
   return (
     <>
@@ -26,7 +26,7 @@ function ListTitleInput() {
           onBlur={(event) => {
             list.title = event.target.value;
             list.timeStamp = Date.now();
-            saveExistingLists(listID, list);
+            saveList({ listID, list });
           }}
         />
       </form>

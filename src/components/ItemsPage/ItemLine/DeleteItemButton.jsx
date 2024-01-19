@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useListsStore } from '../../../store/lists/lists';
 import { TrashIcon } from '../../Icons';
+import { useSelectedListStore } from '../../../UseCases/SelectedList/Store';
+import { deleteItemFromList } from '../../../UseCases/ExistingLists/BusinessLogic';
 
 function DeleteItemButton({ itemID }) {
-  const listID = useListsStore((state) => state.selectedListID);
-  const deleteItem = useListsStore((state) => state.deleteItem);
+  const listID = useSelectedListStore((state) => state.selectedListID);
 
   return (
     <button
       className="text-red-500/70"
-      onClick={() => deleteItem(listID, itemID)}
+      onClick={() => deleteItemFromList({ listID, itemID })}
     >
       <TrashIcon />
     </button>
