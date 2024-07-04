@@ -6,7 +6,6 @@ import { createList } from '../../UseCases/ExistingLists/BusinessLogic';
 function NewListButton() {
   const setDisplayedPage = usePageStore((state) => state.setDisplayedPage);
 
-
   return (
     <button
       onClick={() => {

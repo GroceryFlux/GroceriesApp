@@ -38,9 +38,14 @@ function NewItemForm() {
       return;
     }
 
-    const existingItem = getItemFromExistingList({ itemID: originalItemId, listID })
+    const existingItem = getItemFromExistingList({ itemID: originalItemId, listID });
 
-    const itemsAreCompatible = areItemsCompatible(existingItem.quantity, existingItem.unit, extractedItemDetails.quantity, extractedItemDetails.unit);
+    const itemsAreCompatible = areItemsCompatible(
+      existingItem.quantity,
+      existingItem.unit,
+      extractedItemDetails.quantity,
+      extractedItemDetails.unit,
+    );
 
     if (!itemsAreCompatible) {
       createItem({ input, listID });
@@ -48,7 +53,12 @@ function NewItemForm() {
       return;
     }
 
-    const sumItem = addItems(existingItem.quantity, existingItem.unit, extractedItemDetails.quantity, extractedItemDetails.unit);
+    const sumItem = addItems(
+      existingItem.quantity,
+      existingItem.unit,
+      extractedItemDetails.quantity,
+      extractedItemDetails.unit,
+    );
 
     const updatedItem = {
       ...existingItem,
@@ -56,12 +66,12 @@ function NewItemForm() {
       unit: sumItem.unit,
     };
 
-    if(!existingItem.isOnShoppingList) {
+    if (!existingItem.isOnShoppingList) {
       saveItemInExistingList({ item: updatedItem, itemID: originalItemId, listID });
-      return
+      return;
     }
 
-    updateItemInShoppingList({ oldItem: existingItem, newItem: updatedItem })
+    updateItemInShoppingList({ oldItem: existingItem, newItem: updatedItem });
     event.target[0].value = '';
   }
 

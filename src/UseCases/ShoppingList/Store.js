@@ -1,5 +1,5 @@
-import { create } from "zustand";
-import { getLocalShoppingList, setLocalShoppingList } from '../../utils/localStorage.utils'
+import { create } from 'zustand';
+import { getLocalShoppingList, setLocalShoppingList } from '../../utils/localStorage.utils';
 
 export const useExistingShoppingListStore = create((set, get) => ({
   shoppingList: getLocalShoppingList(),
@@ -7,16 +7,16 @@ export const useExistingShoppingListStore = create((set, get) => ({
   timeoutID: 0,
 
   saveShoppingListInStore(shoppingList) {
-    setLocalShoppingList(shoppingList)
+    setLocalShoppingList(shoppingList);
 
-    set(() => ({ shoppingList: shoppingList }))
+    set(() => ({ shoppingList: shoppingList }));
   },
 
   startCartAnimation() {
-    clearTimeout(get().timeoutID)
-    set(() => ({ animation: '-translate-y-1/4' }))
+    clearTimeout(get().timeoutID);
+    set(() => ({ animation: '-translate-y-1/4' }));
 
     const timeoutID = setTimeout(() => set(() => ({ animation: '-translate-y-1/2' })), 150);
-    set(() => ({ timeoutID }))
-  }
+    set(() => ({ timeoutID }));
+  },
 }));

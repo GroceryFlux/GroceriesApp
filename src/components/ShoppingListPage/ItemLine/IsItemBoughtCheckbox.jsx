@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { toggleItemIsBought } from '../../../UseCases/ShoppingList/BusinessLogic';
 
 function IsItemBoughtCheckBox({ itemID, item }) {
-
   return (
     <input
       type="checkbox"

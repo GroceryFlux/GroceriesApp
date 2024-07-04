@@ -16,7 +16,6 @@ function getIcon(item) {
 }
 
 function ShoppingListInteractionButton({ item }) {
-
   return <button onClick={() => toggleItemOnShoppingList(item)}>{getIcon(item)}</button>;
 }
 

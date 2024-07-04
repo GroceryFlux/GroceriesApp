@@ -10,8 +10,8 @@ import { useSelectedListStore } from '../UseCases/SelectedList/Store';
 import { useExistingListsStore } from '../UseCases/ExistingLists/Store';
 
 function ItemsPage() {
-  const listID = useSelectedListStore((state) => state.selectedListID)
-  const list = useExistingListsStore((state) => state.existingLists).get(listID)
+  const listID = useSelectedListStore((state) => state.selectedListID);
+  const list = useExistingListsStore((state) => state.existingLists).get(listID);
   const itemFilter = useItemFilterStore((state) => state.itemFilter);
 
   const items = filterItems(itemFilter, list.itemsList).map(([itemID, item]) => (

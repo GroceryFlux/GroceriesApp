@@ -12,7 +12,7 @@ import SearchListButton from '../components/ListsPage/SearchListButton';
 import { useExistingListsStore } from '../UseCases/ExistingLists/Store';
 
 function ListsPage() {
-  const existingLists = useExistingListsStore((state) => state.existingLists)
+  const existingLists = useExistingListsStore((state) => state.existingLists);
   const listFilter = useListFilterStore((state) => state.listFilter);
   const sortType = useSortByStore((state) => state.sortType);
 

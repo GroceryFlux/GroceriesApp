@@ -1,7 +1,7 @@
-import { useExistingListsStore } from "./Store";
+import { useExistingListsStore } from './Store';
 
 export function saveItemInExistingList({ listID, itemID, item }) {
-  const list = getList(listID)
+  const list = getList(listID);
   list.itemsList.set(itemID, item);
 
   saveList({ listID, list });
@@ -24,26 +24,24 @@ export function getItemFromExistingList({ itemID, listID }) {
 }
 
 export function deleteListFromExistingLists(listID) {
-  const newExistingLists = new Map(getExisitingLists())
+  const newExistingLists = new Map(getExisitingLists());
 
-  newExistingLists.delete(listID)
+  newExistingLists.delete(listID);
 
   saveExistingLists(newExistingLists);
 }
 
 export function deleteItemFromExistingList({ listID, itemID }) {
-  const list = getList(listID)
-  list.itemsList.delete(itemID)
+  const list = getList(listID);
+  list.itemsList.delete(itemID);
 
-  saveList({ listID, list })
+  saveList({ listID, list });
 }
 
 function getExisitingLists() {
-  return useExistingListsStore.getState().existingLists
+  return useExistingListsStore.getState().existingLists;
 }
 
 function saveExistingLists(newExistingLists) {
-  useExistingListsStore.getState().saveExistingListsInStore(newExistingLists)
+  useExistingListsStore.getState().saveExistingListsInStore(newExistingLists);
 }
- 
-

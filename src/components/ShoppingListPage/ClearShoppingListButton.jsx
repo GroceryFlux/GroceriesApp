@@ -3,7 +3,6 @@ import { TrashIcon } from '../Icons';
 import { clearItemsFromShoppingList } from '../../UseCases/ShoppingList/BusinessLogic';
 
 function ClearShoppingListButton() {
-
   return (
     <button
       onClick={() => clearItemsFromShoppingList()}

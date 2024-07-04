@@ -115,7 +115,7 @@ export function subtractItems(qty1, unit1, qty2, unit2) {
   const fullUnit = removeBracketsFromUnit(sub.numerator[0]);
   const unit = convertUnitToAbbreviation(fullUnit);
 
-  return { quantity , unit };
+  return { quantity, unit };
 }
 
 export function areItemsCompatible(qty1, unit1, qty2, unit2) {

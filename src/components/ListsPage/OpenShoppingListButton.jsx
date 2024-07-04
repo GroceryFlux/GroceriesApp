@@ -6,7 +6,7 @@ import { getMissingShoppingListItemsAmount } from '../../UseCases/ShoppingList/B
 
 function OpenShoppingListButton() {
   const toggleShoppingListVisible = usePageStore((state) => state.toggleShoppingListVisible);
-  const animation = useExistingShoppingListStore((state) => state.animation)
+  const animation = useExistingShoppingListStore((state) => state.animation);
 
   const missingItemsAmount = getMissingShoppingListItemsAmount();
 
