@@ -89,7 +89,7 @@ export function addItems(qty1, unit1, qty2, unit2) {
   const qtyB = Qty(qty2, unit2);
 
   const rawSum = qtyA.add(qtyB);
-  const sum = rawSum.toPrec(0.01);
+  const sum = rawSum.toPrec(0.001);
   const quantity = sum.scalar;
   const fullUnit = removeBracketsFromUnit(sum.numerator[0]);
   const unit = convertUnitToAbbreviation(fullUnit);
@@ -110,7 +110,7 @@ export function subtractItems(qty1, unit1, qty2, unit2) {
   const qtyB = Qty(qty2, unit2);
 
   const rawSub = qtyA.sub(qtyB);
-  const sub = rawSub.toPrec(0.01);
+  const sub = rawSub.toPrec(0.001);
   const quantity = sub.scalar;
   const fullUnit = removeBracketsFromUnit(sub.numerator[0]);
   const unit = convertUnitToAbbreviation(fullUnit);

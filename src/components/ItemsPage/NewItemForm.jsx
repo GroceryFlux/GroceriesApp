@@ -68,6 +68,7 @@ function NewItemForm() {
 
     if (!existingItem.isOnShoppingList) {
       saveItemInExistingList({ item: updatedItem, itemID: originalItemId, listID });
+      event.target[0].value = '';
       return;
     }
 
