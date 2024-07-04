@@ -30,7 +30,7 @@ function hasQuantity(value) {
 }
 
 function extractQuantity(value) {
-  const quantityAndUnit = Qty(value);
+  const quantityAndUnit = Qty(value.replaceAll(',', '.'));
   return quantityAndUnit.scalar;
 }
 
@@ -88,8 +88,10 @@ export function addItems(qty1, unit1, qty2, unit2) {
   const qtyA = Qty(qty1, unit1);
   const qtyB = Qty(qty2, unit2);
 
+  const precision = qtyA.baseScalar < qtyB.baseScalar ? qtyA.baseScalar : qtyB.baseScalar
+
   const rawSum = qtyA.add(qtyB);
-  const sum = rawSum.toPrec(0.001);
+  const sum = rawSum.toPrec(precision);
   const quantity = sum.scalar;
   const fullUnit = removeBracketsFromUnit(sum.numerator[0]);
   const unit = convertUnitToAbbreviation(fullUnit);
@@ -109,8 +111,10 @@ export function subtractItems(qty1, unit1, qty2, unit2) {
   const qtyA = Qty(qty1, unit1);
   const qtyB = Qty(qty2, unit2);
 
+  const precision = qtyA.baseScalar < qtyB.baseScalar ? qtyA.baseScalar : qtyB.baseScalar
+
   const rawSub = qtyA.sub(qtyB);
-  const sub = rawSub.toPrec(0.001);
+  const sub = rawSub.toPrec(precision);
   const quantity = sub.scalar;
   const fullUnit = removeBracketsFromUnit(sub.numerator[0]);
   const unit = convertUnitToAbbreviation(fullUnit);
