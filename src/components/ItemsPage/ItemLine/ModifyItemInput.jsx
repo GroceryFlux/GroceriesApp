@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getDefaultValue } from '../../../utils/quantitiesAndUnits';
+import { stringifyItemNameQuantityUnit } from '../../../utils/quantitiesAndUnits';
 import { saveItemFromInputInExistingList } from '../../../UseCases/ExistingLists/BusinessLogic';
 import { useSelectedListStore } from '../../../UseCases/SelectedList/Store';
 
 function ModifyItemInput({ itemID, item }) {
   const listID = useSelectedListStore((state) => state.selectedListID);
 
-  const defaultValue = getDefaultValue(item);
+  const defaultValue = stringifyItemNameQuantityUnit(item);
 
   return (
     <input

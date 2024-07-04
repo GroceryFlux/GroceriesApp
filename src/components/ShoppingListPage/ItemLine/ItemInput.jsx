@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getDefaultValue } from '../../../utils/quantitiesAndUnits';
+import { stringifyItemNameQuantityUnit } from '../../../utils/quantitiesAndUnits';
 
 function ItemInput({ item }) {
-  const value = getDefaultValue(item);
+  const value = stringifyItemNameQuantityUnit(item);
 
   return (
     <input

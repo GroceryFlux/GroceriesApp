@@ -133,7 +133,7 @@ export function areItemsCompatible(qty1, unit1, qty2, unit2) {
   return true;
 }
 
-export function getDefaultValue(item) {
+export function stringifyItemNameQuantityUnit(item) {
   const hasQuantity = item.quantity ? true : false;
   const hasUnit = item.unit !== '1';
 

@@ -2,7 +2,7 @@ import {
   addItems,
   areItemsCompatible,
   extractItemDetails,
-  getDefaultValue,
+  stringifyItemNameQuantityUnit,
   substractItems,
 } from './quantitiesAndUnits';
 
@@ -298,7 +298,7 @@ describe('quantitiesAndUnits.js', () => {
     });
   });
 
-  describe('getDefaultValue()', () => {
+  describe('stringifyItemNameQuantityUnit()', () => {
     it('should return only a name', () => {
       const givenItem = {
         itemName: 'item',
@@ -308,7 +308,7 @@ describe('quantitiesAndUnits.js', () => {
 
       const expectedResult = 'item';
 
-      const actualResult = getDefaultValue(givenItem);
+      const actualResult = stringifyItemNameQuantityUnit(givenItem);
 
       expect(expectedResult).toEqual(actualResult);
     });
@@ -322,7 +322,7 @@ describe('quantitiesAndUnits.js', () => {
 
       const expectedResult = '1 item';
 
-      const actualResult = getDefaultValue(givenItem);
+      const actualResult = stringifyItemNameQuantityUnit(givenItem);
 
       expect(expectedResult).toEqual(actualResult);
     });
@@ -336,7 +336,7 @@ describe('quantitiesAndUnits.js', () => {
 
       const expectedResult = '1 kg item';
 
-      const actualResult = getDefaultValue(givenItem);
+      const actualResult = stringifyItemNameQuantityUnit(givenItem);
 
       expect(expectedResult).toEqual(actualResult);
     });
