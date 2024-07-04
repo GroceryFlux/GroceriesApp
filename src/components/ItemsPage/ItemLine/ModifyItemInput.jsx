@@ -1,16 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useListsStore } from '../../../store/lists/lists';
+import { stringifyItemNameQuantityUnit } from '../../../utils/quantitiesAndUnits';
+import { saveItemFromInputInExistingList } from '../../../UseCases/ExistingLists/BusinessLogic';
+import { useSelectedListStore } from '../../../UseCases/SelectedList/Store';
 
 function ModifyItemInput({ itemID, item }) {
-  const listID = useListsStore((state) => state.selectedListID);
-  const saveItemName = useListsStore((state) => state.saveItemName);
+  const listID = useSelectedListStore((state) => state.selectedListID);
+
+  const defaultValue = stringifyItemNameQuantityUnit(item);
 
   return (
     <input
+      key={defaultValue}
       className="w-0 grow bg-base-100 text-info rounded-md focus:outline focus:outline-blue-500/50 pl-1"
-      onBlur={(event) => saveItemName(event.target.value, itemID, listID)}
-      defaultValue={item.itemName}
+      onBlur={(event) => saveItemFromInputInExistingList({ input: event.target.value, itemID, listID })}
+      defaultValue={defaultValue}
     />
   );
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useListsStore } from '../../../store/lists/lists';
 import { CartArrowIcon, CartCheckIcon, HandleBagCheck } from '../../Icons';
+import { toggleItemOnShoppingList } from '../../../UseCases/ExistingLists/BusinessLogic';
 
 function getIcon(item) {
   if (item.isBought) {
@@ -15,10 +15,8 @@ function getIcon(item) {
   return <CartArrowIcon />;
 }
 
-function ShoppingListInteractionButton({ itemID, item }) {
-  const toggleShoppingListItem = useListsStore((state) => state.toggleShoppingListItem);
-
-  return <button onClick={() => toggleShoppingListItem(itemID, item)}>{getIcon(item)}</button>;
+function ShoppingListInteractionButton({ item }) {
+  return <button onClick={() => toggleItemOnShoppingList(item)}>{getIcon(item)}</button>;
 }
 
 ShoppingListInteractionButton.propTypes = {

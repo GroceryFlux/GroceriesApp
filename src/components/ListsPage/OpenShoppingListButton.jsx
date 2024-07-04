@@ -1,14 +1,14 @@
 import React from 'react';
 import { usePageStore } from '../../store/displayedMenu/displayedMenu';
 import { OutlineCartIcon } from '../Icons';
-import { useListsStore } from '../../store/lists/lists.js';
+import { useExistingShoppingListStore } from '../../UseCases/ShoppingList/Store.js';
+import { getMissingShoppingListItemsAmount } from '../../UseCases/ShoppingList/BusinessLogic.js';
 
 function OpenShoppingListButton() {
   const toggleShoppingListVisible = usePageStore((state) => state.toggleShoppingListVisible);
-  const animation = useListsStore((state) => state.animation);
-  const getMissingItemsAmount = useListsStore((state) => state.getMissingItemsAmount);
+  const animation = useExistingShoppingListStore((state) => state.animation);
 
-  const missingItemsAmount = getMissingItemsAmount();
+  const missingItemsAmount = getMissingShoppingListItemsAmount();
 
   return (
     <div className="indicator">

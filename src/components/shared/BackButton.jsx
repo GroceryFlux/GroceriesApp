@@ -1,13 +1,14 @@
 import React from 'react';
 import { usePageStore } from '../../store/displayedMenu/displayedMenu';
-import { useListsStore } from '../../store/lists/lists';
 import ReturnIcon from '../Icons/ReturnIcon';
+import { useSelectedListStore } from '../../UseCases/SelectedList/Store';
+import { getList } from '../../UseCases/ExistingLists/Repository';
+import { deleteList } from '../../UseCases/ExistingLists/BusinessLogic';
 
 function BackButton() {
   const setDisplayedPage = usePageStore((state) => state.setDisplayedPage);
-  const listID = useListsStore((state) => state.selectedListID);
-  const list = useListsStore((state) => state.existingLists.get(listID));
-  const deleteList = useListsStore((state) => state.deleteList);
+  const listID = useSelectedListStore((state) => state.selectedListID);
+  const list = getList(listID);
   const displayedMenu = usePageStore((state) => state.displayedMenu);
 
   function checkEmptyList() {

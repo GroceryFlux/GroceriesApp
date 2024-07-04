@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useListsStore } from '../../../store/lists/lists';
 import { CancelIcon, ConfirmDeleteIcon, TrashIcon } from '../../Icons';
+import { deleteList } from '../../../UseCases/ExistingLists/BusinessLogic';
 
 function DeleteListButton({ listID }) {
   const [confirmDelete, setConfirmDelete] = useState(false);
-
-  const deleteList = useListsStore((state) => state.deleteList);
 
   if (confirmDelete) {
     return (

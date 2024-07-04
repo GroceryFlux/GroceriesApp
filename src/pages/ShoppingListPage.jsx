@@ -1,14 +1,15 @@
 import React from 'react';
-import { useListsStore } from '../store/lists/lists';
 import { useBoughtItemsStore } from '../store/displayedMenu/displayedMenu';
 import ToggleBoughtItemsButton from '../components/ShoppingListPage/ToggleBoughtItemsButton';
 import ItemLine from '../components/ShoppingListPage/ItemLine/ItemLine';
 import ShoppingListHeader from '../components/ShoppingListPage/ShoppingListHeader.jsx';
 import ClearShoppingListButton from '../components/ShoppingListPage/ClearShoppingListButton.jsx';
+import { useExistingShoppingListStore } from '../UseCases/ShoppingList/Store.js';
+import { useExistingListsStore } from '../UseCases/ExistingLists/Store.js';
 
 function ShoppingListPage() {
-  const shoppingList = useListsStore((state) => state.shoppingList);
-  const existingLists = useListsStore((state) => state.existingLists);
+  const shoppingList = useExistingShoppingListStore((state) => state.shoppingList);
+  const existingLists = useExistingListsStore((state) => state.existingLists);
   const showBoughtItems = useBoughtItemsStore((state) => state.showBoughtItems);
 
   if (shoppingList.size === 0) {
@@ -32,13 +33,18 @@ function ShoppingListPage() {
   const unboughtItems = [];
 
   shoppingList.forEach((item, itemID) => {
+    const associatedListTitles = [];
+    item.associatedIDs.forEach((IDs) => {
+      associatedListTitles.push(existingLists.get(IDs.listID).title);
+    });
+
     if (item.isBought) {
       boughtItems.push(
         <ItemLine
           key={itemID}
           itemID={itemID}
           item={item}
-          listTitle={existingLists.get(item.listID).title}
+          listTitles={associatedListTitles}
         />,
       );
       return;
@@ -49,7 +55,7 @@ function ShoppingListPage() {
         key={itemID}
         itemID={itemID}
         item={item}
-        listTitle={existingLists.get(item.listID).title}
+        listTitles={associatedListTitles}
       />,
     );
   });

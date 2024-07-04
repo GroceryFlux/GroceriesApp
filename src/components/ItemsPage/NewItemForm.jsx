@@ -1,47 +1,84 @@
 import React, { useState } from 'react';
-import { useListsStore } from '../../store/lists/lists';
 import { PlusIcon } from '../Icons';
 import SearchItemButton from './SearchItemButton.jsx';
+import { findItemDuplicateId } from '../../utils/duplicates';
+import { addItems, areItemsCompatible, extractItemDetails } from '../../utils/quantitiesAndUnits';
+import { useSelectedListStore } from '../../UseCases/SelectedList/Store.js';
+import { getItemFromExistingList, getList, saveItemInExistingList } from '../../UseCases/ExistingLists/Repository.js';
+import { createItem } from '../../UseCases/ExistingLists/BusinessLogic.js';
+import { updateItemInShoppingList } from '../../UseCases/ShoppingList/BusinessLogic.js';
 
-let timeout;
+let warningBorderTimeout;
 export const newItemFormId = 'newItemInput';
 
 function NewItemForm() {
-  const listID = useListsStore((state) => state.selectedListID);
-  const list = useListsStore((state) => state.existingLists).get(listID);
-  const saveExistingLists = useListsStore((state) => state.saveExistingLists);
+  const listID = useSelectedListStore((state) => state.selectedListID);
+  const list = getList(listID);
 
   const [hasError, setHasError] = useState(false);
 
-  function checkSubmit(event) {
-    if (!event.target[0].value) {
+  function onSubmit(event) {
+    event.preventDefault();
+
+    const input = event.target[0].value;
+
+    if (!input) {
       setHasError(true);
-      clearTimeout(timeout);
-      timeout = setTimeout(() => setHasError(false), 1500);
+      clearTimeout(warningBorderTimeout);
+      warningBorderTimeout = setTimeout(() => setHasError(false), 1500);
       return;
     }
 
-    setHasError(false);
+    const extractedItemDetails = extractItemDetails(input);
+    const originalItemId = findItemDuplicateId(list.itemsList, extractedItemDetails.itemName);
 
-    list.itemsList.set(crypto.randomUUID(), {
-      itemName: event.target[0].value,
-      isOnShoppingList: false,
-      isBought: false,
-      listID: listID,
-    });
+    if (!originalItemId) {
+      createItem({ input, listID });
+      event.target[0].value = '';
+      return;
+    }
 
-    list.timeStamp = Date.now();
-    saveExistingLists(listID, list);
+    const existingItem = getItemFromExistingList({ itemID: originalItemId, listID });
 
+    const itemsAreCompatible = areItemsCompatible(
+      existingItem.quantity,
+      existingItem.unit,
+      extractedItemDetails.quantity,
+      extractedItemDetails.unit,
+    );
+
+    if (!itemsAreCompatible) {
+      createItem({ input, listID });
+      event.target[0].value = '';
+      return;
+    }
+
+    const sumItem = addItems(
+      existingItem.quantity,
+      existingItem.unit,
+      extractedItemDetails.quantity,
+      extractedItemDetails.unit,
+    );
+
+    const updatedItem = {
+      ...existingItem,
+      quantity: sumItem.quantity,
+      unit: sumItem.unit,
+    };
+
+    if (!existingItem.isOnShoppingList) {
+      saveItemInExistingList({ item: updatedItem, itemID: originalItemId, listID });
+      event.target[0].value = '';
+      return;
+    }
+
+    updateItemInShoppingList({ oldItem: existingItem, newItem: updatedItem });
     event.target[0].value = '';
   }
 
   return (
     <form
-      onSubmit={(event) => {
-        event.preventDefault();
-        checkSubmit(event);
-      }}
+      onSubmit={onSubmit}
       className="flex w-full justify-between items-center gap-4"
     >
       <div className="flex w-full gap-4">

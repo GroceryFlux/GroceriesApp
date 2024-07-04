@@ -1,17 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useListsStore } from '../../../store/lists/lists';
+import { toggleItemIsBought } from '../../../UseCases/ShoppingList/BusinessLogic';
 
 function IsItemBoughtCheckBox({ itemID, item }) {
-  const saveShoppingList = useListsStore((state) => state.saveShoppingList);
-
   return (
     <input
       type="checkbox"
       defaultChecked={item.isBought}
       className="checkbox checkbox-sm checkbox-accent"
       onClick={() => {
-        saveShoppingList(itemID, { ...item, isBought: !item.isBought });
+        toggleItemIsBought({ itemID, item });
       }}
     />
   );

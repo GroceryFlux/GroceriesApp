@@ -1,11 +1,11 @@
 import { React } from 'react';
 import { usePageStore } from '../../../store/displayedMenu/displayedMenu';
 import PropTypes from 'prop-types';
-import { useListsStore } from '../../../store/lists/lists';
+import { useSelectedListStore } from '../../../UseCases/SelectedList/Store';
 
 function OpenListButton({ listID, list }) {
   const setDisplayedPage = usePageStore((state) => state.setDisplayedPage);
-  const setSelectedListID = useListsStore((state) => state.setSelectedListID);
+  const setSelectedListID = useSelectedListStore((state) => state.setSelectedListID);
 
   const itemsPreview = [...list.itemsList].map(([, item]) => item.itemName).join(', ');
 

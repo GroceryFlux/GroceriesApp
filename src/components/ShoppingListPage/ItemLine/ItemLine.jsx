@@ -3,7 +3,17 @@ import PropTypes from 'prop-types';
 import ItemInput from './ItemInput';
 import IsItemBoughtCheckBox from './IsItemBoughtCheckbox';
 
-function ItemLine({ itemID, item, listTitle }) {
+function ItemLine({ itemID, item, listTitles }) {
+  const associatedListTitlesForItem = listTitles
+    .map((listTitle) => {
+      if (!listTitle) {
+        return 'No Title';
+      }
+
+      return listTitle;
+    })
+    .join(', ');
+
   return (
     <li key={itemID}>
       <div className="flex flex-row gap-2 items-center">
@@ -12,7 +22,7 @@ function ItemLine({ itemID, item, listTitle }) {
           item={item}
         />
         <ItemInput item={item} />
-        <div className="italic text-xs truncate">{listTitle ? listTitle : 'No title'}</div>
+        <div className="italic text-xs truncate">{associatedListTitlesForItem}</div>
       </div>
     </li>
   );
@@ -21,7 +31,7 @@ function ItemLine({ itemID, item, listTitle }) {
 ItemLine.propTypes = {
   itemID: PropTypes.string,
   item: PropTypes.object,
-  listTitle: PropTypes.string,
+  listTitles: PropTypes.array,
 };
 
 export default ItemLine;
