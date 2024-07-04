@@ -1,5 +1,5 @@
 import { findItemDuplicateId } from "../../utils/duplicates";
-import { addItems, areItemsCompatible, substractItems } from "../../utils/quantitiesAndUnits";
+import { addItems, areItemsCompatible, subtractItems } from "../../utils/quantitiesAndUnits";
 import { getItemFromExistingList, saveItemInExistingList } from "../ExistingLists/Repository";
 import { deleteItemFromShoppingList, getItemFromShoppingList, getShoppingList, saveItemInShoppingList } from "./Repository";
 import { useExistingShoppingListStore } from "./Store";
@@ -140,7 +140,7 @@ function unmergeItems({ shoppingListItem, itemID, item }) {
   const index = associatedIDs.findIndex((IDs) => IDs.itemID === itemID);
   associatedIDs.splice(index, 1);
 
-  const substraction = substractItems(shoppingListItem.quantity, shoppingListItem.unit, item.quantity, item.unit);
+  const substraction = subtractItems(shoppingListItem.quantity, shoppingListItem.unit, item.quantity, item.unit);
 
   return { 
     ...item, 

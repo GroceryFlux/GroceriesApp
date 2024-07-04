@@ -3,7 +3,7 @@ import {
   areItemsCompatible,
   extractItemDetails,
   stringifyItemNameQuantityUnit,
-  substractItems,
+  subtractItems,
 } from './quantitiesAndUnits';
 
 describe('quantitiesAndUnits.js', () => {
@@ -216,7 +216,7 @@ describe('quantitiesAndUnits.js', () => {
     });
   });
 
-  describe('substractItems()', () => {
+  describe('subtractItems()', () => {
     it('should return a round value from a substraction 154.64 of items with different unit in the intial unit entered kg to precision 0,01', () => {
       const givenQty1 = 200;
       const givenUnit1 = 'kg';
@@ -228,7 +228,7 @@ describe('quantitiesAndUnits.js', () => {
         unit: 'kg',
       };
 
-      const actualResult = substractItems(givenQty1, givenUnit1, givenQty2, givenUnit2);
+      const actualResult = subtractItems(givenQty1, givenUnit1, givenQty2, givenUnit2);
 
       expect(actualResult).toEqual(expectedResult);
     });
@@ -244,7 +244,7 @@ describe('quantitiesAndUnits.js', () => {
         unit: 'kg',
       };
 
-      const actualResult = substractItems(givenQty1, givenUnit1, givenQty2, givenUnit2);
+      const actualResult = subtractItems(givenQty1, givenUnit1, givenQty2, givenUnit2);
 
       expect(actualResult).toEqual(expectedResult);
     });
@@ -260,7 +260,7 @@ describe('quantitiesAndUnits.js', () => {
         unit: 'kg',
       };
 
-      const actualResult = substractItems(givenQty1, givenUnit1, givenQty2, givenUnit2);
+      const actualResult = subtractItems(givenQty1, givenUnit1, givenQty2, givenUnit2);
 
       expect(actualResult).toEqual(expectedResult);
     });
@@ -276,7 +276,7 @@ describe('quantitiesAndUnits.js', () => {
         unit: '1',
       };
 
-      const actualResult = substractItems(givenQty1, givenUnit1, givenQty2, givenUnit2);
+      const actualResult = subtractItems(givenQty1, givenUnit1, givenQty2, givenUnit2);
 
       expect(expectedResult).toEqual(actualResult);
     });
@@ -292,7 +292,7 @@ describe('quantitiesAndUnits.js', () => {
         unit: '1',
       };
 
-      const actualResult = substractItems(givenQty1, givenUnit1, givenQty2, givenUnit2);
+      const actualResult = subtractItems(givenQty1, givenUnit1, givenQty2, givenUnit2);
 
       expect(expectedResult).toEqual(actualResult);
     });

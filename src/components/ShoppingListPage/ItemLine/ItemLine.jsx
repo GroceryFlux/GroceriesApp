@@ -4,17 +4,29 @@ import ItemInput from './ItemInput';
 import IsItemBoughtCheckBox from './IsItemBoughtCheckbox';
 
 function ItemLine({ itemID, item, listTitles }) {
-  let rawStringForListTitle = '';
-  listTitles.forEach((title) => {
-    if (title) {
-      rawStringForListTitle += `${title}, `;
-      return;
-    }
-    rawStringForListTitle += 'No title, ';
-    return;
-  });
 
-  const stringForListTitle = rawStringForListTitle.slice(0, -2);
+  // const getAssociatedListTitleForItem() => {
+  //   let rawStringForListTitle = '';
+  //   listTitles.forEach((title) => {
+  //     if (title) {
+  //       rawStringForListTitle += `${title}, `;
+  //       return;
+  //     }
+  //     rawStringForListTitle += 'No title, ';
+  //     return;
+  //   });
+  //   const stringForListTitle = rawStringForListTitle.slice(0, -2);
+  // }
+
+  const associatedListTitlesForItem = listTitles.map((listTitle) => {
+    if (!listTitle) {
+      return 'No Title';
+    }
+
+    return listTitle
+  }).join(', ');
+  
+
 
   return (
     <li key={itemID}>
@@ -24,7 +36,7 @@ function ItemLine({ itemID, item, listTitles }) {
           item={item}
         />
         <ItemInput item={item} />
-        <div className="italic text-xs truncate">{stringForListTitle}</div>
+        <div className="italic text-xs truncate">{associatedListTitlesForItem}</div>
       </div>
     </li>
   );

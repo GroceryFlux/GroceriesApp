@@ -11,7 +11,7 @@ function removeBracketsFromUnit(value) {
   return value.slice(1, -1);
 }
 
-function convertUnitToAbreviation(unit) {
+function convertUnitToAbbreviation(unit) {
   const abreviatedUnit = Qty.getAliases(unit)[0];
   return abreviatedUnit;
 }
@@ -38,7 +38,7 @@ function extractUnit(value) {
   const quantitiesAndUnits = Qty(value);
   const rawUnit = quantitiesAndUnits.numerator[0];
   const fullUnit = removeBracketsFromUnit(rawUnit);
-  const unit = convertUnitToAbreviation(fullUnit);
+  const unit = convertUnitToAbbreviation(fullUnit);
 
   if (acceptedUnits.includes(unit)) {
     return unit;
@@ -90,14 +90,14 @@ export function addItems(qty1, unit1, qty2, unit2) {
 
   const rawSum = qtyA.add(qtyB);
   const sum = rawSum.toPrec(0.01);
-  const summedQuantity = sum.scalar;
-  const summedFullUnit = convertUnitToAbreviation(sum.numerator[0].slice(1, -1));
-  const summedUnit = convertUnitToAbreviation(summedFullUnit);
+  const quantity = sum.scalar;
+  const fullUnit = removeBracketsFromUnit(sum.numerator[0]);
+  const unit = convertUnitToAbbreviation(fullUnit);
 
-  return { quantity: summedQuantity, unit: summedUnit };
+  return { quantity, unit };
 }
 
-export function substractItems(qty1, unit1, qty2, unit2) {
+export function subtractItems(qty1, unit1, qty2, unit2) {
   if (qty1 === '' && qty2 === '') {
     return { quantity: '', unit: '1' };
   }
@@ -111,11 +111,11 @@ export function substractItems(qty1, unit1, qty2, unit2) {
 
   const rawSub = qtyA.sub(qtyB);
   const sub = rawSub.toPrec(0.01);
-  const substractedQuantity = sub.scalar;
-  const substractedFullUnit = sub.numerator[0].slice(1, -1);
-  const substractedUnit = convertUnitToAbreviation(substractedFullUnit);
+  const quantity = sub.scalar;
+  const fullUnit = removeBracketsFromUnit(sub.numerator[0]);
+  const unit = convertUnitToAbbreviation(fullUnit);
 
-  return { quantity: substractedQuantity, unit: substractedUnit };
+  return { quantity , unit };
 }
 
 export function areItemsCompatible(qty1, unit1, qty2, unit2) {
