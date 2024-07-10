@@ -18,7 +18,6 @@ function ItemLine({ itemID, item, listTitles }) {
     <li key={itemID}>
       <div className="flex flex-row gap-2 items-center">
         <IsItemBoughtCheckBox
-          itemID={itemID}
           item={item}
         />
         <ItemInput item={item} />
