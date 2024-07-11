@@ -33,5 +33,3 @@ export const test = base.test.extend({
     await use(page);
   },
 });
-
-export { expect } from '@playwright/test';
