@@ -102,8 +102,7 @@ export function clearItemsFromShoppingList() {
 }
 
 export function toggleItemIsBought({ item }) {
-
-  const shoppingListID = item.associatedIDs[0].shoppingListID
+  const shoppingListID = item.associatedIDs[0].shoppingListID;
   saveItemInShoppingList({ shoppingListID, item: { ...item, isBought: !item.isBought } });
 
   item.associatedIDs.forEach((IDs) => {
