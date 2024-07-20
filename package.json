@@ -15,7 +15,8 @@
     "eslint": "eslint --report-unused-disable-directives --ext \".js,.jsx\" --ignore-path .lintignore .",
     "eslint:fix": "npm run eslint -- --fix",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest --coverage",
-    "test:watch": "NODE_OPTIONS=--experimental-vm-modules jest --watch --coverage"
+    "test:watch": "NODE_OPTIONS=--experimental-vm-modules jest --watch --coverage",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "date-fns": "^2.30.0",
@@ -25,6 +26,8 @@
     "zustand": "^4.3.7"
   },
   "devDependencies": {
+    "@playwright/test": "1.45.1",
+    "@types/node": "20.14.9",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.9",
     "@vitejs/plugin-react": "^3.0.0",

@@ -88,7 +88,7 @@ export function addItems(qty1, unit1, qty2, unit2) {
   const qtyA = Qty(qty1, unit1);
   const qtyB = Qty(qty2, unit2);
 
-  const precision = qtyA.baseScalar < qtyB.baseScalar ? qtyA.baseScalar : qtyB.baseScalar
+  const precision = qtyA.baseScalar < qtyB.baseScalar ? qtyA.baseScalar : qtyB.baseScalar;
 
   const rawSum = qtyA.add(qtyB);
   const sum = rawSum.toPrec(precision);
@@ -111,7 +111,7 @@ export function subtractItems(qty1, unit1, qty2, unit2) {
   const qtyA = Qty(qty1, unit1);
   const qtyB = Qty(qty2, unit2);
 
-  const precision = qtyA.baseScalar < qtyB.baseScalar ? qtyA.baseScalar : qtyB.baseScalar
+  const precision = qtyA.baseScalar < qtyB.baseScalar ? qtyA.baseScalar : qtyB.baseScalar;
 
   const rawSub = qtyA.sub(qtyB);
   const sub = rawSub.toPrec(precision);
