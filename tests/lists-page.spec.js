@@ -123,7 +123,6 @@ test('should sort the list by lastest edited', async ({ pageWithTwoRecurrentList
 });
 
 test('should sort the list by alphabetic order', async ({ pageWithTwoRecurrentLists }) => {
-
   //Clicks on button to change to last edited sorting
   await pageWithTwoRecurrentLists.locator('.relative > button').click();
   await pageWithTwoRecurrentLists.getByRole('button', { name: 'Date' }).click();
@@ -155,12 +154,18 @@ test('should search for a list called Breaky', async ({ pageWithSimilarRecurrent
   await pageWithSimilarRecurrentListsName.locator('button:nth-child(3)').first().click();
   await pageWithSimilarRecurrentListsName.getByPlaceholder('Looking for a list or an item').click();
   await pageWithSimilarRecurrentListsName.getByPlaceholder('Looking for a list or an item').fill('Breaky');
-  await expect(pageWithSimilarRecurrentListsName.getByRole('listitem')).toHaveText(['BreakyWeekEndCroissant', 'BreakyStrawberries']);
+  await expect(pageWithSimilarRecurrentListsName.getByRole('listitem')).toHaveText([
+    'BreakyWeekEndCroissant',
+    'BreakyStrawberries',
+  ]);
 });
 
 test('should search for an item called Strawberries', async ({ pageWithSameItemInDifferentLists }) => {
   await pageWithSameItemInDifferentLists.locator('button:nth-child(3)').first().click();
   await pageWithSameItemInDifferentLists.getByPlaceholder('Looking for a list or an item').click();
   await pageWithSameItemInDifferentLists.getByPlaceholder('Looking for a list or an item').fill('Strawberries');
-  await expect(pageWithSameItemInDifferentLists.getByRole('listitem')).toHaveText(['FruitsStrawberries', 'BreakyStrawberries']);
+  await expect(pageWithSameItemInDifferentLists.getByRole('listitem')).toHaveText([
+    'FruitsStrawberries',
+    'BreakyStrawberries',
+  ]);
 });

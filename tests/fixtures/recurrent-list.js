@@ -168,6 +168,4 @@ export const test = base.test.extend({
     // Use the fixture in the test
     await use(page);
   },
-
-  
 });
