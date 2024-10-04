@@ -4,6 +4,23 @@ import { test as base } from '@playwright/test';
  * Extend base test with page with a pre-filled recurrent list
  */
 export const test = base.test.extend({
+  pageWithEmptyRecurrentList: async ({ page }, use) => {
+    // Go to the main page
+    await page.goto('http://localhost:5173/GroceriesApp/ ');
+
+    // Click the button to create a new recurrent list
+    await page.getByRole('button').nth(2).click();
+
+    // Write the title
+    await page.getByPlaceholder('Title').click();
+    await page.getByPlaceholder('Title').fill('Breaky');
+
+    // Goes back to main page
+    await page.locator('.text-1xl').click();
+
+    await use(page);
+  },
+
   pageWithRecurrentList: async ({ page }, use) => {
     // Go to the main page
     await page.goto('http://localhost:5173/GroceriesApp/ ');
