@@ -138,7 +138,7 @@ export function areItemsCompatible(qty1, unit1, qty2, unit2) {
 }
 
 export function stringifyItemNameQuantityUnit(item) {
-  const hasQuantity = item.quantity === 1 ? false : true
+  const hasQuantity = item.quantity === 1 ? false : true;
   const hasUnit = item.unit !== '1';
 
   if (!hasQuantity && !hasUnit) {

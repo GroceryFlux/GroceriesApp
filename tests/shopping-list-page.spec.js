@@ -47,7 +47,9 @@ test('should mark an item as purshased', async ({ pageWithItemInShoppingList }) 
   await pageWithItemInShoppingList.getByRole('checkbox').check();
 
   // checks item has correctly been added
-  await expect(pageWithItemInShoppingList.locator('li').filter({ hasText: 'Breaky' }).getByRole('textbox')).toHaveValue('500 g Strawberries');
+  await expect(pageWithItemInShoppingList.locator('li').filter({ hasText: 'Breaky' }).getByRole('textbox')).toHaveValue(
+    '500 g Strawberries',
+  );
   await expect(pageWithItemInShoppingList.getByRole('checkbox')).toBeChecked();
   await expect(pageWithItemInShoppingList.locator('#root')).toContainText('Nothing left! 🎉');
 });
@@ -74,12 +76,30 @@ test('Should hide then show purshased items', async ({ pageWithItemInShoppingLis
   await pageWithItemInShoppingList.getByRole('checkbox').nth(1).check();
 
   // hides purshased items and verifies hidden
-  await pageWithItemInShoppingList.locator('div').filter({ hasText: /^Purchased$/ }).getByRole('button').click();
-  await expect(pageWithItemInShoppingList.locator('div').filter({ hasText: /^PurchasedBreaky$/ }).getByRole('textbox')).toHaveCount(0);
+  await pageWithItemInShoppingList
+    .locator('div')
+    .filter({ hasText: /^Purchased$/ })
+    .getByRole('button')
+    .click();
+  await expect(
+    pageWithItemInShoppingList
+      .locator('div')
+      .filter({ hasText: /^PurchasedBreaky$/ })
+      .getByRole('textbox'),
+  ).toHaveCount(0);
 
   // shows purshased items and verifies shows
-  await pageWithItemInShoppingList.locator('div').filter({ hasText: /^Purchased$/ }).getByRole('button').click();
-  await expect(pageWithItemInShoppingList.locator('div').filter({ hasText: /^PurchasedBreaky$/ }).getByRole('textbox')).toHaveValue('1 kg Oats');
+  await pageWithItemInShoppingList
+    .locator('div')
+    .filter({ hasText: /^Purchased$/ })
+    .getByRole('button')
+    .click();
+  await expect(
+    pageWithItemInShoppingList
+      .locator('div')
+      .filter({ hasText: /^PurchasedBreaky$/ })
+      .getByRole('textbox'),
+  ).toHaveValue('1 kg Oats');
 });
 
 test('should clear the shopping list', async ({ pageWithItemInShoppingList }) => {
@@ -91,7 +111,9 @@ test('should clear the shopping list', async ({ pageWithItemInShoppingList }) =>
 
   // clears the list then checks if correctly cleared
   await pageWithItemInShoppingList.getByRole('button', { name: 'Clear list' }).click();
-  await expect(pageWithItemInShoppingList.getByRole('paragraph')).toContainText('Your shopping list is empty, please start adding items in your recurrent lists');
+  await expect(pageWithItemInShoppingList.getByRole('paragraph')).toContainText(
+    'Your shopping list is empty, please start adding items in your recurrent lists',
+  );
 });
 
 test('should check the associated list(s) is/are correct', async ({ pageWithTwoRecurrentLists }) => {
@@ -106,11 +128,19 @@ test('should check the associated list(s) is/are correct', async ({ pageWithTwoR
 
   // checks in shopping list that associated lists are correct for each item
   await pageWithTwoRecurrentLists.locator('.text-primary').first().click();
-  await expect(pageWithTwoRecurrentLists.locator('li').filter({ hasText: 'Lunch' }).getByRole('textbox')).toHaveValue('300 g Pasta');
+  await expect(pageWithTwoRecurrentLists.locator('li').filter({ hasText: 'Lunch' }).getByRole('textbox')).toHaveValue(
+    '300 g Pasta',
+  );
   await expect(pageWithTwoRecurrentLists.locator('#root')).toContainText('Lunch');
-  await expect(pageWithTwoRecurrentLists.locator('li').filter({ hasText: 'Breaky' }).getByRole('textbox')).toHaveValue('500 g Strawberries');
+  await expect(pageWithTwoRecurrentLists.locator('li').filter({ hasText: 'Breaky' }).getByRole('textbox')).toHaveValue(
+    '500 g Strawberries',
+  );
   await expect(pageWithTwoRecurrentLists.locator('#root')).toContainText('Breaky');
-  await pageWithTwoRecurrentLists.locator('div').filter({ hasText: /^Shopping List$/ }).getByRole('button').click();
+  await pageWithTwoRecurrentLists
+    .locator('div')
+    .filter({ hasText: /^Shopping List$/ })
+    .getByRole('button')
+    .click();
 
   // adds item 300 g Pasta to Breaky then to shopping list
   await pageWithTwoRecurrentLists.getByPlaceholder('Strawberries').click();
@@ -120,6 +150,8 @@ test('should check the associated list(s) is/are correct', async ({ pageWithTwoR
 
   // checks in shopping list if Lunch and Breaky lists correcly displayed for Pasta item
   await pageWithTwoRecurrentLists.locator('.text-primary').first().click();
-  await expect(pageWithTwoRecurrentLists.locator('li').filter({ hasText: 'Lunch, Breaky' }).getByRole('textbox')).toHaveValue('600 g Pasta');
+  await expect(
+    pageWithTwoRecurrentLists.locator('li').filter({ hasText: 'Lunch, Breaky' }).getByRole('textbox'),
+  ).toHaveValue('600 g Pasta');
   await expect(pageWithTwoRecurrentLists.locator('#root')).toContainText('Lunch, Breaky');
 });

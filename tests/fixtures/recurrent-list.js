@@ -209,10 +209,10 @@ export const test = base.test.extend({
     await page.getByPlaceholder('Strawberries').press('Enter');
 
     // adds the item 'Strawberries to shopping list
-    await page.locator('div:nth-child(2) > button').first().click()
+    await page.locator('div:nth-child(2) > button').first().click();
 
     // Go back to the main page
-    await page.locator('.text-1xl').click()
+    await page.locator('.text-1xl').click();
 
     // Use the fixture in the test
     await use(page);
