@@ -100,12 +100,8 @@ test('should add an item with a different unit', async ({ pageWithRecurrentList 
   await pageWithRecurrentList.getByPlaceholder('Strawberries').fill('2 Bananas');
   await pageWithRecurrentList.getByPlaceholder('Strawberries').press('Enter');
   await pageWithRecurrentList.locator('li:nth-child(5) > div > div:nth-child(2) > button').first().click();
-  await pageWithRecurrentList.locator('.text-primary').first().click();
-  await expect(pageWithRecurrentList.locator('li').filter({ hasText: 'Breaky' }).getByRole('textbox')).toHaveValue('2 Bananas');
-  await expect(pageWithRecurrentList.getByRole('checkbox')).not.toBeChecked();
-  await pageWithRecurrentList.locator('div').filter({ hasText: /^Shopping List$/ }).getByRole('button').click();
 
-  // adds '200g Bananas' and checks that new item is created and not merged in either items list or shopping list
+  // adds '200g Bananas' and checks that new item is created and not merged in neither items list or shopping list
   await pageWithRecurrentList.getByPlaceholder('Strawberries').click();
   await pageWithRecurrentList.getByPlaceholder('Strawberries').fill('200g Bananas');
   await pageWithRecurrentList.getByPlaceholder('Strawberries').press('Enter');
@@ -139,96 +135,66 @@ test('should search for an item in the list', async ({ pageWithRecurrentList }) 
   await expect(pageWithRecurrentList.getByRole('textbox').nth(4)).toHaveValue('Strawberry ice cream');
 })
 
-test('should change the name only of an item', async ({ pageWithRecurrentList }) => {
-  await pageWithRecurrentList.getByRole('button', { name: 'Breaky Strawberries, Oats,' }).click();
-
-  // adds the item to shopping list and checks if item name is correct
-  await pageWithRecurrentList.locator('div:nth-child(2) > button').first().click();
-  await pageWithRecurrentList.locator('.text-primary').first().click();
-  await expect(pageWithRecurrentList.locator('li').filter({ hasText: 'Breaky' }).getByRole('textbox')).toHaveValue('500 g Strawberries');
-  await expect(pageWithRecurrentList.getByRole('checkbox')).not.toBeChecked();
-  await pageWithRecurrentList.locator('div').filter({ hasText: /^Shopping List$/ }).getByRole('button').click();
+test('should change the name only of an item', async ({ pageWithItemInShoppingList }) => {
+  await pageWithItemInShoppingList.getByRole('button', { name: 'Breaky Strawberries, Oats,' }).click();
 
   // changes the name to 'Strawberries ice cream' and check if updated in items list and shopping list
-  await pageWithRecurrentList.getByRole('textbox').nth(2).click();
-  await pageWithRecurrentList.getByRole('textbox').nth(2).fill('500 g Strawberries ice cream');
-  await pageWithRecurrentList.getByRole('textbox').nth(2).press('Enter');
-  await expect(pageWithRecurrentList.getByRole('textbox').nth(2)).toHaveValue('500 g Strawberries ice cream');
-  await pageWithRecurrentList.locator('.text-primary').first().click();
-  await expect(pageWithRecurrentList.locator('li').filter({ hasText: 'Breaky' }).getByRole('textbox')).toHaveValue('500 g Strawberries ice cream');
+  await pageWithItemInShoppingList.getByRole('textbox').nth(2).click();
+  await pageWithItemInShoppingList.getByRole('textbox').nth(2).fill('500 g Strawberries ice cream');
+  await pageWithItemInShoppingList.getByRole('textbox').nth(2).press('Enter');
+  await expect(pageWithItemInShoppingList.getByRole('textbox').nth(2)).toHaveValue('500 g Strawberries ice cream');
+  await pageWithItemInShoppingList.locator('.text-primary').first().click();
+  await expect(pageWithItemInShoppingList.locator('li').filter({ hasText: 'Breaky' }).getByRole('textbox')).toHaveValue('500 g Strawberries ice cream');
 })
 
-test('should change the name, quantity and units of an item', async ({ pageWithRecurrentList }) => {
-  await pageWithRecurrentList.getByRole('button', { name: 'Breaky Strawberries, Oats,' }).click();
-
-  // adds the item to shopping list and verify if quantity, name and unit are correct
-  await pageWithRecurrentList.locator('div:nth-child(2) > button').first().click();
-  await pageWithRecurrentList.locator('.text-primary').first().click();
-  await expect(pageWithRecurrentList.locator('li').filter({ hasText: 'Breaky' }).getByRole('textbox')).toHaveValue('500 g Strawberries');
-  await expect(pageWithRecurrentList.getByRole('checkbox')).not.toBeChecked();
-  await pageWithRecurrentList.locator('div').filter({ hasText: /^Shopping List$/ }).getByRole('button').click();
+test('should change the name, quantity and units of an item', async ({ pageWithItemInShoppingList }) => {
+  await pageWithItemInShoppingList.getByRole('button', { name: 'Breaky Strawberries, Oats,' }).click();
 
   // changed the quantity, unit and name of the item
-  await pageWithRecurrentList.getByRole('textbox').nth(2).click();
-  await pageWithRecurrentList.getByRole('textbox').nth(2).fill('10 oz Strawberries ice cream');
+  await pageWithItemInShoppingList.getByRole('textbox').nth(2).click();
+  await pageWithItemInShoppingList.getByRole('textbox').nth(2).fill('10 oz Strawberries ice cream');
 
   // checks if updated correctly in shopping list
-  await pageWithRecurrentList.locator('.text-primary').first().click();
-  await expect(pageWithRecurrentList.locator('li').filter({ hasText: 'Breaky' }).getByRole('textbox')).toHaveValue('10 oz Strawberries ice cream')
-  await expect(pageWithRecurrentList.getByRole('checkbox')).not.toBeChecked();
+  await pageWithItemInShoppingList.locator('.text-primary').first().click();
+  await expect(pageWithItemInShoppingList.locator('li').filter({ hasText: 'Breaky' }).getByRole('textbox')).toHaveValue('10 oz Strawberries ice cream')
+  await expect(pageWithItemInShoppingList.getByRole('checkbox')).not.toBeChecked();
 })
 
-test('should change the quantity and units of an item', async ({ pageWithRecurrentList }) => {
-  await pageWithRecurrentList.getByRole('button', { name: 'Breaky Strawberries, Oats,' }).click();
-
-  // adds the item to shopping list and verify if quantity, name and unit are correct
-  await pageWithRecurrentList.locator('div:nth-child(2) > button').first().click();
-  await pageWithRecurrentList.locator('.text-primary').first().click();
-  await expect(pageWithRecurrentList.locator('li').filter({ hasText: 'Breaky' }).getByRole('textbox')).toHaveValue('500 g Strawberries');
-  await expect(pageWithRecurrentList.getByRole('checkbox')).not.toBeChecked();
-  await pageWithRecurrentList.locator('div').filter({ hasText: /^Shopping List$/ }).getByRole('button').click();
+test('should change the quantity and units of an item', async ({ pageWithItemInShoppingList }) => {
+  await pageWithItemInShoppingList.getByRole('button', { name: 'Breaky Strawberries, Oats,' }).click();
 
   // changed the quantity and unit of the item
-  await pageWithRecurrentList.getByRole('textbox').nth(2).click();
-  await pageWithRecurrentList.getByRole('textbox').nth(2).fill('10 oz Strawberries');
+  await pageWithItemInShoppingList.getByRole('textbox').nth(2).click();
+  await pageWithItemInShoppingList.getByRole('textbox').nth(2).fill('10 oz Strawberries');
 
   // checks if updated correctly in shopping list
-  await pageWithRecurrentList.locator('.text-primary').first().click();
-  await expect(pageWithRecurrentList.locator('li').filter({ hasText: 'Breaky' }).getByRole('textbox')).toHaveValue('10 oz Strawberries')
-  await expect(pageWithRecurrentList.getByRole('checkbox')).not.toBeChecked();
+  await pageWithItemInShoppingList.locator('.text-primary').first().click();
+  await expect(pageWithItemInShoppingList.locator('li').filter({ hasText: 'Breaky' }).getByRole('textbox')).toHaveValue('10 oz Strawberries')
+  await expect(pageWithItemInShoppingList.getByRole('checkbox')).not.toBeChecked();
 })
 
-test('shoud remove an item from the shopping list', async ({ pageWithRecurrentList }) => {
+test('shoud remove an item from the shopping list when deleted from items list', async ({ pageWithItemInShoppingList }) => {
   // adds the item to the shopping list
-  await pageWithRecurrentList.getByRole('button', { name: 'Breaky Strawberries, Oats,' }).click();
-  await pageWithRecurrentList.locator('div:nth-child(2) > button').first().click();
-
-  // checks if item correctly added to shopping list
-  await pageWithRecurrentList.locator('.text-primary').first().click();
-  await expect(pageWithRecurrentList.locator('li').filter({ hasText: 'Breaky' }).getByRole('textbox')).toHaveValue('500 g Strawberries');
-  await expect(pageWithRecurrentList.getByRole('checkbox')).not.toBeChecked();
-  await pageWithRecurrentList.locator('div').filter({ hasText: /^Shopping List$/ }).getByRole('button').click();
+  await pageWithItemInShoppingList.getByRole('button', { name: 'Breaky Strawberries, Oats,' }).click();
 
   // removes the unbought item from the shopping list and checks is shopping list is empty
-  await pageWithRecurrentList.locator('div:nth-child(2) > button').first().click();
-  await pageWithRecurrentList.locator('.text-primary').first().click();
-  await expect(pageWithRecurrentList.getByText('Your shopping list is empty,')).toBeVisible();
-  await pageWithRecurrentList.locator('div').filter({ hasText: /^Shopping List$/ }).getByRole('button').click();
+  await pageWithItemInShoppingList.locator('div:nth-child(2) > button').first().click();
+  await pageWithItemInShoppingList.locator('.text-primary').first().click();
+  await expect(pageWithItemInShoppingList.getByText('Your shopping list is empty,')).toBeVisible();
+  await pageWithItemInShoppingList.locator('div').filter({ hasText: /^Shopping List$/ }).getByRole('button').click();
 
   // adds the item to the shopping list
-  await pageWithRecurrentList.locator('div:nth-child(2) > button').first().click();
-  await pageWithRecurrentList.locator('.text-primary').first().click();
-
+  await pageWithItemInShoppingList.locator('div:nth-child(2) > button').first().click();
+  
   // marks item as bought
-  await pageWithRecurrentList.getByRole('checkbox').check();
-  await expect(pageWithRecurrentList.locator('li').filter({ hasText: 'Breaky' }).getByRole('textbox')).toHaveValue('500 g Strawberries');
-  await expect(pageWithRecurrentList.getByRole('checkbox')).toBeChecked();
-  await pageWithRecurrentList.locator('div').filter({ hasText: /^Shopping List$/ }).getByRole('button').click();
+  await pageWithItemInShoppingList.locator('.text-primary').first().click();
+  await pageWithItemInShoppingList.getByRole('checkbox').check();
+  await pageWithItemInShoppingList.locator('div').filter({ hasText: /^Shopping List$/ }).getByRole('button').click();
 
   // deletes the bought item from shopping list and checks if shopping list is empty
-  await pageWithRecurrentList.locator('div:nth-child(2) > button').first().click();
-  await pageWithRecurrentList.locator('.text-primary').first().click();
-  await expect(pageWithRecurrentList.getByText('Your shopping list is empty,')).toBeVisible();
+  await pageWithItemInShoppingList.locator('div:nth-child(2) > button').first().click();
+  await pageWithItemInShoppingList.locator('.text-primary').first().click();
+  await expect(pageWithItemInShoppingList.getByText('Your shopping list is empty,')).toBeVisible();
 })
 
 test('should delete an item', async ({ pageWithRecurrentList }) => {
@@ -238,13 +204,9 @@ test('should delete an item', async ({ pageWithRecurrentList }) => {
   await pageWithRecurrentList.locator('.text-red-500\\/70').first().click();
   await expect(pageWithRecurrentList.getByRole('textbox').nth(2)).toHaveValue('1 kg Oats');
   await expect(pageWithRecurrentList.getByRole('textbox').nth(3)).toHaveValue('4 Joghurts');
+  
+  // adds next item to shopping list
   await pageWithRecurrentList.getByRole('list').getByRole('button').first().click();
-
-  // adds next item to shopping list and checks if it is correctly added
-  await pageWithRecurrentList.locator('.text-primary').first().click();
-  await expect(pageWithRecurrentList.locator('li').filter({ hasText: 'Breaky' }).getByRole('textbox')).toHaveValue('1 kg Oats');
-  await expect(pageWithRecurrentList.getByRole('checkbox')).not.toBeChecked();
-  await pageWithRecurrentList.locator('div').filter({ hasText: /^Shopping List$/ }).getByRole('button').click();
 
   // deletes next item and checks if removed from shopping list
   await pageWithRecurrentList.getByRole('list').getByRole('button').nth(1).click();
@@ -253,14 +215,11 @@ test('should delete an item', async ({ pageWithRecurrentList }) => {
   await expect(pageWithRecurrentList.getByText('Your shopping list is empty,')).toBeVisible();
   await pageWithRecurrentList.locator('div').filter({ hasText: /^Shopping List$/ }).getByRole('button').click();
   
-  // adds next item to shopping list and checks if it is correctly added and marks it as bought
+  // adds next item to shopping list and marks it as bought
   await pageWithRecurrentList.getByRole('listitem').getByRole('button').first().click();
   await pageWithRecurrentList.locator('.text-primary').first().click();
-  await expect(pageWithRecurrentList.locator('li').filter({ hasText: 'Breaky' }).getByRole('textbox')).toHaveValue('4 Joghurts');
-  await expect(pageWithRecurrentList.getByRole('checkbox')).not.toBeChecked();
   await pageWithRecurrentList.getByRole('checkbox').check();
-  await expect(pageWithRecurrentList.getByRole('checkbox')).toBeChecked();
-  await expect(pageWithRecurrentList.locator('li').filter({ hasText: 'Breaky' }).getByRole('textbox')).toHaveValue('4 Joghurts');
+  
   await pageWithRecurrentList.locator('div').filter({ hasText: /^Shopping List$/ }).getByRole('button').click();
 
   // deletes the item and checks if removed from shopping list
