@@ -208,7 +208,7 @@ export const test = base.test.extend({
     await page.getByPlaceholder('Strawberries').fill('4 Joghurts');
     await page.getByPlaceholder('Strawberries').press('Enter');
 
-    // adds the item 'Strawberries to shopping list
+    // adds the item 'Strawberries' to shopping list
     await page.locator('div:nth-child(2) > button').first().click();
 
     // Go back to the main page
