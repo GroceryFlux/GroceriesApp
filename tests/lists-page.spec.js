@@ -7,61 +7,63 @@ test('should have one recurrent list with items', async ({ pageWithRecurrentList
   await expect(recurrentList).toBeVisible();
 });
 
-test('should change the name of the list Breakie to Breakfast', async ({ pageWithRecurrentList }) => {
-  // Opens the recurent list
+test('should change the name of the list Breaky to Breakfast', async ({ pageWithRecurrentList }) => {
+  // open the recurrent list
   await pageWithRecurrentList.getByRole('button', { name: 'Breaky Strawberries, Oats, Joghurt' }).click();
 
-  // Clicks on the title
+  // change title to Breakfast
   await pageWithRecurrentList.getByPlaceholder('Title').click();
-
-  // Changes title to Breakfast
   await pageWithRecurrentList.getByPlaceholder('Title').fill('Breakfast');
   await pageWithRecurrentList.getByPlaceholder('Title').press('Enter');
 
-  // Returns to recurrent lists to save
+  // return to recurrent lists to save
   await pageWithRecurrentList.locator('.text-1xl').click();
 
-  // Checks the list name has changed to Breakfast
+  // check the list name has changed to Breakfast
   await expect(pageWithRecurrentList.getByRole('button', { name: 'Breakfast' })).toBeVisible();
 });
 
-test('should delete an existing list then cancel the delete', async ({ pageWithRecurrentList }) => {
-  // Clicks on button to delete
-  await pageWithRecurrentList.getByRole('listitem').getByRole('button').nth(1).click();
+test.describe('delete list', () => {
+  test('should delete an existing list then cancel the delete', async ({ pageWithRecurrentList }) => {
+    // click on button to delete
+    await pageWithRecurrentList.getByRole('listitem').getByRole('button').nth(1).click();
 
-  //Clicks on button to cancel delete
-  await pageWithRecurrentList.getByRole('listitem').getByRole('button').nth(2).click();
+    // click on button to cancel delete
+    await pageWithRecurrentList.getByRole('listitem').getByRole('button').nth(2).click();
 
-  //Checks if the list is still there
-  await expect(pageWithRecurrentList.getByRole('button', { name: 'Breaky Strawberries, Oats, Joghurt' })).toBeVisible();
-});
+    // check if the list is still there
+    await expect(
+      pageWithRecurrentList.getByRole('button', { name: 'Breaky Strawberries, Oats, Joghurt' }),
+    ).toBeVisible();
+  });
 
-test('should delete an existing list then confirm the delete', async ({ pageWithRecurrentList }) => {
-  // Clicks on button to delete
-  await pageWithRecurrentList.getByRole('listitem').getByRole('button').nth(1).click();
+  test('should delete an existing list then confirm the delete', async ({ pageWithRecurrentList }) => {
+    // click on button to delete
+    await pageWithRecurrentList.getByRole('listitem').getByRole('button').nth(1).click();
 
-  //Clicks on button to confirm delete
-  await pageWithRecurrentList.getByRole('listitem').getByRole('button').nth(1).click();
+    // click on button to confirm delete
+    await pageWithRecurrentList.getByRole('listitem').getByRole('button').nth(1).click();
 
-  //Checks if the list is still there
-  await expect(
-    pageWithRecurrentList.getByRole('button', { name: 'Breaky Strawberries, Oats, Joghurt' }),
-  ).not.toBeVisible();
+    // check if the list has been deleted
+    await expect(
+      pageWithRecurrentList.getByRole('button', { name: 'Breaky Strawberries, Oats, Joghurt' }),
+    ).not.toBeVisible();
+  });
 });
 
 test('should check the change in colors when setting dark theme', async ({ pageWithRecurrentList }) => {
-  //locates the background when in initial (light) theme
+  // locate the background when in initial (light) theme
   const html = pageWithRecurrentList.locator('html');
 
-  //gets the color from the background in light theme
+  // get the color from the background in light theme
   const initialBackgroundColor = await html.evaluate((e) => {
     return window.getComputedStyle(e).getPropertyValue('background-color');
   });
 
-  //checks the color is light
+  // check the color is light
   expect(initialBackgroundColor).toEqual('rgb(241, 244, 242)');
 
-  //changes theme to dark
+  // change theme to dark
   await pageWithRecurrentList
     .locator('div')
     .filter({ hasText: /^Groceries0$/ })
@@ -69,15 +71,15 @@ test('should check the change in colors when setting dark theme', async ({ pageW
     .first()
     .click();
 
-  //gets the color from the background in dark theme
+  // get the color from the background in dark theme
   const backgroundColorDark = await html.evaluate((e) => {
     return window.getComputedStyle(e).getPropertyValue('background-color');
   });
 
-  //checks the color is dark
+  // check the color is dark
   await expect(backgroundColorDark).toEqual('rgb(15, 23, 41)');
 
-  //changes theme to light
+  // change theme to light
   await pageWithRecurrentList
     .locator('div')
     .filter({ hasText: /^Groceries0$/ })
@@ -85,87 +87,101 @@ test('should check the change in colors when setting dark theme', async ({ pageW
     .first()
     .click();
 
-  //gets the color from the background light theme
+  // get the color from the background light theme
   const backgroundColorLight = await html.evaluate((e) => {
     return window.getComputedStyle(e).getPropertyValue('background-color');
   });
 
-  //checks the theme is back to the same light color as before
+  // check the theme is back to the same light color as before
   await expect(backgroundColorLight).toEqual('rgb(241, 244, 242)');
 });
 
-test('should sort the list by lastest edited', async ({ pageWithTwoRecurrentLists }) => {
-  //Clicks on button to change to alphabetic sorting
-  await pageWithTwoRecurrentLists.locator('.relative > button').click();
-  await pageWithTwoRecurrentLists.getByRole('button', { name: 'A-Z' }).click();
-  await pageWithTwoRecurrentLists
-    .locator('div')
-    .filter({ hasText: /^Recurrent listsDateA-Z$/ })
-    .getByRole('button')
-    .nth(1)
-    .click();
+test.describe('list sorting', () => {
+  test('should sort the list by latest edited', async ({ pageWithTwoRecurrentLists }) => {
+    // click on button to change to alphabetic sorting
+    await pageWithTwoRecurrentLists.locator('.relative > button').click();
+    await pageWithTwoRecurrentLists.getByRole('button', { name: 'A-Z' }).click();
+    await pageWithTwoRecurrentLists
+      .locator('div')
+      .filter({ hasText: /^Recurrent listsDateA-Z$/ })
+      .getByRole('button')
+      .nth(1)
+      .click();
 
-  //Checks if the first item on the list page is the first alphabetically
-  await expect(pageWithTwoRecurrentLists.getByRole('listitem').nth(0)).toHaveText(['BreakyStrawberries']);
+    // check if the first item on the list page is the first alphabetically
+    await expect(pageWithTwoRecurrentLists.getByRole('listitem').nth(0)).toHaveText(['BreakyStrawberries']);
 
-  //Clicks on button to change to last edited sorting
-  await pageWithTwoRecurrentLists.locator('.relative > button').click();
-  await pageWithTwoRecurrentLists.getByRole('button', { name: 'Date' }).click();
-  await pageWithTwoRecurrentLists
-    .locator('div')
-    .filter({ hasText: /^Recurrent listsDateA-Z$/ })
-    .getByRole('button')
-    .nth(1)
-    .click();
+    // click on button to change to last edited sorting
+    await pageWithTwoRecurrentLists.locator('.relative > button').click();
+    await pageWithTwoRecurrentLists.getByRole('button', { name: 'Date' }).click();
+    await pageWithTwoRecurrentLists
+      .locator('div')
+      .filter({ hasText: /^Recurrent listsDateA-Z$/ })
+      .getByRole('button')
+      .nth(1)
+      .click();
 
-  //Checks if first item on the list page is the last created/edited one
-  await expect(pageWithTwoRecurrentLists.getByRole('listitem').nth(0)).toHaveText(['LunchPasta']);
+    // check if first item on the list page is the last created/edited one
+    await expect(pageWithTwoRecurrentLists.getByRole('listitem').nth(0)).toHaveText(['LunchPasta']);
+  });
+
+  test('should sort the list by alphabetic order', async ({ pageWithTwoRecurrentLists }) => {
+    // click on button to change to last edited sorting
+    await pageWithTwoRecurrentLists.locator('.relative > button').click();
+    await pageWithTwoRecurrentLists.getByRole('button', { name: 'Date' }).click();
+    await pageWithTwoRecurrentLists
+      .locator('div')
+      .filter({ hasText: /^Recurrent listsDateA-Z$/ })
+      .getByRole('button')
+      .nth(1)
+      .click();
+
+    // check if first item on the list page is the last created/edited one
+    await expect(pageWithTwoRecurrentLists.getByRole('listitem').nth(0)).toHaveText(['LunchPasta']);
+
+    // click on button to change to alphabetic order
+    await pageWithTwoRecurrentLists.locator('.relative > button').click();
+    await pageWithTwoRecurrentLists.getByRole('button', { name: 'A-Z' }).click();
+    await pageWithTwoRecurrentLists
+      .locator('div')
+      .filter({ hasText: /^Recurrent listsDateA-Z$/ })
+      .getByRole('button')
+      .nth(1)
+      .click();
+
+    // check if first item on the list page is Breaky (ahead alphabetically of Lunch)
+    await expect(pageWithTwoRecurrentLists.getByRole('listitem').nth(0)).toHaveText(['BreakyStrawberries']);
+  });
 });
 
-test('should sort the list by alphabetic order', async ({ pageWithTwoRecurrentLists }) => {
-  //Clicks on button to change to last edited sorting
-  await pageWithTwoRecurrentLists.locator('.relative > button').click();
-  await pageWithTwoRecurrentLists.getByRole('button', { name: 'Date' }).click();
-  await pageWithTwoRecurrentLists
-    .locator('div')
-    .filter({ hasText: /^Recurrent listsDateA-Z$/ })
-    .getByRole('button')
-    .nth(1)
-    .click();
+test.describe('list searching', () => {
+  test('should search for a list called Breaky', async ({ pageWithSimilarRecurrentListsName }) => {
+    // open search bar
+    await pageWithSimilarRecurrentListsName.locator('button:nth-child(3)').first().click();
 
-  //Checks if first item on the list page is the last created/edited one
-  await expect(pageWithTwoRecurrentLists.getByRole('listitem').nth(0)).toHaveText(['LunchPasta']);
+    // search for Breaky
+    await pageWithSimilarRecurrentListsName.getByPlaceholder('Looking for a list or an item').click();
+    await pageWithSimilarRecurrentListsName.getByPlaceholder('Looking for a list or an item').fill('Breaky');
 
-  //Clicks on button to change to alphabetic order
-  await pageWithTwoRecurrentLists.locator('.relative > button').click();
-  await pageWithTwoRecurrentLists.getByRole('button', { name: 'A-Z' }).click();
-  await pageWithTwoRecurrentLists
-    .locator('div')
-    .filter({ hasText: /^Recurrent listsDateA-Z$/ })
-    .getByRole('button')
-    .nth(1)
-    .click();
+    // check if correct lists have been found via list name
+    await expect(pageWithSimilarRecurrentListsName.getByRole('listitem')).toHaveText([
+      'BreakyWeekEndCroissant',
+      'BreakyStrawberries',
+    ]);
+  });
 
-  //Checks if first item on the list page is Breaky (ahead alphabetically of Lunch)
-  await expect(pageWithTwoRecurrentLists.getByRole('listitem').nth(0)).toHaveText(['BreakyStrawberries']);
-});
+  test('should search for an item called Strawberries', async ({ pageWithSameItemInDifferentLists }) => {
+    // open search bar
+    await pageWithSameItemInDifferentLists.locator('button:nth-child(3)').first().click();
 
-test('should search for a list called Breaky', async ({ pageWithSimilarRecurrentListsName }) => {
-  await pageWithSimilarRecurrentListsName.locator('button:nth-child(3)').first().click();
-  await pageWithSimilarRecurrentListsName.getByPlaceholder('Looking for a list or an item').click();
-  await pageWithSimilarRecurrentListsName.getByPlaceholder('Looking for a list or an item').fill('Breaky');
-  await expect(pageWithSimilarRecurrentListsName.getByRole('listitem')).toHaveText([
-    'BreakyWeekEndCroissant',
-    'BreakyStrawberries',
-  ]);
-});
+    // search for Strawberry
+    await pageWithSameItemInDifferentLists.getByPlaceholder('Looking for a list or an item').click();
+    await pageWithSameItemInDifferentLists.getByPlaceholder('Looking for a list or an item').fill('Strawberries');
 
-test('should search for an item called Strawberries', async ({ pageWithSameItemInDifferentLists }) => {
-  await pageWithSameItemInDifferentLists.locator('button:nth-child(3)').first().click();
-  await pageWithSameItemInDifferentLists.getByPlaceholder('Looking for a list or an item').click();
-  await pageWithSameItemInDifferentLists.getByPlaceholder('Looking for a list or an item').fill('Strawberries');
-  await expect(pageWithSameItemInDifferentLists.getByRole('listitem')).toHaveText([
-    'FruitsStrawberries',
-    'BreakyStrawberries',
-  ]);
+    // check if correct lists have been found via item name
+    await expect(pageWithSameItemInDifferentLists.getByRole('listitem')).toHaveText([
+      'FruitsStrawberries',
+      'BreakyStrawberries',
+    ]);
+  });
 });
