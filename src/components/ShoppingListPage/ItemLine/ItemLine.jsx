@@ -17,12 +17,14 @@ function ItemLine({ itemID, item, listTitles }) {
   return (
     <li key={itemID}>
       <div className="flex flex-row gap-2 items-center">
-        <IsItemBoughtCheckBox
-          itemID={itemID}
-          item={item}
-        />
+        <IsItemBoughtCheckBox item={item} />
         <ItemInput item={item} />
-        <div className="italic text-xs truncate">{associatedListTitlesForItem}</div>
+        <div
+          data-testid="associated-lists"
+          className="italic text-xs truncate"
+        >
+          {associatedListTitlesForItem}
+        </div>
       </div>
     </li>
   );

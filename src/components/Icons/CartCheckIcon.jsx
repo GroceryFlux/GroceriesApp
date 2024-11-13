@@ -9,6 +9,7 @@ export const CartCheckIcon = () => {
       strokeWidth={1.5}
       stroke="currentColor"
       className="w-6 h-6"
+      data-testid="cart-check-icon"
     >
       <g
         id="Artboard"

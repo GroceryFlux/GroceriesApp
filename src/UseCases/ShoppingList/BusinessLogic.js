@@ -101,7 +101,8 @@ export function clearItemsFromShoppingList() {
   });
 }
 
-export function toggleItemIsBought({ shoppingListID, item }) {
+export function toggleItemIsBought({ item }) {
+  const shoppingListID = item.associatedIDs[0].shoppingListID;
   saveItemInShoppingList({ shoppingListID, item: { ...item, isBought: !item.isBought } });
 
   item.associatedIDs.forEach((IDs) => {
@@ -111,7 +112,7 @@ export function toggleItemIsBought({ shoppingListID, item }) {
     const itemDetailsInExistingList = getItemFromExistingList({
       itemID: associatedItemID,
       listID: associatedListID,
-    }).itemDetails;
+    });
 
     const newItemDetailsInExistingList = {
       ...itemDetailsInExistingList,
